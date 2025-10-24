@@ -39,17 +39,15 @@ const JOBS = [
   },
 ];
 
-const LOCATIONS = [
-  { value: "", label: "All Locations" },
-  { value: "Jakarta", label: "Jakarta" },
-  { value: "Bandung", label: "Bandung" },
-  { value: "Surabaya", label: "Surabaya" },
-];
+// ... existing code ...
 
-export default function JobsPage() {
-  const [query, setQuery] = useState("");
-  const [location, setLocation] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+// Locations list removed to satisfy lint (unused constant)
+
+ export default function JobsPage() {
+   const [query, setQuery] = useState("");
+
+  const [location] = useState("");
+   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filtered = useMemo(() => {
     return JOBS.filter((job) => {

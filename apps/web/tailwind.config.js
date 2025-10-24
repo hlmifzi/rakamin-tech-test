@@ -1,4 +1,4 @@
-/* eslint-disable import/no-commonjs, @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-require-imports */
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   presets: [require('@rakamin/ui/tailwind.preset.cjs')],

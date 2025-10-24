@@ -28,8 +28,8 @@ const Modal: React.FC<ModalProps> = ({
 
   const headerNode = title || subtitle ? (
     <div className={styles.header}>
-      {title && <Typography>{title}</Typography>}
-      {subtitle && <Typography>{subtitle}</Typography>}
+      {title && <Typography variant="HeadingMBold">{title}</Typography>}
+      {subtitle && <Typography variant="TextMRegular">{subtitle}</Typography>}
     </div>
   ) : null;
 
