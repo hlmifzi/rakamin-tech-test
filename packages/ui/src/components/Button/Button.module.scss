@@ -1,0 +1,86 @@
+.button {
+  @apply w-full inline-flex items-center justify-center rounded-md px-4 py-2 transition-colors duration-150 focus:outline-none focus:ring-0 focus:ring-offset-0 disabled:cursor-not-allowed select-none font-nunito font-bold text-[1rem] leading-[1.5rem] tracking-[0];
+}
+
+/* Rounded */
+.rounded {
+  @apply rounded-full;
+}
+
+/* Sizes */
+.sm {
+  @apply px-3 py-1.5;
+}
+.md {
+  @apply px-4 py-2;
+}
+.lg {
+  @apply px-5 py-2.5;
+}
+.fullWidth {
+  @apply w-full;
+}
+
+/* Variants */
+.default {
+  @apply bg-white text-neutral-90 border border-neutral-40;
+}
+.default:hover:not(:disabled),
+.default:focus:not(:disabled),
+.default:active:not(:disabled) {
+  @apply bg-white;
+}
+
+.primary {
+  @apply bg-primary text-white border border-transparent;
+}
+.primary:hover:not(:disabled),
+.primary:focus:not(:disabled),
+.primary:active:not(:disabled) {
+  @apply brightness-95 bg-primary;
+}
+
+.secondary {
+  @apply bg-secondary text-black border border-transparent;
+}
+.secondary:hover:not(:disabled),
+.secondary:focus:not(:disabled),
+.secondary:active:not(:disabled) {
+  @apply brightness-95 bg-secondary;
+}
+
+.tertiary {
+  @apply bg-white text-primary border border-primary;
+}
+.tertiary:hover:not(:disabled),
+.tertiary:focus:not(:disabled),
+.tertiary:active:not(:disabled) {
+  @apply bg-primary-surface bg-white;
+}
+
+.text {
+  @apply bg-transparent text-primary border border-transparent;
+}
+.text:hover:not(:disabled),
+.text:focus:not(:disabled),
+.text:active:not(:disabled) {
+  @apply bg-primary-surface bg-transparent;
+}
+
+/* Icons */
+.iconLeft {
+  @apply -ml-1 mr-2;
+}
+.iconRight {
+  @apply -mr-1 ml-2;
+}
+
+/* Loading */
+.loading {
+  @apply animate-pulse;
+}
+
+/* Disabled State Override */
+.button:disabled {
+  @apply text-[#919191] border border-neutral-40 bg-neutral-30 opacity-100;
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@rakamin/eslint-config",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.js",
+  "peerDependencies": {
+    "eslint": ">=9.0.0",
+    "eslint-config-next": ">=16.0.0"
+  }
+}

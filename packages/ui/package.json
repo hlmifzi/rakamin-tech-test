@@ -1,0 +1,54 @@
+{
+  "name": "@rakamin/ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    },
+    "./tailwind.preset.cjs": "./tailwind.preset.cjs"
+  },
+  "files": [
+    "src",
+    "tailwind.preset.cjs"
+  ],
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@rakamin/tsconfig": "workspace:*",
+    "@storybook/addon-docs": "^8.6.14",
+    "@storybook/addon-essentials": "^8.6.14",
+    "@storybook/blocks": "^8.6.14",
+    "@storybook/react": "^8.6.14",
+    "@storybook/react-vite": "^8.6.14",
+    "@storybook/test": "^8.6.14",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "sass": "^1.69.0",
+    "storybook": "^8.6.14",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5",
+    "vite": "^6.0.7"
+  },
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^6.1.0",
+    "@iconscout/react-unicons": "^2.2.5",
+    "@iconscout/unicons": "^4.2.0",
+    "antd": "^5.27.6"
+  }
+}

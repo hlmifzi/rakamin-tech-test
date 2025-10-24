@@ -1,0 +1,11 @@
+.card {
+  @apply w-full p-6 relative rounded-2xl bg-white transition-colors cursor-pointer;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.1);
+
+  &:not(:last-child) {
+    @apply mb-4;
+  }
+}
+.card:hover {
+  @apply bg-primary-surface;
+}

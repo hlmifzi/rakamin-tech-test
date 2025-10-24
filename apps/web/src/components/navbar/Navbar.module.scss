@@ -1,0 +1,21 @@
+.root {
+  @apply flex items-center h-16 bg-white border-b border-neutral-40;
+}
+.container {
+  @apply w-full px-6;
+}
+.inner {
+  @apply h-14 flex items-center justify-between;
+}
+.brand {
+  @apply text-black;
+}
+.profile {
+  @apply flex items-center gap-6 text-sm;
+}
+.link {
+  @apply hover:text-gray-900;
+}
+.avatar {
+  @apply rounded-full border border-neutral-40;
+}

@@ -1,0 +1,57 @@
+.TextXSRegular {
+  @apply font-nunito font-normal text-[0.625rem] leading-[1rem] tracking-[0];
+}
+.TextXSBold {
+  @apply font-nunito font-bold text-[0.625rem] leading-[1rem] tracking-[0];
+}
+
+.TextSRegular {
+  @apply font-nunito font-normal text-[0.75rem] leading-[1.25rem] tracking-[0];
+}
+.TextSBold {
+  @apply font-nunito font-bold text-[0.75rem] leading-[1.25rem] tracking-[0];
+}
+
+.TextMRegular {
+  @apply font-nunito font-normal text-[0.875rem] leading-[1.5rem] tracking-[0];
+}
+.TextMBold {
+  @apply font-nunito font-bold text-[0.875rem] leading-[1.5rem] tracking-[0];
+}
+
+.TextLRegular {
+  @apply font-nunito font-normal text-[1rem] leading-[1.75rem] tracking-[0];
+}
+.TextLBold {
+  @apply font-nunito font-bold text-[1rem] leading-[1.75rem] tracking-[0];
+}
+
+.HeadingSRegular {
+  @apply font-nunito font-normal text-[1.25rem] leading-[2rem] tracking-[0];
+}
+.HeadingSBold {
+  @apply font-nunito font-bold text-[1.25rem] leading-[2rem] tracking-[0];
+}
+
+.HeadingMRegular {
+  @apply font-nunito font-normal text-[1.5rem] leading-[2.25rem] tracking-[0];
+}
+.HeadingMBold {
+  @apply font-nunito font-bold text-[1.5rem] leading-[2.25rem] tracking-[0];
+}
+
+.HeadingLRegular {
+  @apply font-nunito font-normal text-[2rem] leading-[2.75rem] tracking-[0];
+}
+.HeadingLBold {
+  @apply font-nunito font-bold text-[2rem] leading-[2.75rem] tracking-[0];
+}
+
+.DisplayBold {
+  @apply font-nunito font-bold text-[3rem] leading-[4rem] tracking-[0];
+}
+
+/* Legacy variant kept for backward-compatibility */
+.TextXLBold {
+  @apply font-nunito font-bold text-[1.125rem] leading-[1.75rem] tracking-[0];
+}

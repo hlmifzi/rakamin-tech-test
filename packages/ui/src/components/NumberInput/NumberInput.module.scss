@@ -1,0 +1,32 @@
+.wrapper {
+  @apply flex flex-col;
+}
+.label {
+  @apply text-sm font-medium text-neutral-90 mb-2;
+}
+.input {
+  @apply w-full rounded-lg border-2 border-neutral-40 bg-white px-4 max-h-11 py-[.625rem] text-neutral-90 placeholder:text-neutral-60 shadow-sm outline-0 transition-colors duration-150 text-m-regular mb-4;
+}
+.input:hover,
+.input:focus {
+  @apply border-primary outline-0;
+}
+.helper {
+  @apply text-xs text-neutral-60;
+}
+// Addon wrappers
+.inputContainer {
+  @apply relative;
+}
+.addonBefore {
+  @apply absolute left-4 top-2 text-neutral-90;
+}
+.addonAfter {
+  @apply absolute right-3 top-1/2 -translate-y-1/2 text-neutral-60;
+}
+.withAddonBefore {
+  @apply pl-10;
+}
+.withAddonAfter {
+  @apply pr-10;
+}

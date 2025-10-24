@@ -1,0 +1,16 @@
+.container {
+  @apply flex flex-col justify-center items-center h-[100vh];
+}
+.icon {
+  @apply mb-2;
+}
+.title {
+  @apply mb-1 mt-4 text-neutral-90 text-center;
+}
+
+.description {
+    @apply text-neutral-90 text-center;
+}
+.cta {
+  @apply mt-4;
+}

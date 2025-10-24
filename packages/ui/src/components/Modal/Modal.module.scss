@@ -1,0 +1,54 @@
+/* Overlay gelap di belakang modal */
+.overlay {
+  @apply fixed inset-0 bg-black/50 flex items-center justify-center z-50;
+}
+
+/* Kontainer utama modal */
+.container {
+  @apply bg-white rounded-xl shadow-xl w-[90vw] max-w-lg relative flex flex-col;
+  @apply max-h-[calc(100vh-7.5rem)];
+  animation: fadeIn 0.25s ease-out;
+}
+
+
+/* Header modal */
+.header {
+  @apply p-6 border-b border-neutral-40;
+}
+
+/* Isi modal */
+.body {
+  @apply pt-4 px-6 pb-6 text-gray-700 overflow-auto;
+}
+
+/* Footer modal (opsional, bisa muncul kalau ada props.footer) */
+.footer {
+  @apply p-6 border-t border-neutral-200 flex items-center justify-end;
+
+  button {
+    @apply rounded-lg w-full md:w-[6.625rem] h-[2rem] mt-2 md:mt-0 py-0 px-0;
+  }
+}
+
+/* Tombol close di pojok kanan atas */
+.closeBtn {
+  @apply absolute top-5 right-4 inline-flex items-center justify-center rounded-md w-8 h-8 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-0;
+}
+
+.closeBtn:hover,
+.closeBtn:focus,
+.closeBtn:active {
+  @apply bg-gray-100;
+}
+
+/* Animasi kecil saat modal muncul */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

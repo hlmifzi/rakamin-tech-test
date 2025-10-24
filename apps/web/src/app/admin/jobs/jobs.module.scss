@@ -1,0 +1,50 @@
+.container {
+  @apply grid grid-cols-1 md:grid-cols-[auto_18.75rem] gap-6 pt-9;
+}
+.searchBar {
+  @apply mb-6;
+
+  svg {
+    @apply text-primary cursor-pointer;
+  }
+}
+
+.ctaContainer {
+  @apply relative col-start-1 md:col-start-2 overflow-hidden flex p-6 h-fit text-white rounded-2xl;
+
+  img {
+    @apply object-cover;
+  }
+}
+
+.ctaInnerText {
+  @apply w-full flex flex-col items-start justify-start gap-6 z-10;
+}
+
+.ctaOverlay { @apply absolute inset-0 bg-black/[.72]; }
+
+.title {
+  @apply text-lg font-semibold;
+}
+.company {
+  @apply text-sm;
+}
+.meta {
+  @apply text-xs mt-2;
+}
+
+.ctaManageJob {
+  @apply sm:relative md:absolute right-6 bottom-6;
+
+  button {
+    @apply rounded-lg w-full mt-2 md:mt-0 md:w-[6.125rem] h-[1.75rem] py-0 px-0
+  }
+}
+
+.badgeContainer {
+  @apply flex gap-4 mb-3;
+}
+
+.jobDescriptionContainer {
+  @apply flex-col gap-2;
+}

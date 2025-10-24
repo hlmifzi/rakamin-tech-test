@@ -1,0 +1,29 @@
+.wrapper {
+  @apply flex flex-col mb-4;
+}
+.label {
+  @apply text-sm font-medium text-neutral-90 mb-2;
+}
+.select { 
+  @apply mb-4;
+  
+  /* Override Ant Design Select styles */
+  :global(.ant-select-selector) {
+    @apply rounded-lg border-2 border-neutral-40 bg-white px-3 py-2 text-neutral-90 shadow-sm outline-0 transition-colors duration-150 text-m-regular;
+    height: auto !important;
+    min-height: 44px;
+  }
+  
+  :global(.ant-select-selector:hover),
+  :global(.ant-select-focused .ant-select-selector) {
+    @apply border-primary outline-0;
+    box-shadow: none !important;
+  }
+  
+  :global(.ant-select-selection-placeholder) {
+    @apply text-neutral-60;
+  }
+}
+.helper {
+  @apply text-xs text-neutral-60;
+}
