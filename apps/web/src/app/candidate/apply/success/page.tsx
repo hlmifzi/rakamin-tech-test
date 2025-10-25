@@ -53,7 +53,7 @@ const ApplySuccessPage = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
       >
-        <Typography variant="HeadingMBold" as="h1">
+        <Typography className="text-neutral-90" variant="HeadingMBold" as="h1">
           🎉 Your application was sent!
         </Typography>
       </motion.div>
