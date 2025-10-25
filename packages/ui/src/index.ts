@@ -14,5 +14,6 @@ export { Badge } from './components/Badge/Badge';
 export type { BadgeProps, BadgeVariant } from './components/Badge/Badge';
 export { Checkbox } from './components/Checkbox/Checkbox';
 export { Table } from './components/Table/Table';
+export { TakePictureInput } from './components/TakePictureInput/TakePictureInput';
 // Icons
-export { UilSearch, UilAngleRight, UilLocationPoint, UilMoneyBill } from './icons';
+export { UilSearch, UilAngleRight, UilLocationPoint, UilMoneyBill, UilArrowLeft, UilUpload } from './icons';

@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <>
         <NavbarCandidate />
-        <div className="max-w-[1440px] mx-auto px-[104px] py-[40px]">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-[104px] py-[40px]">
           {children}
         </div>
     </>

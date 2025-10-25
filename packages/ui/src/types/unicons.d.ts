@@ -9,5 +9,7 @@ declare module '@iconscout/react-unicons' {
   export const UilAngleRight: React.FC<UniconProps>;
   export const UilLocationPoint: React.FC<UniconProps>;
   export const UilMoneyBill: React.FC<UniconProps>;
+  export const UilArrowLeft: React.FC<UniconProps>;
+  export const UilUpload: React.FC<UniconProps>;
   // Add more icons here as needed; untyped icons will still work at runtime.
 }

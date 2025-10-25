@@ -1,0 +1,120 @@
+.container {
+  @apply mb-4;
+}
+
+.label {
+  @apply text-sm font-medium text-neutral-90 mb-2;
+}
+
+.preview {
+  @apply my-2 rounded-lg overflow-hidden;
+}
+
+.previewEmpty {
+  @apply border-2 border-dashed border-neutral-40;
+}
+
+.previewFilled {
+  @apply border-2 border-solid border-primary;
+}
+
+.uploadBtn {
+  @apply px-4 w-fit h-[32px] items-center;
+
+  &:hover {
+    svg, p {
+      @apply text-primary;
+    }
+  }
+
+  svg {
+    @apply w-4 h-4 mt-[3px] text-gray-900;
+  }
+
+  span {
+    @apply flex gap-1 text-gray-900;
+  }
+}
+
+.modalContent {
+  @apply flex flex-col gap-4;
+}
+
+.videoContainer {
+  @apply relative w-full h-[400px] bg-black rounded-lg overflow-hidden;
+}
+
+.video {
+  @apply w-full h-full object-cover;
+}
+
+.canvas {
+  @apply absolute top-0 left-0 w-full h-full;
+}
+
+.poseIndicator {
+  @apply absolute top-4 left-4 right-4 z-10;
+}
+
+.poseStatus {
+  @apply bg-black bg-opacity-80 text-white p-4 rounded-lg text-center backdrop-blur-sm;
+  transition: all 0.3s ease;
+  
+  &.neutral {
+    @apply bg-gray-600 bg-opacity-80;
+  }
+  
+  &.correct {
+    @apply bg-green-600 bg-opacity-80;
+    animation: pulse 1s infinite;
+  }
+  
+  &.wrong {
+    @apply bg-red-600 bg-opacity-80;
+    animation: shake 0.5s ease-in-out;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+.poseSequence {
+  @apply flex justify-center gap-4 mt-4;
+}
+
+.poseStep {
+  @apply px-4 py-2 rounded-lg border-2 border-neutral-40 bg-neutral-10 text-center;
+  min-width: 100px;
+  
+  &.active {
+    @apply border-primary text-primary;
+    background-color: rgba(59, 130, 246, 0.1);
+  }
+  
+  &.completed {
+    @apply border-green-500 text-green-700;
+    background-color: rgba(34, 197, 94, 0.1);
+  }
+}
+
+.actions {
+  @apply flex gap-2 justify-end;
+}

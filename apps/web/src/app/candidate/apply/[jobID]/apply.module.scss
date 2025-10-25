@@ -1,0 +1,49 @@
+.cardContainer {
+    @apply border border-neutral-40 border-b-0 h-[calc(100vh-100px)] relative w-[48vw] bg-neutral-10;
+}
+
+.header {
+    @apply pt-10 px-10 pb-6 flex justify-between;
+}
+
+.content {
+    @apply px-16 overflow-auto max-h-[60vh] pb-8;
+}
+
+.backBtn {
+    @apply w-7 p-0 h-7 shadow-[0px_1px_2px_0px_#0000001F] rounded-lg;
+}
+
+.btnAction {
+    @apply absolute border-t bg-neutral-10 border-neutral-40 min-h-[88px] bottom-0 left-[-1px] right-[-1px] px-9 flex items-center;
+}
+
+.headerTitleContainer {
+    @apply flex gap-4;
+}
+
+.uploadInput {
+    @apply px-4 w-fit h-[32px] items-center;
+
+    &:hover {
+        svg, p {
+            @apply text-primary;
+        }
+    }
+
+    svg {
+        @apply w-4 h-4 mt-[3px] text-gray-900;
+    }
+
+    span {
+        @apply flex gap-1 text-gray-900;
+    }
+}
+
+.defaultPicture {
+    @apply my-2;
+}
+
+.takePictureInput {
+    @apply mb-4;
+}

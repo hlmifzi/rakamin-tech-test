@@ -8,12 +8,9 @@
 }
 
 .active {
-  @apply w-fit px-4 h-8 border flex items-center justify-center bg-neutral-30 border-neutral-50 rounded-lg text-center text-neutral-90;
+  @apply w-fit px-4 h-8 border flex items-center justify-center bg-neutral-30 border-neutral-50 rounded-lg text-center;
 }
 
 .link {
-  @apply w-fit px-4 h-8 border flex items-center justify-center border-neutral-50 rounded-lg text-center text-neutral-90 transition-colors;
-}
-.link:hover {
-  @apply border-primary text-primary;
+  @apply w-fit px-4 h-8 border flex items-center justify-center border-neutral-50 rounded-lg text-center;
 }

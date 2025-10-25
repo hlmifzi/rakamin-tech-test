@@ -24,6 +24,9 @@ module.exports = {
         black: {
           DEFAULT: '#1E1F21',
         },
+        gray: {
+          900: "#111827"
+        },
         neutral: {
           10: '#FFFFFF',
           // tambahan
@@ -81,6 +84,7 @@ module.exports = {
       },
       boxShadow: {
         'modal': '0px 4px 8px 0px #0000001A',
+        'blur': '0px 1px 2px 0px #0000001F',
       },
     },
   },

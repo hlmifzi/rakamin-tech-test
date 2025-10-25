@@ -28,7 +28,7 @@
 .default:hover:not(:disabled),
 .default:focus:not(:disabled),
 .default:active:not(:disabled) {
-  @apply bg-white;
+  @apply bg-white border-primary text-primary;
 }
 
 .primary {
