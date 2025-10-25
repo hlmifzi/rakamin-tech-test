@@ -6,8 +6,10 @@ const config: StorybookConfig = {
     options: {}
   },
   stories: ["../src/**/*.stories.@(ts|tsx)"],
-  // Simplify setup to avoid preview issues; docs/static can be re-enabled later
-  addons: [],
+  addons: [
+    "@storybook/addon-essentials",
+    "@storybook/addon-docs"
+  ],
   viteFinal: async (config) => {
     return config;
   }
