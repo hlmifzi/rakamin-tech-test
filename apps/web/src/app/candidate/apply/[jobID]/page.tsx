@@ -52,6 +52,7 @@ const ApplyPage = () => {
                     </div>
                 </div>
                 <div className={styles.content}>
+                    <Typography variant="TextSBold" className="text-danger mb-4">* Required</Typography>
                     <TakePictureInput 
                         label="Photo Profile"
                         defaultImageSrc="/candidate/default-picture.webp"

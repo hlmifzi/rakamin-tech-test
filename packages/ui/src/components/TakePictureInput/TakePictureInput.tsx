@@ -214,6 +214,12 @@ export const TakePictureInput = ({
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
+    // Freeze radar box after last pose; skip detection during countdown/preview
+    if (stageRef.current !== "pose") {
+      animationFrameRef.current = requestAnimationFrame(detectPose);
+      return;
+    }
+
     try {
       // Tambahan pengecekan sebelum detectForVideo
       if (video.currentTime === 0) {

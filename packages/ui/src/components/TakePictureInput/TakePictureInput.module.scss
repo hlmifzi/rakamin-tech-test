@@ -7,11 +7,15 @@
 }
 
 .preview {
-  @apply my-2 rounded-lg overflow-hidden flex items-center justify-start;
+  @apply my-2 overflow-hidden flex items-center justify-start;
+
+  img {
+    @apply rounded-2xl w-32 h-32;
+  }
 }
 
 .previewFilled {
-  @apply border-2 border-solid border-primary;
+  @apply w-fit;
 }
 
 .uploadBtn {
