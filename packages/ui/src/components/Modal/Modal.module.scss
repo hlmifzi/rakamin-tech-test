@@ -14,7 +14,7 @@
 
 /* Header modal */
 .header {
-  @apply p-6 border-b border-neutral-40;
+  @apply  flex flex-col items-start justify-center p-6 border-b border-neutral-40;
 }
 
 /* Isi modal */
@@ -34,7 +34,7 @@
 
 /* Tombol close di pojok kanan atas */
 .closeBtn {
-  @apply absolute top-5 right-4 inline-flex items-center justify-center rounded-md w-8 h-8 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-0;
+  @apply absolute right-4 inline-flex items-center justify-center rounded-md w-8 h-8 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-0;
 }
 
 .closeBtn:hover,

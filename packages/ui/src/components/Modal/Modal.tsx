@@ -30,6 +30,14 @@ const Modal: React.FC<ModalProps> = ({
     <div className={styles.header}>
       {title && <Typography variant="HeadingMBold">{title}</Typography>}
       {subtitle && <Typography variant="TextMRegular">{subtitle}</Typography>}
+       {/* Tombol close (X) di pojok kanan atas) */}
+        <button
+          className={styles.closeBtn}
+          onClick={onClose}
+          aria-label="Close modal"
+        >
+          ✕
+        </button>
     </div>
   ) : null;
 
@@ -44,15 +52,7 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <div className={styles.overlay} role="dialog" aria-modal="true" onClick={handleOverlayClick}>
       <div className={className || styles.container} onClick={stopPropagation}>
-        {/* Tombol close (X) di pojok kanan atas) */}
-        <button
-          className={styles.closeBtn}
-          onClick={onClose}
-          aria-label="Close modal"
-        >
-          ✕
-        </button>
-
+       
         {/* Header */}
         {headerNode}
 

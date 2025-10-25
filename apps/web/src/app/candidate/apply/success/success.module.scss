@@ -1,0 +1,11 @@
+.root {
+  @apply min-h-[80vh] flex flex-col items-center justify-center text-center;
+}
+
+.image {
+  @apply mb-4;
+}
+
+.description {
+  @apply mt-2 w-[606px];
+}
