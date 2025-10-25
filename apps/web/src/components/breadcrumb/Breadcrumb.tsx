@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { Typography, UilAngleRight } from "@rakamin/ui";
 import { usePathname } from "next/navigation";
+import styles from "./breadcumb.module.scss";
 
 interface BreadcrumbProps {
   className?: string;
@@ -40,17 +41,17 @@ export function Breadcrumb({
   const lastIndex = items.length - 1;
 
   return (
-    <div className={className}>
+    <div className={[styles.breadcrumb, className || ""].filter(Boolean).join(" ")}> 
       {items.map((item, index) => (
         <React.Fragment key={item.href}>
           {index < lastIndex ? (
-            <Link href={item.href}>
-              <Typography className={linkClassName} variant="TextMBold" as="span">
+            <Link href={item.href} className={[styles.link, linkClassName || ""].filter(Boolean).join(" ")}> 
+              <Typography variant="TextMBold" as="span">
                 {item.label}
               </Typography>
             </Link>
           ) : (
-            <Typography className={activeClassName} variant="TextMBold" as="span">
+            <Typography className={[styles.active, activeClassName || ""].filter(Boolean).join(" ")} variant="TextMBold" as="span">
               {item.label}
             </Typography>
           )}
