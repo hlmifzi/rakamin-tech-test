@@ -28,10 +28,11 @@ module.exports = {
           10: '#FFFFFF',
           // tambahan
           20: '#FAFAFA',
+          25: '#FCFCFC',
           30: '#EDEDED',
           40: '#E0E0E0',
           // tambahan
-          50: '#CACAC2',
+          50: '#C2C2C2',
           60: '#9E9E9E',
           // tambahan
           70: '#757575',
@@ -78,6 +79,9 @@ module.exports = {
           'sans-serif',
         ],
       },
+      boxShadow: {
+        'modal': '0px 4px 8px 0px #0000001A',
+      },
     },
   },
   plugins: [
@@ -89,6 +93,9 @@ module.exports = {
           fontSize: '14px',
           lineHeight: '24px',
           letterSpacing: '0px',
+        },
+        '.shadow-modal': {
+            boxShadow: '0px 4px 8px 0px #0000001A',
         },
       });
     },

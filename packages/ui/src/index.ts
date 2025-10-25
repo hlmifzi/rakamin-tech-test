@@ -12,5 +12,7 @@ export { EmptyState } from './components/EmptyState/EmptyState';
 export { Card } from './components/Card/Card';
 export { Badge } from './components/Badge/Badge';
 export type { BadgeProps, BadgeVariant } from './components/Badge/Badge';
+export { Checkbox } from './components/Checkbox/Checkbox';
+export { Table } from './components/Table/Table';
 // Icons
-export { UilSearch } from './icons';
+export { UilSearch, UilAngleRight, UilLocationPoint, UilMoneyBill } from './icons';

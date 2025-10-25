@@ -1,0 +1,18 @@
+.checkbox {
+  @apply rounded border-2 w-5 h-5 border-primary outline-none cursor-pointer bg-white transition-colors;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.checkbox:checked {
+  @apply bg-primary border-primary;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px 12px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none'%3E%3Cpath d='M2 6 L5 9 L10 3' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.label {
+  @apply ml-2 text-neutral-90;
+}
+.container {
+  @apply inline-flex items-center;
+}

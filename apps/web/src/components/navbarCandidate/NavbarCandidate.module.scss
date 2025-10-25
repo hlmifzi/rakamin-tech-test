@@ -1,0 +1,23 @@
+.root {
+  @apply flex items-center h-16 bg-white shadow-modal backdrop-filter backdrop-blur-[12px];
+  
+  
+}
+.container {
+  @apply w-full max-w-[1440px] px-[120px];
+}
+.inner {
+  @apply h-14 flex items-center justify-end;
+}
+.brand {
+  @apply text-black;
+}
+.profile {
+  @apply flex items-center gap-6 text-sm border-l border-neutral-40 pl-4;
+}
+.link {
+  @apply hover:text-gray-900;
+}
+.avatar {
+  @apply rounded-full border border-neutral-40;
+}

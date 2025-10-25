@@ -1,9 +1,7 @@
 .container {
-  @apply grid grid-cols-1 md:grid-cols-[auto_18.75rem] gap-6 pt-9;
+  @apply grid grid-cols-1 md:grid-cols-[auto_18.75rem] gap-6 pt-3;
 }
 .searchBar {
-  @apply mb-6;
-
   svg {
     @apply text-primary cursor-pointer;
   }

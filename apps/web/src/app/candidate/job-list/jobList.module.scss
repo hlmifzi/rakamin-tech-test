@@ -1,0 +1,64 @@
+.inner {
+    @apply grid grid-cols-1 md:grid-cols-[400px_auto] gap-6;
+}
+
+.cardBorder {
+    @apply border-neutral-40 cursor-pointer rounded-lg px-4 py-3 transition-all border-2 hover:border-primary hover:bg-primary-surface;
+}
+
+.listJobContainer {
+    @apply flex flex-col gap-4 max-h-[80vh] overflow-y-auto pr-5;
+}
+
+.cardBorderHeader {
+    @apply grid grid-cols-[48px_auto] items-center gap-x-4 pb-2 border-dashed border-b border-neutral-40;
+
+    img {
+        @apply rounded-lg h-12 border border-neutral-40 row-span-2;
+    }
+}
+
+
+.cardBorderDetail {
+    @apply relative grid grid-cols-[48px_auto] items-center gap-x-6 pb-6 border-b border-neutral-40;
+
+    img {
+        @apply rounded-lg h-12 border border-neutral-40 row-span-2;
+    }
+
+    p:last-child {
+        @apply text-neutral-80 col-start-2;
+    }
+}
+
+.applyButton {
+    @apply absolute right-0 top-0 h-8 w-fit max-w-fit py-2;
+}
+
+.jobType {
+    @apply w-fit flex items-center justify-center text-neutral-10 bg-success px-2 h-6 rounded-md mb-2;
+}
+
+.jobDescContainer {
+    @apply flex flex-col gap-2 pt-2;
+}
+
+.jobDescItem {
+    @apply flex items-center gap-x-1;
+
+    svg {
+        @apply text-neutral-80 w-4 h-4;
+    }
+
+    p {
+        @apply text-neutral-80;
+    }
+}
+
+.cardDetailJob {
+    @apply border-neutral-40 rounded-lg p-6 border;
+}
+
+.contentJobDetail {
+    @apply overflow-y-auto text-m-regular pt-6;
+}

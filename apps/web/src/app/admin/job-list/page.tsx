@@ -5,6 +5,7 @@ import { TextInput, Button, Typography, EmptyState, Card, Badge, UilSearch } fro
 import { ModalAddJobs } from "@/components/modalAddJobs/ModalAddJobs";
 import { formatRupiah } from "@/lib/format";
 import styles from "./jobs.module.scss";
+import Link from "next/link";
 
 const JOBS = [
   {
@@ -118,11 +119,13 @@ const JOBS = [
                 </div>
 
                 <div className={styles.ctaManageJob}>
-                  <Button variant="primary">
-                    <Typography variant="TextSBold">
-                      Manage Job
-                    </Typography> 
-                  </Button>
+                  <Link href={`/admin/job-list/manage-candidate/${job.id}`}>
+                    <Button variant="primary">
+                      <Typography variant="TextSBold">
+                        Manage Job
+                      </Typography> 
+                    </Button>
+                  </Link>
                 </div>
               </Card>
             ))
