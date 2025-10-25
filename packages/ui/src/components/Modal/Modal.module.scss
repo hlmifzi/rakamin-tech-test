@@ -1,12 +1,13 @@
 /* Overlay gelap di belakang modal */
 .overlay {
-  @apply fixed inset-0 bg-black/50 flex items-center justify-center z-50;
+  @apply fixed inset-0 bg-black/50 flex items-center justify-center z-50 overflow-auto;
 }
 
 /* Kontainer utama modal */
 .container {
   @apply bg-white rounded-xl shadow-xl w-[90vw] max-w-lg relative flex flex-col;
-  @apply max-h-[calc(100vh-7.5rem)];
+  /* Hapus max-height agar tidak ada scroll internal; biarkan overlay/page yang scroll */
+  /* @apply max-h-[calc(100vh-7.5rem)]; */
   animation: fadeIn 0.25s ease-out;
 }
 
@@ -18,7 +19,8 @@
 
 /* Isi modal */
 .body {
-  @apply pt-4 px-6 pb-6 text-gray-700 overflow-auto;
+  @apply pt-4 px-6 pb-6 text-gray-700;
+  /* Jangan pakai overflow di body agar tidak ada scroll internal */
 }
 
 /* Footer modal (opsional, bisa muncul kalau ada props.footer) */
