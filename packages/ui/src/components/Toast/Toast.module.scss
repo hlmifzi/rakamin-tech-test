@@ -1,0 +1,37 @@
+.container {
+  @apply fixed bottom-6 left-6;
+  @apply h-14 px-4;
+  @apply rounded-lg shadow-modal z-50;
+  @apply border-l-4;
+  @apply bg-white text-neutral-90;
+  @apply flex items-center justify-between gap-4;
+}
+
+.left {
+  @apply flex items-center gap-2;
+}
+
+.iconLeft {
+  @apply inline-flex items-center justify-center w-6 h-6;
+}
+
+.closeBtn {
+  @apply inline-flex items-center justify-center w-5 h-5 text-neutral-100;
+}
+
+/* Variants */
+.success {
+  @apply border-primary bg-neutral-10;
+}
+
+.danger {
+  @apply border-danger bg-neutral-10;
+}
+
+.iconSuccess {
+  @apply text-success;
+}
+
+.iconDanger {
+  @apply text-danger;
+}

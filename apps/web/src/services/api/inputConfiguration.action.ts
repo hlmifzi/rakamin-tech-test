@@ -4,6 +4,7 @@ import { supabase } from "@/lib/supabase";
 
 export enum ConfigurationType {
   JOB_CONFIGURATION = "JOB_CONFIGURATION",
+  JOB_TYPE_OPTIONS = "JOB_TYPE_OPTIONS",
 }
 
 type ApplicationFormField = {
@@ -30,6 +31,13 @@ type ConfigurationRow = {
   form_options: JobConfigurationFormOptions;
 };
 
+// Generic row type for mixed configurations (different form_options shapes)
+type ConfigurationRowAny = {
+  id: string;
+  type: string;
+  form_options: unknown;
+};
+
 export const getConfiguration = async (
   type: ConfigurationType
 ): Promise<ConfigurationRow | null> => {
@@ -49,4 +57,23 @@ export const getConfiguration = async (
 
   if (!data) return null;
   return data as ConfigurationRow;
+};
+
+// Fetch multiple configurations by type array
+export const getConfigurations = async (
+  types: ConfigurationType[]
+): Promise<ConfigurationRowAny[]> => {
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from("configurations")
+    .select("id, type, form_options")
+    .in("type", types);
+
+  if (error) {
+    console.error("Supabase getConfigurations error:", error.message);
+    return [];
+  }
+
+  return Array.isArray(data) ? (data as ConfigurationRowAny[]) : [];
 };

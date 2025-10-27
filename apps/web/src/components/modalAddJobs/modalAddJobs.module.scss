@@ -65,6 +65,12 @@
     }
 }
 
+.publishButton {
+    button {
+        @apply px-4 w-fit h-8;
+    }
+}
+
 .builderFormItemSetting {
     @apply flex gap-2;
 }

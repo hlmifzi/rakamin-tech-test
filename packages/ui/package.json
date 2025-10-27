@@ -50,6 +50,7 @@
     "@iconscout/react-unicons": "^2.2.5",
     "@iconscout/unicons": "^4.2.0",
     "@mediapipe/tasks-vision": "0.10.22-rc.20250304",
-    "antd": "^5.27.6"
+    "antd": "^5.27.6",
+    "framer-motion": "^12.23.24"
   }
 }

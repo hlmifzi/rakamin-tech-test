@@ -41,3 +41,7 @@ export type Job = {
   salary_min: number;
   salary_max: number;
 };
+
+// Job Type configuration payload
+export type JobTypeOption = { value: string; label: string };
+export type JobTypeOptionsPayload = { job_type_options: JobTypeOption[] };

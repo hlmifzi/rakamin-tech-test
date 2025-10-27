@@ -19,15 +19,15 @@ import {
 } from "@/types/type";
 
 import styles from "./modalAddJobs.module.scss";
+import { useToastStore } from "@/lib/store/toastStore";
 
-
-// types moved to '@/types/type'
 
 export interface ModalAddJobsProps {
   open: boolean;
   onClose: () => void;
   onConfirm?: () => void;
   configuration?: JobConfigurationFormOptions | null;
+  jobTypeOptions?: { value: string; label: string }[];
 }
 
 export function ModalAddJobs({
@@ -35,7 +35,9 @@ export function ModalAddJobs({
   onClose,
   onConfirm,
   configuration = null,
+  jobTypeOptions = [],
 }: ModalAddJobsProps) {
+  const showToast = useToastStore((s) => s.showToast);
   const dynamicKeys = (configuration?.application_form?.sections || [])
     .flatMap((section) => section.fields.map((f) => f.key));
 
@@ -49,13 +51,19 @@ export function ModalAddJobs({
     ...Object.fromEntries(dynamicKeys.map((k) => [k, ""]))
   };
 
-  const { control, handleSubmit, formState, setValue, unregister, clearErrors } = useForm<FormValues>({
+  const { control, handleSubmit, formState, setValue, unregister, clearErrors, reset } = useForm<FormValues>({
     defaultValues,
     mode: "onSubmit",
   });
 
   const { errors } = formState;
   const watchedValues = useWatch<FormValues>({ control });
+
+  const handleCloseModal = useCallback(() => {
+    // Bersihkan semua error saat modal ditutup
+    clearErrors();
+    onClose();
+  }, [clearErrors, onClose]);
 
   const asFormPrimitive = (v: unknown): string | number | undefined => {
     if (typeof v === "string" || typeof v === "number") return v;
@@ -105,22 +113,24 @@ export function ModalAddJobs({
       application_form: applicationFormBuilt,
     };
     console.log("[AddJob Submit Payload]", payload);
+    showToast("Job vacancy successfully created");
+    reset();
     onConfirm ? onConfirm() : onClose();
-  }, [applicationFormBuilt, onConfirm, onClose]);
+  }, [applicationFormBuilt, onConfirm, onClose, showToast, reset]);
 
   const onInvalid = useCallback(() => {
     scrollToFirstError(errors);
-  }, [errors]);
+    showToast("Submission failed. Please complete the form.", "danger");
+  }, [errors, showToast]);
 
-  
   return (
     <Modal
       open={open}
-      onClose={onClose}
+      onClose={handleCloseModal}
       title="Job Opening"
       className={styles.modalContainer}
       footer={
-        <div>
+        <div className={styles.publishButton}>
           <Button
             variant="primary"
             onClick={handleSubmit(onValid, onInvalid)}
@@ -149,7 +159,13 @@ export function ModalAddJobs({
             <Select
               label="Job Type"
               isMandatory
-              options={[{ value: "intern", label: "inter" }]}
+              options={jobTypeOptions?.length ? jobTypeOptions : [
+                { value: "full_time", label: "Full-time" },
+                { value: "contract", label: "Contract" },
+                { value: "part_time", label: "Part-time" },
+                { value: "internship", label: "Internship" },
+                { value: "freelance", label: "Freelance" },
+              ]}
               value={field.value}
               onChange={field.onChange}
               placeholder="Select job type"

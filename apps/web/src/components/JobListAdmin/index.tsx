@@ -6,6 +6,7 @@ import { TextInput, Button, Typography, EmptyState, Card, Badge, UilSearch } fro
 import { ModalAddJobs } from "@/components/modalAddJobs/ModalAddJobs";
 import { formatRupiah } from "@/lib/format";
 import styles from "./jobs.module.scss";
+import type { JobTypeOptionsPayload } from "@/types/type";
 
 type StrapiJob = {
   id: number | string;
@@ -28,6 +29,7 @@ type StrapiJob = {
 type Props = {
   jobs?: StrapiJob[];
   configuration?: JobConfigurationFormOptions | null;
+  options?: JobTypeOptionsPayload | null;
 };
 
 type ApplicationFormField = { key: string; validation: { required: boolean } };
@@ -35,7 +37,7 @@ type ApplicationFormSection = { title: string; fields: ApplicationFormField[] };
 type ApplicationForm = { sections: ApplicationFormSection[] };
 type JobConfigurationFormOptions = { application_form: ApplicationForm };
 
- export default function JobsPage({ jobs = [], configuration = null }: Props) {
+ export default function JobsPage({ jobs = [], configuration = null, options = null }: Props) {
    const [query, setQuery] = useState("");
 
   const [location] = useState("");
@@ -152,6 +154,7 @@ type JobConfigurationFormOptions = { application_form: ApplicationForm };
         onClose={() => setIsModalOpen(false)}
         onConfirm={() => setIsModalOpen(false)}
         configuration={configuration}
+        jobTypeOptions={options?.job_type_options ?? []}
       />
     </>
   );

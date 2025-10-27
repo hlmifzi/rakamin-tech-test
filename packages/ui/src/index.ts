@@ -21,3 +21,5 @@ export { DatePicker } from './components/DatePicker/DatePicker';
 export { UilSearch, UilAngleRight, UilLocationPoint, UilMoneyBill, UilArrowLeft, UilUpload, IconEmail, IconGoogle, IconSSOLogin } from './icons';
 // Skeleton
 export { Skeleton, SkeletonAvatar, SkeletonInput, SkeletonButton, SkeletonImage } from './components/Skeleton/Skeleton';
+// Toast
+export { Toast } from './components/Toast/Toast';
