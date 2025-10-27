@@ -6,6 +6,7 @@ import { Typography, Button } from "../../index";
 const meta: Meta<typeof Card> = {
   title: "Design System/Card",
   component: Card,
+  tags: ["autodocs"],
 };
 export default meta;
 

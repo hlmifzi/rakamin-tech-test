@@ -11,5 +11,7 @@ declare module '@iconscout/react-unicons' {
   export const UilMoneyBill: React.FC<UniconProps>;
   export const UilArrowLeft: React.FC<UniconProps>;
   export const UilUpload: React.FC<UniconProps>;
+  export const UilEye: React.FC<UniconProps>;
+  export const UilEyeSlash: React.FC<UniconProps>;
   // Add more icons here as needed; untyped icons will still work at runtime.
 }

@@ -8,6 +8,7 @@ const meta: Meta<typeof TakePictureInput> = {
   parameters: {
     layout: "centered",
   },
+  tags: ["autodocs"],
   args: {
     label: "Photo Profile",
     defaultImageSrc: "/candidate/default-picture.webp",

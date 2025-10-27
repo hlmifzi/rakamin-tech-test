@@ -5,6 +5,7 @@ import { Button } from "../Button/Button";
 const meta: Meta<typeof EmptyState> = {
   title: "Design System/EmptyState",
   component: EmptyState,
+  tags: ["autodocs"],
   args: {
     title: "No job openings available",
     description: "Create a job opening now and start the candidate process.",

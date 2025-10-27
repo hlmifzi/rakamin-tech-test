@@ -1,5 +1,5 @@
 .button {
-  @apply w-full inline-flex items-center justify-center rounded-md px-4 py-2 transition-colors duration-150 focus:outline-none focus:ring-0 focus:ring-offset-0 disabled:cursor-not-allowed select-none font-nunito font-bold text-[1rem] leading-[1.5rem] tracking-[0];
+  @apply w-full gap-[10px] inline-flex items-center justify-center rounded-md px-4 py-2 transition-colors duration-150 focus:outline-none focus:ring-0 focus:ring-offset-0 disabled:cursor-not-allowed select-none font-nunito font-bold text-[1rem] leading-[1.5rem] tracking-[0];
 }
 
 /* Rounded */
@@ -23,12 +23,12 @@
 
 /* Variants */
 .default {
-  @apply bg-white text-neutral-90 border border-neutral-40;
+  @apply bg-white text-neutral-100 border border-neutral-40;
 }
 .default:hover:not(:disabled),
 .default:focus:not(:disabled),
 .default:active:not(:disabled) {
-  @apply bg-white border-primary text-primary;
+  @apply bg-white shadow-blur;
 }
 
 .primary {
@@ -66,15 +66,6 @@
 .text:active:not(:disabled) {
   @apply bg-primary-surface bg-transparent;
 }
-
-/* Icons */
-.iconLeft {
-  @apply -ml-1 mr-2;
-}
-.iconRight {
-  @apply -mr-1 ml-2;
-}
-
 /* Loading */
 .loading {
   @apply animate-pulse;

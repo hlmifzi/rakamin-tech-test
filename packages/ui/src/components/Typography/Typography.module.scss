@@ -55,3 +55,7 @@
 .TextXLBold {
   @apply font-nunito font-bold text-[1.125rem] leading-[1.75rem] tracking-[0];
 }
+
+.spanSign {
+  @apply text-primary;
+}

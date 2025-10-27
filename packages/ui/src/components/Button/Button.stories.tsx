@@ -5,6 +5,7 @@ import { Button } from "./Button";
 const meta: Meta<typeof Button> = {
   title: "Design System/Button",
   component: Button,
+  tags: ["autodocs"],
   args: {
     children: "Button",
   },

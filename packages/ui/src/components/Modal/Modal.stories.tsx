@@ -6,6 +6,7 @@ import { Button } from "../Button/Button";
 const meta: Meta<typeof Modal> = {
   title: "Design System/Modal",
   component: Modal,
+  tags: ["autodocs"],
 };
 export default meta;
 

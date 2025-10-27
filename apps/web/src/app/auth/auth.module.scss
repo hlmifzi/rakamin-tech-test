@@ -1,0 +1,61 @@
+.root {
+  @apply flex pt-12 pb-[8.0625rem] items-center justify-center text-center;
+}
+
+.logoContainer {
+  @apply h-[50px] flex justify-start items-center mb-8;
+}
+
+.loginContainer {
+  @apply w-full h-fit max-w-[500px] ;
+}
+
+.loginCardTitle {
+  @apply flex flex-col gap-2 mb-4;
+}
+
+.loginCardContainer {
+  @apply relative text-left bg-white shadow-blur p-10;
+}
+
+.formGroup {
+  @apply w-full flex flex-col gap-2;
+}
+
+.formSubmit {
+  @apply w-full mt-4 h-10 rounded-lg bg-primary text-white font-semibold hover:bg-primary-hover transition-colors;
+}
+
+.spanSign {
+  @apply text-primary hover:text-primary-hover;
+}
+
+.form {
+  @apply w-full flex flex-col;
+}
+
+.spanSignForgot {
+  @apply text-primary hover:text-primary-hover text-right;
+
+  p {
+    @apply pb-4
+  }
+}
+
+.divider {
+  @apply relative w-full flex max-h-[18px] items-center justify-center gap-4 text-neutral-60 my-4;
+
+  p {
+    @apply bg-neutral-10 px-3 z-10 text-neutral-60;
+  }
+
+  &::before {
+    @apply absolute content-[''] w-full h-[1px] bg-neutral-60;
+  }
+}
+
+.ssoContainer {
+  @apply flex flex-col gap-4;
+}
+
+

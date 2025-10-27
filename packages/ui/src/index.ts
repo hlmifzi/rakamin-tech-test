@@ -15,5 +15,8 @@ export type { BadgeProps, BadgeVariant } from './components/Badge/Badge';
 export { Checkbox } from './components/Checkbox/Checkbox';
 export { Table } from './components/Table/Table';
 export { TakePictureInput } from './components/TakePictureInput/TakePictureInput';
+export { PasswordInput } from './components/PasswordInput/PasswordInput';
 // Icons
-export { UilSearch, UilAngleRight, UilLocationPoint, UilMoneyBill, UilArrowLeft, UilUpload } from './icons';
+export { UilSearch, UilAngleRight, UilLocationPoint, UilMoneyBill, UilArrowLeft, UilUpload, IconEmail, IconGoogle, IconSSOLogin } from './icons';
+// Skeleton
+export { Skeleton, SkeletonAvatar, SkeletonInput, SkeletonButton, SkeletonImage } from './components/Skeleton/Skeleton';

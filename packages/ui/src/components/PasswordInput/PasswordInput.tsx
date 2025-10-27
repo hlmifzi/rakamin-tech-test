@@ -1,9 +1,10 @@
 "use client";
-import React from "react";
-import styles from "./TextInput.module.scss";
+import React, { useState } from "react";
+import styles from "./PasswordInput.module.scss";
 import { Typography } from "../Typography/Typography";
+import { UilEye, UilEyeSlash } from "@iconscout/react-unicons";
 
-type TextInputProps = {
+export type PasswordInputProps = {
   label?: string;
   isMandatory?: boolean;
   placeholder?: string;
@@ -13,12 +14,9 @@ type TextInputProps = {
   name?: string;
   helperText?: string;
   disabled?: boolean;
-  addonBefore?: React.ReactNode;
-  addonAfter?: React.ReactNode;
-  type?: "text" | "email" | "password";
 };
 
-export const TextInput: React.FC<TextInputProps> = ({
+export const PasswordInput: React.FC<PasswordInputProps> = ({
   label,
   isMandatory,
   placeholder,
@@ -28,20 +26,11 @@ export const TextInput: React.FC<TextInputProps> = ({
   name,
   helperText,
   disabled,
-  addonBefore,
-  addonAfter,
-  ...props
 }) => {
+  const [visible, setVisible] = useState(false);
   const inputId = id || name || undefined;
-  const before = addonBefore;
-  const after = addonAfter;
-  const inputClasses = [
-    styles.input,
-    before ? styles.withAddonBefore : "",
-    after ? styles.withAddonAfter : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
+
+  const inputClasses = [styles.input, styles.withAddonAfter].join(" ");
 
   return (
     <div className={styles.wrapper}>
@@ -49,28 +38,36 @@ export const TextInput: React.FC<TextInputProps> = ({
         <label htmlFor={inputId} className={styles.label}>
           <Typography variant="TextSRegular">
             {label}
-            {isMandatory && (
-              <span className="text-danger">*</span>
-            )}
+            {isMandatory && <span className="text-danger">*</span>}
           </Typography>
         </label>
       )}
       <div className={styles.inputContainer}>
-        {before ? <span className={styles.addonBefore}>{before}</span> : null}
         <input
           id={inputId}
           name={name}
-          type="text"
+          type={visible ? "text" : "password"}
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
           placeholder={placeholder}
           className={inputClasses}
           disabled={disabled}
-          {...props}
+          autoComplete={name === "password" ? "current-password" : undefined}
         />
-        {after ? <span className={styles.addonAfter}>{after}</span> : null}
+        <span className={styles.addonAfter}>
+          <button
+            type="button"
+            aria-label={visible ? "Hide password" : "Show password"}
+            onClick={() => setVisible((v) => !v)}
+            className={styles.toggleButton}
+          >
+            {visible ? <UilEyeSlash size={20} /> : <UilEye size={20} />}
+          </button>
+        </span>
       </div>
       {helperText && <p className={styles.helper}>{helperText}</p>}
     </div>
   );
 };
+
+export default PasswordInput;

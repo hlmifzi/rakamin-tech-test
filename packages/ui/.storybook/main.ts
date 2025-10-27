@@ -10,6 +10,9 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@storybook/addon-docs"
   ],
+  docs: {
+    autodocs: true,
+  },
   viteFinal: async (config) => {
     return config;
   }

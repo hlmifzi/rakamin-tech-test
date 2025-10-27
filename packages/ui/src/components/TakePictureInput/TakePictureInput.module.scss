@@ -19,7 +19,7 @@
 }
 
 .uploadBtn {
-  @apply px-4 w-fit h-[32px] shadow-blur;
+  @apply px-4 w-fit h-[32px];
 
   span {
     @apply items-center flex gap-2;
@@ -29,14 +29,6 @@
   }
   p {
     @apply text-gray-900;
-  }
-
-  &:hover {
-    @apply text-primary;
-    svg,
-    p {
-      @apply text-primary;
-    }
   }
 }
 

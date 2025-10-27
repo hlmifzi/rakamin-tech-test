@@ -4,6 +4,7 @@
 .label {
   @apply text-sm font-medium text-neutral-90 mb-2;
 }
+
 .input {
   @apply w-full rounded-lg border-2 border-neutral-40 bg-white px-4 max-h-11 py-[.625rem] text-neutral-90 placeholder:text-neutral-60 shadow-sm outline-0 transition-colors duration-150 text-m-regular mb-4;
 }
@@ -16,17 +17,15 @@
 }
 // Addon wrappers
 .inputContainer {
-  @apply relative items-center;
+  @apply relative flex justify-center items-center;
+
+  svg {
+    @apply size-[20px] mt-[-1rem];
+  }
 }
 .addonBefore {
-  @apply absolute top-2 left-4 text-neutral-60;
+  @apply absolute left-4 text-neutral-60;
 }
 .addonAfter {
-  @apply absolute top-2 right-4 text-neutral-60;
-}
-.withAddonBefore {
-  @apply pl-10;
-}
-.withAddonAfter {
-  @apply pr-10;
+  @apply absolute right-4 text-neutral-60;
 }

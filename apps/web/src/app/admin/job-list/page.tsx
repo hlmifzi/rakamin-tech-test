@@ -1,11 +1,11 @@
 "use client";
 import { useMemo, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { TextInput, Button, Typography, EmptyState, Card, Badge, UilSearch } from "@rakamin/ui";
 import { ModalAddJobs } from "@/components/modalAddJobs/ModalAddJobs";
 import { formatRupiah } from "@/lib/format";
 import styles from "./jobs.module.scss";
-import Link from "next/link";
 
 const JOBS = [
   {
@@ -40,9 +40,6 @@ const JOBS = [
   },
 ];
 
-// ... existing code ...
-
-// Locations list removed to satisfy lint (unused constant)
 
  export default function JobsPage() {
    const [query, setQuery] = useState("");

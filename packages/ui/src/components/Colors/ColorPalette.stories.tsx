@@ -5,6 +5,7 @@ import { ColorPalette } from "./ColorPalette";
 const meta: Meta<typeof ColorPalette> = {
   title: "Design System/Colors",
   component: ColorPalette,
+  tags: ["autodocs"],
 };
 export default meta;
 

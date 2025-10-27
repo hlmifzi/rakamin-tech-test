@@ -16,6 +16,7 @@ interface RowData {
 const meta: Meta<typeof Table<RowData>> = {
   title: "Components/Table",
   component: Table<RowData>,
+  tags: ["autodocs"],
 };
 
 export default meta;
