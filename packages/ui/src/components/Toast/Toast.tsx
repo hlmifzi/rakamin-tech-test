@@ -9,13 +9,13 @@ export type ToastProps = {
   message: string;
   onClose?: () => void;
   className?: string;
-  variant?: "success" | "danger" | "default";
+  variant?: "success" | "danger" | "warning";
 };
 
 export const Toast: React.FC<ToastProps> = ({ message, onClose, className, variant = "success" }) => {
   const containerClasses = [
     styles.container,
-    variant === "success" ? styles.success : variant === "danger" ? styles.danger : "",
+    variant === "success" ? styles.success : variant === "danger" ? styles.danger : variant === "warning" ? styles.warning : "",
     className || "",
   ].filter(Boolean).join(" ");
 
@@ -31,8 +31,13 @@ export const Toast: React.FC<ToastProps> = ({ message, onClose, className, varia
       transition={{ duration: 0.25, ease: "easeOut" }}
     >
       <div className={styles.left}>
-        <span className={[styles.iconLeft, variant === "danger" ? styles.iconDanger : styles.iconSuccess].join(" ")}>
-          {variant === "danger" ? <UilExclamationTriangle size={24} /> : <UilCheckCircle size={24} />}
+        <span className={[
+          styles.iconLeft, 
+          variant === "danger" ? styles.iconDanger : variant === "warning" ? styles.iconWarning : styles.iconSuccess
+        ].join(" ")}>
+          {variant === "danger" ? <UilExclamationTriangle size={24} /> : 
+           variant === "warning" ? <UilExclamationTriangle size={24} /> : 
+           <UilCheckCircle size={24} />}
         </span>
         <Typography variant="TextMBold">{message}</Typography>
       </div>

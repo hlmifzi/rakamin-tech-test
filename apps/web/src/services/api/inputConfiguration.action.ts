@@ -1,6 +1,6 @@
 "use server";
 
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 
 export enum ConfigurationType {
   JOB_CONFIGURATION = "JOB_CONFIGURATION",
@@ -41,6 +41,8 @@ type ConfigurationRowAny = {
 export const getConfiguration = async (
   type: ConfigurationType
 ): Promise<ConfigurationRow | null> => {
+  const supabase = await createClient();
+
   if (!supabase) return null;
 
   const { data, error } = await supabase
@@ -63,6 +65,7 @@ export const getConfiguration = async (
 export const getConfigurations = async (
   types: ConfigurationType[]
 ): Promise<ConfigurationRowAny[]> => {
+  const supabase = await createClient();
   if (!supabase) return [];
 
   const { data, error } = await supabase

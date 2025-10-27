@@ -14,6 +14,8 @@ export { Badge } from './components/Badge/Badge';
 export type { BadgeProps, BadgeVariant } from './components/Badge/Badge';
 export { Checkbox } from './components/Checkbox/Checkbox';
 export { Table } from './components/Table/Table';
+export { SkeletonTable } from './components/SkeletonTable/SkeletonTable';
+export type { SkeletonTableProps, SkeletonTableColumn } from './components/SkeletonTable/SkeletonTable';
 export { TakePictureInput } from './components/TakePictureInput/TakePictureInput';
 export { PasswordInput } from './components/PasswordInput/PasswordInput';
 export { DatePicker } from './components/DatePicker/DatePicker';

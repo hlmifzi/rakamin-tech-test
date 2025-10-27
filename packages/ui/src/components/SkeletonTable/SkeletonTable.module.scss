@@ -1,0 +1,89 @@
+// Import all styles from Table.module.scss and add skeleton-specific styles
+.wrapper {
+  @apply border border-neutral-40 rounded-lg overflow-hidden;
+}
+
+.table {
+  @apply w-full border-collapse min-w-max;
+}
+
+.thead {
+  @apply bg-neutral-25;
+}
+
+.th {
+  @apply h-[72px] px-4 text-left border-b border-neutral-40;
+}
+
+.td {
+  @apply h-[56px] px-4 bg-neutral-10 whitespace-nowrap border-b border-neutral-40;
+}
+
+.sticky {
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  background: theme('colors.neutral.25');
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: -1px;
+    height: 100%;
+    box-shadow: 0px 4px 8px 0px #0000001A;
+    pointer-events: none;
+  }
+}
+
+.stickyRow {
+  @apply bg-neutral-10;
+  position: sticky;
+  left: 0;
+  z-index: 10;
+
+  &::after {
+    @apply absolute left-0 top-0 right-[-1px] h-full pointer-events-none;
+    content: "";
+    box-shadow: 0px 4px 8px 0px #0000001A;
+  }
+}
+
+.scrollX {
+  @apply overflow-x-auto p-6 pl-0 ml-6;
+}
+
+.stickyShadow {
+  // Same as sticky but with shadow
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  background: theme('colors.neutral.25');
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: -1px;
+    height: 100%;
+    box-shadow: 0px 4px 8px 0px #0000001A;
+    pointer-events: none;
+  }
+}
+
+.stickyShadowInner {
+  @apply relative;
+}
+
+// Skeleton-specific styles
+.skeletonHeader {
+  @apply h-4 bg-neutral-40 rounded animate-pulse;
+  width: 80%;
+}
+
+.skeletonCell {
+  @apply h-3 bg-neutral-30 rounded animate-pulse;
+  width: 90%;
+}
