@@ -56,7 +56,7 @@ export const Select: React.FC<SelectProps> = ({
         disabled={disabled}
         options={options}
         open={open}
-        onDropdownVisibleChange={(vis: boolean) => setOpen(vis)}
+        onOpenChange={(vis: boolean) => setOpen(vis)}
         suffixIcon={
           open ? (
             <UilAngleUp size={20} color="#1D1F20" />
