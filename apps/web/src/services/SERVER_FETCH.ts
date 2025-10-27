@@ -1,12 +1,13 @@
 "use server";
-import { FIVE_MINUTES } from "@/lib/constant";
+import { cookies } from "next/headers";
 import { sendLogError } from "./sendLogError";
-import { getCookies } from "@/lib/hooks/useCookiesServer";
 
 const UNAUTHORIZED_ERROR_CODE_STATUS = 401;
 
 const API_URL = process.env.STRAPI_API_URL;
+const API_TOKEN = process.env.STRAPI_API_TOKEN;
 const API_URL_FETCH = API_URL + "/api";
+const DEFAULT_REVALIDATE = 300; // 5 minutes
 
 type RequestCache =
   | "default"
@@ -17,58 +18,53 @@ type RequestCache =
   | "only-if-cached"
   | string;
 
+type QueryParams = Record<string, string | number | boolean | null | undefined>;
+
+type NextFetchOptions = RequestInit & {
+  next?: { tags?: string[]; revalidate?: number };
+  cache?: RequestCache;
+};
+
 type argsType = {
   tags?: string[];
   revalidate?: number;
   cache?: RequestCache;
   Authorization?: string;
-  query?: any;
+  query?: QueryParams;
 }[];
 
-const getOptions = (args: argsType, token?: string) => {
-  let next = {};
-  let cache = {};
-  let Authorization = {};
+const getOptions = (args: argsType, token?: string): NextFetchOptions => {
+  let next: NextFetchOptions["next"] = undefined;
+  let cache: Pick<NextFetchOptions, "cache"> = {};
+  let authHeader: Record<string, string> = {};
 
 
   if (args?.[0]?.tags || args?.[0]?.revalidate) {
     next = {
-      next: {
-        ...(args?.[0]?.tags && {
-          tags: args?.[0]?.tags,
-        }),
-        ...(args?.[0]?.revalidate && {
-          revalidate: args?.[0]?.revalidate,
-        }),
-      },
+      ...(args?.[0]?.tags && { tags: args?.[0]?.tags }),
+      ...(args?.[0]?.revalidate && { revalidate: args?.[0]?.revalidate }),
     };
   } else {
-    next = {
-      next: {
-        revalidate: FIVE_MINUTES
-      },
-    };
+    next = { revalidate: DEFAULT_REVALIDATE };
   }
 
   if (args?.[0]?.cache) {
     cache = {
-      cache: args?.[0]?.cache,
+      cache: args?.[0]?.cache || "cache",
     };
   }
 
   if (token) {
-    Authorization = {
-      Authorization: token ? `Bearer ${token}` : "",
-    };
+    authHeader = { Authorization: `Bearer ${token}` };
   }
 
-  const options: any = {
+  const options: NextFetchOptions = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      ...Authorization,
+      ...authHeader,
     },
-    ...next,
+    next,
     ...cache,
     credentials: "include",
   };
@@ -76,9 +72,13 @@ const getOptions = (args: argsType, token?: string) => {
   return options;
 };
 
+// const readCookieToken = (): string | undefined => cookies().get("accessToken")?.value;
+
 export const SERVER_FETCH = async (endPoint: string, ...args: argsType) => {
-  
-  const token = await getCookies("accessToken");
+  // Prefer cookie accessToken; fallback to STRAPI_API_TOKEN if provided
+  // const cookieToken = readCookieToken();
+  // const token = cookieToken || API_TOKEN || undefined;
+  const token = API_TOKEN || undefined;
   const options = getOptions(args, token);
   const searchParams = `${args[0]?.query ? `?${new URLSearchParams({ ...args[0]?.query }).toString()}` : ""}`;
 
@@ -113,18 +113,24 @@ export const SERVER_FETCH = async (endPoint: string, ...args: argsType) => {
         error: data?.error,
       };
     })
-    .catch((err: any) => {
+    .catch((err: unknown) => {
+      const errMessage =
+        typeof err === "string"
+          ? err
+          : err instanceof Error
+          ? err.message
+          : "Unknown error";
       sendLogError(
-        `Error API (GET) ${err}`,
+        `Error API (GET) ${errMessage}`,
         `searchParams: ${searchParams}`,
         API_URL,
         endPoint,
-        err,
+        errMessage,
       );
 
       return {
         data: null,
-        error: err || {
+        error: errMessage || {
           message: "Terjadi Kesalahan",
         },
       };

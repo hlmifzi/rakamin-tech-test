@@ -54,10 +54,10 @@
 }
 
 .builderFormItem {
-    @apply flex justify-between items-center h-[56px] px-2 border-b border-neutral-40;
+    @apply flex flex-col md:flex-row  justify-between items-start md:items-center h-[56px] px-2 border-b border-neutral-40;
 
     button {
-        @apply h-8 w-fit px-3;
+        @apply h-8 w-fit px-3 mb-2 md:mb-0;
     }
 }
 

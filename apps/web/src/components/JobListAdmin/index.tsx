@@ -7,55 +7,42 @@ import { ModalAddJobs } from "@/components/modalAddJobs/ModalAddJobs";
 import { formatRupiah } from "@/lib/format";
 import styles from "./jobs.module.scss";
 
-const JOBS = [
-  {
-    id: 1,
-    title: "Frontend Engineer",
-    company: "Rakamin",
-    location: "Jakarta",
-    status: "success",
-    min_salary: 7000000,
-    max_salary: 13000000,
-    status_label: "active"
-  },
-  {
-    id: 2,
-    title: "Backend Engineer",
-    company: "Tokopedia",
-    location: "Jakarta",
-    status: "danger",
-    min_salary: 7000000,
-    max_salary: 13000000,
-    status_label: "inactive"
-  },
-  {
-    id: 4,
-    title: "Mobile Developer",
-    company: "Traveloka",
-    location: "Jakarta",
-    status: "warning",
-    min_salary: 7000000,
-    max_salary: 13000000,
-    status_label: "draft"
-  },
-];
+type StrapiJob = {
+  id: number;
+  title: string;
+  status?: "active" | "inactive" | string;
+  location?: string; // optional field for filtering compatibility
+  salary_range?: {
+    min?: number;
+    max?: number;
+    display_text?: string;
+    currency?: string;
+  } | null;
+  list_card?: {
+    badge?: string;
+    started_on_text?: string;
+    cta?: string;
+  } | null;
+};
 
+type Props = {
+  jobs?: StrapiJob[];
+};
 
- export default function JobsPage() {
+ export default function JobsPage({ jobs = [] }: Props) {
    const [query, setQuery] = useState("");
 
   const [location] = useState("");
    const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filtered = useMemo(() => {
-    return JOBS.filter((job) => {
+    return jobs.filter((job) => {
       const matchesQuery =
-        job.title.toLowerCase().includes(query.toLowerCase()) ||
-        job.company.toLowerCase().includes(query.toLowerCase());
+        job.title?.toLowerCase().includes(query.toLowerCase());
       const matchesLocation = location ? job.location === location : true;
       return matchesQuery && matchesLocation;
     });
-  }, [query, location]);
+  }, [query, location, jobs]);
 
   return (
     <>
@@ -95,14 +82,14 @@ const JOBS = [
             filtered.map((job, index) => (
               <Card key={index}>
                 <div className={styles.badgeContainer}>
-                  <Badge variant={job?.status}>
+                  <Badge variant={job?.status === "active" ? "success" : job?.status === "inactive" ? "danger" : "warning"}>
                     <Typography className="rounded-lg" variant="TextMBold">
-                      {job?.status_label}
+                      {job?.list_card?.badge || job?.status || "status"}
                     </Typography>
                   </Badge>
                   <Badge>
                     <Typography variant="TextMRegular">
-                      started on 1 Oct 2025
+                      {job?.list_card?.started_on_text || "started on 1 Oct 2025"}
                     </Typography>
                   </Badge>
                 </div>
@@ -111,7 +98,7 @@ const JOBS = [
                     {job.title}
                   </Typography>
                   <Typography variant="TextLRegular" className="text-neutral-80">
-                    {formatRupiah(job.min_salary)} - {formatRupiah(job.max_salary)}
+                    {job?.salary_range?.display_text || `${formatRupiah(job?.salary_range?.min || 0)} - ${formatRupiah(job?.salary_range?.max || 0)}`}
                   </Typography>
                 </div>
 
