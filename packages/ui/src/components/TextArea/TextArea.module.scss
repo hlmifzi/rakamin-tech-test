@@ -6,4 +6,7 @@
 .textarea:hover, .textarea:focus { 
   @apply border-primary outline-0; 
 }
+.error {
+  @apply border-danger;
+}
 .helper { @apply text-xs text-neutral-60; }

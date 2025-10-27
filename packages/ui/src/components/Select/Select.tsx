@@ -21,6 +21,7 @@ type SelectProps = {
   name?: string;
   helperText?: string;
   disabled?: boolean;
+  isError?: boolean;
 };
 
 export const Select: React.FC<SelectProps> = ({
@@ -34,10 +35,11 @@ export const Select: React.FC<SelectProps> = ({
   name,
   helperText,
   disabled,
+  isError = false,
 }) => {
   const [open, setOpen] = useState(false);
   return (
-    <div className={styles.wrapper}>
+    <div className={[styles.wrapper, isError ? styles.error : ""].filter(Boolean).join(" ")}>
       {label && (
         <div className={styles.label}>
           <Typography variant="TextSRegular">

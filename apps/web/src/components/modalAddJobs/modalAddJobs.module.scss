@@ -54,7 +54,11 @@
 }
 
 .builderFormItem {
-    @apply flex flex-col md:flex-row  justify-between items-start md:items-center h-[56px] px-2 border-b border-neutral-40;
+    @apply flex flex-col md:flex-row justify-between items-start md:items-center h-[56px] px-2 border-b border-neutral-40;
+
+    &:last-child {
+        @apply border-b-0;
+    }
 
     button {
         @apply h-8 w-fit px-3 mb-2 md:mb-0;

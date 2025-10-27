@@ -16,6 +16,7 @@ type TextInputProps = {
   addonBefore?: React.ReactNode;
   addonAfter?: React.ReactNode;
   type?: "text" | "email" | "password";
+  isError?: boolean;
 };
 
 export const TextInput: React.FC<TextInputProps> = ({
@@ -30,6 +31,7 @@ export const TextInput: React.FC<TextInputProps> = ({
   disabled,
   addonBefore,
   addonAfter,
+  isError = false,
   ...props
 }) => {
   const inputId = id || name || undefined;
@@ -37,6 +39,7 @@ export const TextInput: React.FC<TextInputProps> = ({
   const after = addonAfter;
   const inputClasses = [
     styles.input,
+    isError ? styles.error : "",
     before ? styles.withAddonBefore : "",
     after ? styles.withAddonAfter : "",
   ]

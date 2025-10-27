@@ -31,6 +31,7 @@ export const JobsSkeleton: React.FC = () => {
         <div className="w-full flex flex-col items-start justify-start gap-6 z-10">
           <div className="w-full">
             <Skeleton active title={false} paragraph={{ rows: 1 }} />
+            <br />
             <Skeleton active title={false} paragraph={{ rows: 1 }} />
           </div>
           <SkeletonButton size="default" />

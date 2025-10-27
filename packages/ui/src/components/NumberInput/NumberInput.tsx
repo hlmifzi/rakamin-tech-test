@@ -18,6 +18,7 @@ type NumberInputProps = {
   step?: number;
   addonBefore?: React.ReactNode;
   addonAfter?: React.ReactNode;
+  isError?: boolean;
 };
 
 export const NumberInput: React.FC<NumberInputProps> = ({
@@ -35,6 +36,7 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   step,
   addonBefore,
   addonAfter,
+  isError = false,
   ...props
 }) => {
   const inputId = id || name || undefined;
@@ -42,6 +44,7 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   const after = addonAfter;
   const inputClasses = [
     styles.input,
+    isError ? styles.error : "",
     before ? styles.withAddonBefore : "",
     after ? styles.withAddonAfter : "",
   ]

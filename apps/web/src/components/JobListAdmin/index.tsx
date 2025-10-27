@@ -8,7 +8,7 @@ import { formatRupiah } from "@/lib/format";
 import styles from "./jobs.module.scss";
 
 type StrapiJob = {
-  id: number;
+  id: number | string;
   title: string;
   status?: "active" | "inactive" | string;
   location?: string; // optional field for filtering compatibility
@@ -27,9 +27,15 @@ type StrapiJob = {
 
 type Props = {
   jobs?: StrapiJob[];
+  configuration?: JobConfigurationFormOptions | null;
 };
 
- export default function JobsPage({ jobs = [] }: Props) {
+type ApplicationFormField = { key: string; validation: { required: boolean } };
+type ApplicationFormSection = { title: string; fields: ApplicationFormField[] };
+type ApplicationForm = { sections: ApplicationFormSection[] };
+type JobConfigurationFormOptions = { application_form: ApplicationForm };
+
+ export default function JobsPage({ jobs = [], configuration = null }: Props) {
    const [query, setQuery] = useState("");
 
   const [location] = useState("");
@@ -79,8 +85,8 @@ type Props = {
               }
             />
           ) : (
-            filtered.map((job, index) => (
-              <Card key={index}>
+            filtered.map((job) => (
+              <Card key={String(job.id)}>
                 <div className={styles.badgeContainer}>
                   <Badge variant={job?.status === "active" ? "success" : job?.status === "inactive" ? "danger" : "warning"}>
                     <Typography className="rounded-lg" variant="TextMBold">
@@ -145,6 +151,7 @@ type Props = {
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={() => setIsModalOpen(false)}
+        configuration={configuration}
       />
     </>
   );

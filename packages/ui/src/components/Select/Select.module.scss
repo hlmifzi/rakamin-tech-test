@@ -46,6 +46,12 @@
     @apply text-neutral-100 mt-[0px];
   }
 }
+.error {
+  /* Force red border on error state */
+  :global(.ant-select-selector) {
+    border: 2px solid #EF4444 !important;
+  }
+}
 .helper {
   @apply text-xs text-neutral-60;
 }

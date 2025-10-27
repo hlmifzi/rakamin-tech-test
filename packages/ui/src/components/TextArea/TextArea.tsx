@@ -14,6 +14,7 @@ type TextAreaProps = {
   helperText?: string;
   disabled?: boolean;
   rows?: number;
+  isError?: boolean;
 };
 
 export const TextArea: React.FC<TextAreaProps> = ({
@@ -27,6 +28,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
   helperText,
   disabled,
   rows = 4,
+  isError = false,
 }) => {
   const inputId = id || name || undefined;
   return (
@@ -47,7 +49,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
         value={value}
         onChange={(e) => onChange?.(e.target.value)}
         placeholder={placeholder}
-        className={styles.textarea}
+        className={[styles.textarea, isError ? styles.error : ""].filter(Boolean).join(" ")}
         disabled={disabled}
         rows={rows}
       />
