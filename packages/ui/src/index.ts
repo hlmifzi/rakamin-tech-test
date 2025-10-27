@@ -16,6 +16,7 @@ export { Checkbox } from './components/Checkbox/Checkbox';
 export { Table } from './components/Table/Table';
 export { TakePictureInput } from './components/TakePictureInput/TakePictureInput';
 export { PasswordInput } from './components/PasswordInput/PasswordInput';
+export { DatePicker } from './components/DatePicker/DatePicker';
 // Icons
 export { UilSearch, UilAngleRight, UilLocationPoint, UilMoneyBill, UilArrowLeft, UilUpload, IconEmail, IconGoogle, IconSSOLogin } from './icons';
 // Skeleton

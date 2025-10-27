@@ -7,6 +7,8 @@ declare module '@iconscout/react-unicons' {
   };
   export const UilSearch: React.FC<UniconProps>;
   export const UilAngleRight: React.FC<UniconProps>;
+  export const UilAngleDown: React.FC<UniconProps>;
+  export const UilAngleUp: React.FC<UniconProps>;
   export const UilLocationPoint: React.FC<UniconProps>;
   export const UilMoneyBill: React.FC<UniconProps>;
   export const UilArrowLeft: React.FC<UniconProps>;

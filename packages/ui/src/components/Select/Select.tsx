@@ -1,8 +1,9 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Select as AntSelect } from "antd";
 import styles from "./Select.module.scss";
 import { Typography } from "../Typography/Typography";
+import { UilAngleDown, UilAngleUp } from "@iconscout/react-unicons";
 
 type SelectOption = {
   value: string;
@@ -34,6 +35,7 @@ export const Select: React.FC<SelectProps> = ({
   helperText,
   disabled,
 }) => {
+  const [open, setOpen] = useState(false);
   return (
     <div className={styles.wrapper}>
       {label && (
@@ -53,6 +55,15 @@ export const Select: React.FC<SelectProps> = ({
         placeholder={placeholder}
         disabled={disabled}
         options={options}
+        open={open}
+        onDropdownVisibleChange={(vis: boolean) => setOpen(vis)}
+        suffixIcon={
+          open ? (
+            <UilAngleUp size={20} color="#1D1F20" />
+          ) : (
+            <UilAngleDown size={20} color="#1D1F20" />
+          )
+        }
         className={styles.select}
         style={{ width: '100%' }}
       />

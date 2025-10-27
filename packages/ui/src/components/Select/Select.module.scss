@@ -4,24 +4,46 @@
 .label {
   @apply text-sm font-medium text-neutral-90 mb-2;
 }
-.select { 
+.select {
   @apply mb-4;
-  
-  /* Override Ant Design Select styles */
-  [class*='.ant-select-selector'] {
-    @apply rounded-lg border-2 border-neutral-40 bg-black px-3 py-2 text-neutral-90 shadow-sm outline-0 transition-colors duration-150 text-m-regular;
-    height: auto !important;
-    min-height: 44px;
-  }
-  
-  :global(.ant-select-selector:hover),
-  :global(.ant-select-focused .ant-select-selector) {
-    @apply border-primary outline-0;
+
+  /* Container */
+  :global(.ant-select) {
     box-shadow: none !important;
   }
-  
+
+  /* Selector */
+  :global(.ant-select-selector) {
+    @apply w-full rounded-lg border-2 border-neutral-40 bg-neutral-20 px-3 py-2 text-neutral-90 shadow-sm outline-0 transition-colors duration-150 text-m-regular;
+    height: auto !important;
+    min-height: 44px;
+    border: 2px solid #E0E0E0 !important;
+  }
+
+  /* Hover/Focus/Open states */
+  :global(.ant-select:hover .ant-select-selector),
+  :global(.ant-select-selector:hover),
+  :global(.ant-select-focused .ant-select-selector),
+  :global(.ant-select-open .ant-select-selector) {
+    border: 1px solid #01959F !important;
+    box-shadow: none !important;
+    outline: none !important;
+    border-width: 2px !important; /* Keep 2px thickness on interaction states */
+  }
+
+  /* Placeholder */
   :global(.ant-select-selection-placeholder) {
     @apply text-neutral-60;
+  }
+
+  /* Selected item */
+  :global(.ant-select-selection-item) {
+    @apply text-neutral-90;
+  }
+
+  /* Arrow container */
+  :global(.ant-select-arrow) {
+    @apply text-neutral-100 mt-[0px];
   }
 }
 .helper {
