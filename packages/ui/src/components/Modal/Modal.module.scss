@@ -19,7 +19,7 @@
 
 /* Isi modal */
 .body {
-  @apply pt-4 px-6 pb-6 text-gray-700 overflow-y-auto overflow-x-hidden;
+  @apply pt-4 px-6 pb-6 text-gray-700 overflow-y-auto overflow-x-hidden pb-8;
   
   /* Jangan pakai overflow di body agar tidak ada scroll internal */
 }

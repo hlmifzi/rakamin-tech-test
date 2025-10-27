@@ -4,7 +4,7 @@
 .label {
   @apply text-sm font-medium text-neutral-90 mb-2;
 }
-.select {
+.searchSelect {
   @apply mb-4;
 
   /* Container */
@@ -16,20 +16,19 @@
   :global(.ant-select-selector) {
     @apply w-full rounded-lg border-2 border-neutral-40 bg-neutral-20 px-3 py-2 text-neutral-90 shadow-sm outline-0 transition-colors duration-150 text-m-regular;
     height: auto !important;
-    min-height: 44px;
+    min-height: 44px; /* height standard */
     box-shadow: none !important;
     border: 2px solid #E0E0E0 !important;
   }
 
-  /* Hover/Focus/Open states */
+  /* Hover/Focus/Open states: border primary */
   :global(.ant-select:hover .ant-select-selector),
   :global(.ant-select-selector:hover),
   :global(.ant-select-focused .ant-select-selector),
   :global(.ant-select-open .ant-select-selector) {
-    border: 1px solid #01959F !important;
+    border: 2px solid #01959F !important;
     box-shadow: none !important;
     outline: none !important;
-    border-width: 2px !important; /* Keep 2px thickness on interaction states */
   }
 
   /* Placeholder */
@@ -61,7 +60,6 @@
   }
 }
 .error {
-  /* Force red border on error state */
   :global(.ant-select-selector) {
     border: 2px solid #EF4444 !important;
   }

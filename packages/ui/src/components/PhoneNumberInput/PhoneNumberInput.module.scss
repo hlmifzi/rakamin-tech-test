@@ -1,0 +1,79 @@
+.wrapper {
+  @apply flex flex-col mb-4;
+}
+.label {
+  @apply text-sm font-medium text-neutral-90 mb-2;
+}
+.container {
+  @apply flex items-center rounded-lg border-2 border-neutral-40 bg-neutral-20 shadow-sm transition-colors duration-150;
+  min-height: 44px;
+  @apply relative; /* anchor dropdown positioning */
+}
+.container:hover,
+.container:focus-within {
+  @apply border-primary;
+}
+.error {
+  @apply border-danger;
+}
+.country {
+  @apply flex items-center gap-2 pl-3 pr-2 cursor-pointer select-none bg-transparent outline-0;
+}
+.chevron {
+  @apply text-neutral-100 ml-1;
+}
+.dropdown {
+  @apply absolute left-2 top-full mt-2 w-[320px] bg-white rounded-xl shadow-md border border-neutral-40 z-20;
+}
+.searchBox {
+  @apply flex items-center gap-2 px-4 pt-3 pb-2;
+}
+.searchIcon {
+  @apply text-neutral-100;
+}
+.searchInput {
+  @apply w-full rounded-lg border-2 border-neutral-40 bg-white px-4 py-2 text-neutral-90 placeholder:text-neutral-60 outline-0 transition-colors duration-150 text-m-regular;
+}
+.searchInput:hover,
+.searchInput:focus {
+  @apply border-primary;
+}
+.items {
+  @apply max-h-64 overflow-auto;
+}
+.item {
+  @apply flex items-center justify-between px-4 py-2 cursor-pointer transition-colors;
+}
+.item:hover,
+.item[aria-selected="true"] {
+  background-color: #F7FEFF; /* primary.surface */
+}
+.item:hover .countryName,
+.item:hover .dialCode,
+.item[aria-selected="true"] .countryName,
+.item[aria-selected="true"] .dialCode {
+  color: #01959F; /* primary */
+}
+.divider {
+  @apply h-6 border-r border-neutral-40 mx-2;
+}
+.input {
+  @apply flex-1 bg-transparent outline-0 text-neutral-90 placeholder:text-neutral-60 px-2 py-2 text-m-regular;
+}
+.helper {
+  @apply text-xs text-neutral-60 mt-1;
+}
+
+.optionRow {
+  @apply flex items-center justify-between w-full;
+}
+.flag {
+  @apply inline-flex items-center justify-center w-4 h-4 rounded-full bg-white;
+  /* Using emoji flags; can be replaced by SVGs later */
+}
+.countryName {
+  @apply text-neutral-90;
+}
+.dialCode {
+  @apply text-neutral-90;
+}

@@ -1,12 +1,16 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { TextInput, Button, Typography, EmptyState, Card, Badge, UilSearch } from "@rakamin/ui";
+import { TextInput, Button, Typography, EmptyState, Card, Badge, UilSearch, SkeletonTable, SkeletonInput } from "@rakamin/ui";
 import { ModalAddJobs } from "@/components/modalAddJobs/ModalAddJobs";
 import { formatRupiah } from "@/lib/format";
-import styles from "./jobs.module.scss";
 import type { JobTypeOptionsPayload } from "@/types/type";
+import { useRouter } from "next/navigation";
+import { JobListSkeleton } from "@/app/admin/job-list/loading";
+
+import styles from "./jobs.module.scss";
+import { useForm, Controller } from "react-hook-form";
 
 type StrapiJob = {
   id: number | string;
@@ -29,7 +33,8 @@ type StrapiJob = {
 type Props = {
   jobs?: StrapiJob[];
   configuration?: JobConfigurationFormOptions | null;
-  options?: JobTypeOptionsPayload | null;
+  jobTypeOptions?: JobTypeOptionsPayload | null;
+  initialQuery?: string;
 };
 
 type ApplicationFormField = { key: string; validation: { required: boolean } };
@@ -37,35 +42,62 @@ type ApplicationFormSection = { title: string; fields: ApplicationFormField[] };
 type ApplicationForm = { sections: ApplicationFormSection[] };
 type JobConfigurationFormOptions = { application_form: ApplicationForm };
 
- export default function JobsPage({ jobs = [], configuration = null, options = null }: Props) {
-   const [query, setQuery] = useState("");
+ type SearchForm = { search: string };
 
-  const [location] = useState("");
-   const [isModalOpen, setIsModalOpen] = useState(false);
+ export default function JobsPage({ jobs = [], configuration = null, jobTypeOptions = null, initialQuery = "" }: Props) {
+   const { control, handleSubmit } = useForm<SearchForm>({
+     defaultValues: { search: initialQuery || "" },
+   });
+   const [isSearching, setIsSearching] = useState(false);
+   const router = useRouter();
 
-  const filtered = useMemo(() => {
-    return jobs.filter((job) => {
-      const matchesQuery =
-        job.title?.toLowerCase().includes(query.toLowerCase());
-      const matchesLocation = location ? job.location === location : true;
-      return matchesQuery && matchesLocation;
-    });
-  }, [query, location, jobs]);
+  // Client no longer syncs query via effect; re-init handled by key
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const safeJobs = Array.isArray(jobs) ? jobs : [];
+
+  const handleSubmitSearch: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    handleSubmit(({ search }) => {
+      setIsSearching(true);
+      const q = (search || "").trim();
+      const url = q ? `/admin/job-list?search=${encodeURIComponent(q)}` : `/admin/job-list`;
+      router.push(url);
+    })();
+  };
 
   return (
     <>
-      <div className={styles.container}>
+      <div className={styles.container} key={initialQuery}>
         <div>
           <div className={styles.searchBar}>
-            <TextInput
-              placeholder="Search by job details"
-              value={query}
-              onChange={setQuery}
-              addonAfter={<UilSearch />}
-            />
+            <form onSubmit={handleSubmitSearch} key={initialQuery}>
+              <Controller
+                name="search"
+                control={control}
+                render={({ field }) => (
+                  <TextInput
+                    placeholder="Search by job details"
+                    value={field.value}
+                    onChange={field.onChange}
+                    addonAfter={
+                      <button type="submit" aria-label="Search">
+                        <UilSearch />
+                      </button>
+                    }
+                  />
+                )}
+              />
+            </form>
           </div>
 
-          {Boolean(!filtered.length) ? (
+          {isSearching ? (
+            <div className="p-6">
+              <div className="mb-6"><SkeletonInput className="w-12" /></div>
+              <JobListSkeleton />
+            </div>
+          ) : Boolean(!safeJobs.length) ? (
             <EmptyState
               icon={
                 <Image
@@ -87,7 +119,7 @@ type JobConfigurationFormOptions = { application_form: ApplicationForm };
               }
             />
           ) : (
-            filtered.map((job) => (
+            safeJobs.map((job) => (
               <Card key={String(job.id)}>
                 <div className={styles.badgeContainer}>
                   <Badge variant={job?.status === "active" ? "success" : job?.status === "inactive" ? "danger" : "warning"}>
@@ -154,7 +186,7 @@ type JobConfigurationFormOptions = { application_form: ApplicationForm };
         onClose={() => setIsModalOpen(false)}
         onConfirm={() => setIsModalOpen(false)}
         configuration={configuration}
-        jobTypeOptions={options?.job_type_options ?? []}
+        jobTypeOptions={jobTypeOptions?.job_type_options ?? []}
       />
     </>
   );

@@ -13,6 +13,7 @@ declare module '@iconscout/react-unicons' {
   export const UilMoneyBill: React.FC<UniconProps>;
   export const UilArrowLeft: React.FC<UniconProps>;
   export const UilUpload: React.FC<UniconProps>;
+  export const UilCalendar: React.FC<UniconProps>;
   export const UilEye: React.FC<UniconProps>;
   export const UilEyeSlash: React.FC<UniconProps>;
   export const UilCheckCircle: React.FC<UniconProps>;

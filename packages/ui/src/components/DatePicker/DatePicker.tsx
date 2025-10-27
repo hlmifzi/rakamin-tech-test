@@ -1,8 +1,9 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./DatePicker.module.scss";
 import { DatePicker as AntDatePicker } from "antd";
 import { Typography } from "../Typography/Typography";
+import { UilAngleDown, UilAngleUp } from "../../icons";
 
 export type DatePickerProps = {
   label?: string;
@@ -16,6 +17,8 @@ export type DatePickerProps = {
   helperText?: string;
   disabled?: boolean;
   className?: string;
+  /** kiri dalam input, default "/date.svg" dari app's public */
+  prefixIconSrc?: string;
 };
 
 export const DatePicker: React.FC<DatePickerProps> = ({
@@ -30,7 +33,9 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   helperText,
   disabled,
   className,
+  prefixIconSrc = "/date.svg",
 }) => {
+  const [open, setOpen] = useState(false);
   return (
     <div className={styles.wrapper}>
       {label && (
@@ -43,6 +48,10 @@ export const DatePicker: React.FC<DatePickerProps> = ({
       )}
 
       <div className={[styles.picker, className || ""].filter(Boolean).join(" ")}>
+        {/* Prefix icon inside input */}
+        <span className={styles.prefixIcon} aria-hidden="true">
+          <img src={prefixIconSrc} alt="" />
+        </span>
         <AntDatePicker
           id={id}
           name={name}
@@ -51,6 +60,13 @@ export const DatePicker: React.FC<DatePickerProps> = ({
           placeholder={placeholder}
           format={format}
           disabled={disabled}
+          open={open}
+          onOpenChange={(vis) => setOpen(!!vis)}
+          suffixIcon={open ? (
+            <UilAngleUp size={20} color="#1D1F20" />
+          ) : (
+            <UilAngleDown size={20} color="#1D1F20" />
+          )}
           style={{ width: "100%" }}
         />
       </div>

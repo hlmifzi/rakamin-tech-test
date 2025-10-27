@@ -1,6 +1,7 @@
 export { TextInput } from './components/TextInput/TextInput';
 export { NumberInput } from './components/NumberInput/NumberInput';
 export { Select } from './components/Select/Select';
+export { SearchSelect } from './components/SearchSelect/SearchSelect';
 export { TextArea } from './components/TextArea/TextArea';
 export { Button } from './components/Button/Button';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './components/Button/Button';
@@ -19,8 +20,9 @@ export type { SkeletonTableProps, SkeletonTableColumn } from './components/Skele
 export { TakePictureInput } from './components/TakePictureInput/TakePictureInput';
 export { PasswordInput } from './components/PasswordInput/PasswordInput';
 export { DatePicker } from './components/DatePicker/DatePicker';
+export { PhoneNumberInput } from './components/PhoneNumberInput/PhoneNumberInput';
 // Icons
-export { UilSearch, UilAngleRight, UilLocationPoint, UilMoneyBill, UilArrowLeft, UilUpload, IconEmail, IconGoogle, IconSSOLogin } from './icons';
+export { UilSearch, UilAngleRight, UilLocationPoint, UilMoneyBill, UilArrowLeft, UilUpload, UilCalendar, IconEmail, IconGoogle, IconSSOLogin } from './icons';
 // Skeleton
 export { Skeleton, SkeletonAvatar, SkeletonInput, SkeletonButton, SkeletonImage } from './components/Skeleton/Skeleton';
 // Toast

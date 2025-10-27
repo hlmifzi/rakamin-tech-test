@@ -1,6 +1,24 @@
 import React from "react";
 import { Skeleton, SkeletonInput, SkeletonButton } from "@rakamin/ui";
 
+export const JobListSkeleton = () => {
+  return (
+    <div className="flex flex-col gap-3">
+      {Array.from({ length: 3 }).map((_, idx) => (
+        <div key={idx} className="border border-neutral-50 rounded-xl p-4">
+          {/* Badge chips skeleton */}
+          <Skeleton />
+
+          {/* CTA button skeleton */}
+          <div className="flex justify-end mt-3">
+            <SkeletonButton size="small" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 export const JobsSkeleton: React.FC = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-[auto_18.75rem] gap-6 pt-3">
@@ -9,19 +27,7 @@ export const JobsSkeleton: React.FC = () => {
           <SkeletonInput size="large" />
         </div>
 
-        <div className="flex flex-col gap-3">
-          {Array.from({ length: 3 }).map((_, idx) => (
-            <div key={idx} className="border border-neutral-50 rounded-xl p-4">
-              {/* Badge chips skeleton */}
-              <Skeleton />
-
-              {/* CTA button skeleton */}
-              <div className="flex justify-end mt-3">
-                <SkeletonButton size="small" />
-              </div>
-            </div>
-          ))}
-        </div>
+        <JobListSkeleton />
       </div>
 
       <div className="relative col-start-1 md:col-start-2 overflow-hidden flex p-6 h-fit text-white rounded-2xl">

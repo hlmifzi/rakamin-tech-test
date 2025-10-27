@@ -6,10 +6,12 @@
 }
 .picker {
   @apply mb-2;
+  position: relative;
 
   :global(.ant-picker) {
     @apply w-full rounded-lg border-2 border-neutral-40 bg-neutral-20 px-3 py-2 text-neutral-90 shadow-sm outline-0 transition-colors duration-150;
     box-shadow: none !important;
+    padding-left: 40px; /* space for prefix icon */
   }
 
   :global(.ant-picker:hover),
@@ -20,6 +22,23 @@
 
   :global(.ant-picker-input > input::placeholder) {
     @apply text-neutral-60;
+  }
+
+  .prefixIcon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+
+    img {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
   }
 }
 .helper {

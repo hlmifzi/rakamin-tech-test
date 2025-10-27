@@ -6,11 +6,13 @@ import type { JobConfigurationFormOptions, JobTypeOptionsPayload } from "@/types
 
 export const revalidate = FIVE_MINUTES
 
-const JobListAdminPage = async () => {
-  const [jobs, configurations] = await Promise.all([
-    getJobs(),
+const JobListAdminPage = async ({ searchParams }: { searchParams?: { search?: string } }) => {
+  const search = searchParams?.search ?? "";
+  const [jobsResult, configurations] = await Promise.all([
+    getJobs({ page: 1, per: 100, sort_by: "created_at", sort_order: "desc", search }),
     getConfigurations([ConfigurationType.JOB_CONFIGURATION, ConfigurationType.JOB_TYPE_OPTIONS]),
   ]);
+  const jobs = jobsResult?.data ?? [];
 
   // Ambil konfigurasi application form dari hasil configurations
   const jobConfig = (configurations.find(c => c.type === ConfigurationType.JOB_CONFIGURATION)?.form_options || null) as JobConfigurationFormOptions | null;
@@ -18,10 +20,12 @@ const JobListAdminPage = async () => {
 
   return (
     <div>
-      <JobListAdmin 
-        jobs={jobs} 
-        configuration={jobConfig} 
-        options={jobTypeOptionsPayload}
+      <JobListAdmin
+        key={search}
+        jobs={jobs}
+        configuration={jobConfig}
+        jobTypeOptions={jobTypeOptionsPayload}
+        initialQuery={search}
       />
     </div>
   );
