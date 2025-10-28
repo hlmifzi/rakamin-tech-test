@@ -8,6 +8,7 @@ import {
   SearchSelect,
   DatePicker,
   PhoneNumberInput,
+  RadioGroup,
 } from "@rakamin/ui";
 import { useForm, Controller } from "react-hook-form";
 import styles from "./apply.module.scss";
@@ -70,6 +71,15 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
     const requiredPhoto = isRequired("photo_profile");
     form.register("photo", { required: requiredPhoto });
   }, [form, requiredKeys]);
+
+  // Adapter to satisfy UI component's FormAdapter signature without changing form behavior
+  const formAdapter = useMemo(() => ({
+    setValue: (name: string, value: unknown, options?: unknown) => {
+      // Bridge to react-hook-form typed key
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      form.setValue(name as keyof FormData, value as any, options as any);
+    },
+  }), [form]);
 
   const LABELS: Record<string, string> = {
     full_name: "Full Name",
@@ -191,7 +201,7 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
                   isMandatory={required}
                   isError={Boolean(errors.photo)}
                   defaultImageSrc="/candidate/default-picture.webp"
-                  form={form}
+                  form={formAdapter}
                   name="photo"
                   onCaptured={handlePhotoCapture}
                 />
@@ -222,40 +232,27 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
 
             if (key === "gender") {
               return (
-                <div key={key} className="mb-4">
-                  <div className="mb-2">
-                    <Typography variant="TextSRegular">
-                      {label} {required && <span className="text-danger">*</span>}
-                    </Typography>
-                  </div>
-                  <Controller
-                    name="pronoun"
-                    rules={{ required }}
-                    control={form.control}
-                    render={({ field }) => (
-                      <div className="flex items-center gap-4">
-                        <label className="flex items-center gap-[10px] cursor-pointer">
-                          <input type="radio" value="female" name={field.name} checked={field.value === "female"} onChange={() => field.onChange("female")} className="sr-only" />
-                          <span className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${field.value === "female" ? "border-primary" : "border-neutral-90"}`}>
-                            {field.value === "female" && (
-                              <span className="w-2.5 h-2.5 rounded-full bg-primary"></span>
-                            )}
-                          </span>
-                          <Typography variant="TextMRegular" className="text-neutral-90">She/her (Female)</Typography>
-                        </label>
-                        <label className="flex items-center gap-[10px] cursor-pointer">
-                          <input type="radio" value="male" name={field.name} checked={field.value === "male"} onChange={() => field.onChange("male")} className="sr-only" />
-                          <span className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${field.value === "male" ? "border-primary" : "border-neutral-90"}`}>
-                            {field.value === "male" && (
-                              <span className="w-2.5 h-2.5 rounded-full bg-primary"></span>
-                            )}
-                          </span>
-                          <Typography variant="TextMRegular" className="text-neutral-90">He/him (Male)</Typography>
-                        </label>
-                      </div>
-                    )}
-                  />
-                </div>
+                <Controller
+                  key={key}
+                  name="pronoun"
+                  rules={{ required }}
+                  control={form.control}
+                  render={({ field }) => (
+                    <RadioGroup
+                      label={label}
+                      isMandatory={required}
+                      name={field.name}
+                      options={[
+                        { label: "She/her (Female)", value: "female" },
+                        { label: "He/him (Male)", value: "male" },
+                      ]}
+                      value={field.value}
+                      onChange={field.onChange}
+                      error={Boolean(errors.pronoun)}
+                      helperText={Boolean(errors.pronoun) ? "* field pronoun is required" : undefined}
+                    />
+                  )}
+                />
               );
             }
 
@@ -294,7 +291,14 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
                 <Controller
                   key={key}
                   name="phoneNumber"
-                  rules={{ required }}
+                  rules={{
+                    required,
+                    validate: (v) => {
+                      const val = v ?? "";
+                      if (!val) return !required;
+                      return /^\d+$/.test(val);
+                    },
+                  }}
                   control={form.control}
                   render={({ field }) => (
                     <PhoneNumberInput
@@ -303,7 +307,8 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
                       value={field.value ?? ""}
                       onChange={(val) => {
                         if (typeof val === "string") {
-                          field.onChange(val);
+                          const sanitized = val.replace(/\D/g, "");
+                          field.onChange(sanitized);
                         }
                       }}
                       country={form.watch("phoneCountry")}

@@ -547,7 +547,7 @@ export const TakePictureInput = ({
       {label && (
         <Typography className={styles.label} variant="TextSBold">
           {label}
-          {isMandatory ? " *" : ""}
+          {isMandatory && <span className="text-danger">*</span>}
         </Typography>
       )}
 
