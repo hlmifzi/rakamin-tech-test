@@ -1,0 +1,45 @@
+.container {
+  @apply flex flex-col gap-2; // gap 8px
+}
+
+.labelRow {
+  @apply flex items-center gap-[6px];
+}
+
+.required {
+  @apply text-danger; // var(--danger, #EF4444)
+}
+
+.options {
+  @apply flex items-center gap-4; // gap 16px
+}
+
+.option {
+  @apply flex items-center gap-[10px] cursor-pointer;
+}
+
+.disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.radioOuter {
+  @apply relative w-5 h-5 rounded-full border-2 border-neutral-90 flex items-center justify-center;
+}
+
+.radioOuter::after {
+  content: "";
+  @apply absolute w-[10px] h-[10px] rounded-full bg-primary left-1/2 top-1/2 opacity-0;
+  transform: translate(-50%, -50%);
+}
+
+.option input:checked + .radioOuter {
+  @apply border-neutral-90; // aktif border warna netral
+}
+
+.option input:checked + .radioOuter::after {
+  @apply opacity-100;
+}
+
+.errorText {
+  @apply text-danger text-[12px];
+}

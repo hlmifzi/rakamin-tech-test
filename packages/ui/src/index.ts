@@ -21,6 +21,7 @@ export { TakePictureInput } from './components/TakePictureInput/TakePictureInput
 export { PasswordInput } from './components/PasswordInput/PasswordInput';
 export { DatePicker } from './components/DatePicker/DatePicker';
 export { PhoneNumberInput } from './components/PhoneNumberInput/IntlPhoneNumberInput';
+export { RadioGroup } from './components/RadioGroup/RadioGroup';
 // Icons
 export { UilSearch, UilAngleRight, UilLocationPoint, UilMoneyBill, UilArrowLeft, UilUpload, UilCalendar, IconEmail, IconGoogle, IconSSOLogin } from './icons';
 // Skeleton
