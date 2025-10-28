@@ -14,7 +14,7 @@ import styles from "./apply.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
-import { useTransition, useMemo } from "react";
+import { useTransition, useMemo, useEffect } from "react";
 import { useToastStore } from "@/lib/store/toastStore";
 import { scrollToFirstError } from "@/lib/hook/scrollToFirstError";
 import type { ApplicationForm } from "@/types/type";
@@ -64,6 +64,12 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
     flatFields.filter((f) => Boolean(f?.validation?.required)).map((f) => f.key)
   ), [flatFields]);
   const isRequired = (key: string) => requiredKeys.has(key);
+
+  // Register validation rule for photo so errors.photo works
+  useEffect(() => {
+    const requiredPhoto = isRequired("photo_profile");
+    form.register("photo", { required: requiredPhoto });
+  }, [form, requiredKeys]);
 
   const LABELS: Record<string, string> = {
     full_name: "Full Name",
@@ -181,7 +187,9 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
               return (
                 <TakePictureInput
                   key={key}
-                  label={`${label}${required ? " *" : ""}`}
+                  label={label}
+                  isMandatory={required}
+                  isError={Boolean(errors.photo)}
                   defaultImageSrc="/candidate/default-picture.webp"
                   form={form}
                   name="photo"
@@ -293,7 +301,11 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
                       label={label}
                       isMandatory={required}
                       value={field.value ?? ""}
-                      onChange={(val) => form.setValue("phoneNumber", val ?? "", { shouldDirty: true })}
+                      onChange={(val) => {
+                        if (typeof val === "string") {
+                          field.onChange(val);
+                        }
+                      }}
                       country={form.watch("phoneCountry")}
                       onCountryChange={(code) => form.setValue("phoneCountry", code)}
                       placeholder="Enter phone number"

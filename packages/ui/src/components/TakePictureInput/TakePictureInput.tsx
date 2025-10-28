@@ -7,6 +7,12 @@ import { UilUpload, UilAngleRight } from "../../icons";
 import { HandLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
 
 import styles from "./TakePictureInput.module.scss";
+import type { ReactNode } from "react";
+
+// Lightweight adapter to avoid coupling with react-hook-form in UI package
+type FormAdapter = {
+  setValue?: (name: string, value: unknown, options?: unknown) => void;
+};
 
 export type PoseIndicatorStatus = "neutral" | "correct" | "wrong";
 
@@ -131,6 +137,19 @@ const POSE_DEFINITIONS = {
 // urutan: 3 → 2 → 1
 const POSE_ORDER: (1 | 2 | 3)[] = [3, 2, 1];
 
+type TakePictureInputProps = {
+  label?: string;
+  defaultImageSrc?: string;
+  form?: FormAdapter;
+  name?: string;
+  onCaptured?: (dataUrl: string) => void;
+  descriptionImages?: string[];
+  arrowIcon?: ReactNode;
+  isMandatory?: boolean;
+  isError?: boolean;
+  errorMessage?: string;
+};
+
 export const TakePictureInput = ({
   label = "Photo Profile",
   defaultImageSrc = "/candidate/default-picture.webp",
@@ -143,7 +162,10 @@ export const TakePictureInput = ({
     "/component/takePictureInput/Open-Camera-1.webp",
   ],
   arrowIcon,
-}: any) => {
+  isMandatory = false,
+  isError = false,
+  errorMessage,
+}: TakePictureInputProps) => {
   const [open, setOpen] = useState(false);
   const [captured, setCaptured] = useState<string | null>(null);
 
@@ -522,7 +544,12 @@ export const TakePictureInput = ({
 
   return (
     <div className={styles.container}>
-      {label && <Typography className={styles.label} variant="TextSBold">{label}</Typography>}
+      {label && (
+        <Typography className={styles.label} variant="TextSBold">
+          {label}
+          {isMandatory ? " *" : ""}
+        </Typography>
+      )}
 
       <div className={`${styles.preview} ${captured ? styles.previewFilled : styles.previewEmpty}`}>
         <img src={captured || defaultImageSrc} alt="photo" width={128} height={128} />
@@ -532,6 +559,12 @@ export const TakePictureInput = ({
         <UilUpload />
         <Typography variant="TextMBold">Take a Picture</Typography>
       </Button>
+
+      {isError && (
+        <Typography variant="TextSRegular" className="text-danger mt-2">
+          {errorMessage ?? "* field photo is required"}
+        </Typography>
+      )}
 
       <Modal 
         open={open} 
