@@ -58,7 +58,11 @@
   @apply h-6 border-r border-neutral-40 mx-2;
 }
 .input {
-  @apply flex-1 bg-transparent outline-0 text-neutral-90 placeholder:text-neutral-60 px-2 py-2 text-m-regular;
+  @apply w-full rounded-lg border-2 border-neutral-40 bg-white px-4 max-h-11 py-[.625rem] text-neutral-90 placeholder:text-neutral-60 shadow-sm outline-0 transition-colors duration-150 text-m-regular;
+}
+.input:hover,
+.input:focus {
+  @apply border-primary outline-0;
 }
 .helper {
   @apply text-xs text-neutral-60 mt-1;
@@ -76,4 +80,32 @@
 }
 .dialCode {
   @apply text-neutral-90;
+}
+
+/* Overrides for intl-tel-input plugin classes */
+:global(.iti) {
+  width: 100%;
+  --iti-path-flags-1x: url('https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.2/build/img/flags.webp');
+  --iti-path-flags-2x: url('https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.2/build/img/flags@2x.webp');
+  --iti-path-globe-1x: url('https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.2/build/img/globe.webp');
+  --iti-path-globe-2x: url('https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.2/build/img/globe@2x.webp');
+}
+:global(.iti__flag) {
+  border-radius: 9999px;
+  border: 1px solid #E0E0E0; /* neutral-40 */
+}
+
+/* Dropdown list hover: use primary surface and text */
+:global(.iti__country) {
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+:global(.iti__country:hover),
+:global(.iti__country.iti__highlight) {
+  background-color: #F7FEFF; /* primary.surface */
+}
+:global(.iti__country:hover .iti__country-name),
+:global(.iti__country:hover .iti__dial-code),
+:global(.iti__country.iti__highlight .iti__country-name),
+:global(.iti__country.iti__highlight .iti__dial-code) {
+  color: #01959F; /* primary */
 }

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { PhoneNumberInput } from "./PhoneNumberInput";
+import { PhoneNumberInput } from "./IntlPhoneNumberInput";
 
 const meta: Meta<typeof PhoneNumberInput> = {
   title: "Inputs/PhoneNumberInput",

@@ -48,7 +48,7 @@ export const SearchSelect: React.FC<SearchSelectProps> = ({
         <div className={styles.label}>
           <Typography variant="TextSRegular">
             {label}
-            {isMandatory && <span className="text-danger ml-1">*</span>}
+            {isMandatory && <span className="text-danger">*</span>}
           </Typography>
         </div>
       )}

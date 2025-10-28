@@ -24,6 +24,8 @@ const AuthPage = () => {
             height={50}
             className={styles.image}
             priority
+            placeholder="blur"
+            blurDataURL="/tiny-blur.jpg"
           />
         </div>
         <div className={styles.loginCardContainer}>

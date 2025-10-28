@@ -45,7 +45,7 @@ export const Select: React.FC<SelectProps> = ({
           <Typography variant="TextSRegular">
             {label}
             {isMandatory && (
-              <span className="text-danger ml-1">*</span>
+              <span className="text-danger">*</span>
             )}
           </Typography>
         </div>

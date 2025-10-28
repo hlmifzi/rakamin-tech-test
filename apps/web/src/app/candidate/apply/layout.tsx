@@ -13,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
-        <div className="max-w-[1440px] bg-neutral-20 min-h-screen py-[50px] mx-auto flex justify-center">
+        <div className="max-w-[1440px] bg-neutral-20 min-h-screen py-0 md:py-[50px] mx-auto flex justify-center">
           {children}
         </div>
     </>

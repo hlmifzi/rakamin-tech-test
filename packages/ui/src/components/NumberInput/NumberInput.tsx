@@ -58,7 +58,7 @@ export const NumberInput: React.FC<NumberInputProps> = ({
           <Typography variant="TextSRegular">
             {label}
             {isMandatory && (
-              <span className="text-danger ml-1">*</span>
+              <span className="text-danger">*</span>
             )}
           </Typography>
         </label>

@@ -105,6 +105,8 @@ type JobConfigurationFormOptions = { application_form: ApplicationForm };
                   alt="Empty state artwork"
                   width={306}
                   height={300}
+                  placeholder="blur"
+                  blurDataURL="/tiny-blur.jpg"
                 />
               }
               title="No job openings available"
@@ -164,6 +166,8 @@ type JobConfigurationFormOptions = { application_form: ApplicationForm };
             quality={85}
             sizes="300px"
             className="object-cover"
+            placeholder="blur"
+            blurDataURL="/tiny-blur.jpg"
           />
           <div className={styles.ctaOverlay} />
           <div className={styles.ctaInnerText}>

@@ -35,6 +35,9 @@
   :global(.ant-select-selection-placeholder) {
     @apply text-neutral-60;
   }
+  :global(.ant-select-clear) {
+    @apply hidden;
+  }
 
   /* Selected item */
   :global(.ant-select-selection-item) {

@@ -25,6 +25,8 @@ const jobListPage = async () => {
                       alt="artwork"
                       width={100}
                       height={100}
+                      placeholder="blur"
+                      blurDataURL="/tiny-blur.jpg"
                     />
                     <Typography variant="TextLBold">UX Designer</Typography>
                     <Typography variant="TextMRegular">Rakamin</Typography>
@@ -52,6 +54,8 @@ const jobListPage = async () => {
                     alt="artwork"
                     width={100}
                     height={100}
+                    placeholder="blur"
+                    blurDataURL="/tiny-blur.jpg"
                   />
                   <Typography className={styles.jobType} variant="TextSBold">
                     Fulltime

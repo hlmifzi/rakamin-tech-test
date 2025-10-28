@@ -33,6 +33,8 @@ export function Navbar() {
               width={28}
               height={28}
               priority
+              placeholder="blur"
+              blurDataURL="/tiny-blur.jpg"
             />
           </nav>
         </div>

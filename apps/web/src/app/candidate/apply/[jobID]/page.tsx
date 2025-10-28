@@ -120,7 +120,7 @@ const ApplyPage = () => {
           <div className="mb-4">
             <div className="mb-2">
               <Typography variant="TextSRegular">
-                Pronoun (gender) <span className="text-danger ml-1">*</span>
+                Pronoun (gender) <span className="text-danger">*</span>
               </Typography>
             </div>
             <Controller
