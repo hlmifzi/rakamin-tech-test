@@ -1,9 +1,8 @@
 import ManageJobsPage from "@/components/ManageCandidate";
-import { FIVE_MINUTES } from "@/lib/constant";
 import { getCandidateByJobId } from "@/services/api/candidate.action";
 import { getJobById } from "@/services/api/job.action";
 
-export const revalidate = FIVE_MINUTES
+export const revalidate = 300;
 
 const ManageCandidatePage = async ({ params }: { params: { jobID: string } }) => {
   const { jobID } = await params;

@@ -1,12 +1,11 @@
 import JobListAdmin from "@/components/JobListAdmin";
-import { FIVE_MINUTES } from "@/lib/constant";
 import { getJobs, createJobs } from "@/services/api/job.action";
 import { getConfigurations, ConfigurationType } from "@/services/api/inputConfiguration.action";
 import { revalidatePath } from "next/cache";
 import type { ApplicationForm, CreateJobData } from "@/types/jobActionType";
 import type { JobConfigurationFormOptions, JobTypeOptionsPayload } from "@/types/type";
 
-export const revalidate = FIVE_MINUTES
+export const revalidate = 300;
 
 const JobListAdminPage = async ({ searchParams }: { searchParams?: { search?: string } }) => {
   const resolvedParams = await searchParams;

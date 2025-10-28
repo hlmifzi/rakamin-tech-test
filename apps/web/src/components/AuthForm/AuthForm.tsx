@@ -5,7 +5,7 @@ import Link from "next/link";
 import { TextInput, PasswordInput, Button, Typography, IconEmail, IconSSOLogin } from "@rakamin/ui";
 import { motion } from "framer-motion";
 import { useState, useTransition } from "react";
-import styles from "./auth.module.scss";
+import styles from "@/app/auth/auth.module.scss";
 
 export default function AuthForm({ jobID = "" }: { jobID?: string }) {
   const [submitting, setSubmitting] = useState(false);
