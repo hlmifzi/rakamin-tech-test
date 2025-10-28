@@ -17,5 +17,12 @@ export default async function ApplyPage({ params }: { params: { jobID: string } 
     revalidatePath(`/admin/job-list/manage-candidate/${jobID}`);
   }
 
-  return <ApplyForm jobID={jobID} jobTitle={job?.title || ""} onApply={onApply} />;
+  return (
+    <ApplyForm
+      jobID={jobID}
+      jobTitle={job?.title || ""}
+      applicationForm={job?.application_form || undefined}
+      onApply={onApply}
+    />
+  );
 }
