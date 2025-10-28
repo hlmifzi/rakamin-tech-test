@@ -6,6 +6,11 @@
     @apply border-neutral-40 cursor-pointer rounded-lg px-4 py-3 transition-all border-2 hover:border-primary hover:bg-primary-surface;
 }
 
+.cardBorderSelected {
+    @extend .cardBorder;
+    @apply border-primary bg-primary-surface;
+}
+
 .listJobContainer {
     @apply flex flex-col gap-4 max-h-[80vh] overflow-y-auto pr-5;
 }

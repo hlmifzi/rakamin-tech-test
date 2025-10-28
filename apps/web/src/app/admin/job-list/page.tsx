@@ -1,22 +1,32 @@
 import JobListAdmin from "@/components/JobListAdmin";
 import { FIVE_MINUTES } from "@/lib/constant";
-import { getJobs } from "@/services/api/job.action";
+import { getJobs, createJobs } from "@/services/api/job.action";
 import { getConfigurations, ConfigurationType } from "@/services/api/inputConfiguration.action";
+import { revalidatePath } from "next/cache";
+import type { ApplicationForm, CreateJobData } from "@/types/jobActionType";
 import type { JobConfigurationFormOptions, JobTypeOptionsPayload } from "@/types/type";
 
 export const revalidate = FIVE_MINUTES
 
 const JobListAdminPage = async ({ searchParams }: { searchParams?: { search?: string } }) => {
-  const search = searchParams?.search ?? "";
+  const resolvedParams = await searchParams;
+  const search = resolvedParams?.search ?? "";
+
   const [jobsResult, configurations] = await Promise.all([
     getJobs({ page: 1, per: 100, sort_by: "created_at", sort_order: "desc", search }),
     getConfigurations([ConfigurationType.JOB_CONFIGURATION, ConfigurationType.JOB_TYPE_OPTIONS]),
   ]);
   const jobs = jobsResult?.data ?? [];
 
-  // Ambil konfigurasi application form dari hasil configurations
   const jobConfig = (configurations.find(c => c.type === ConfigurationType.JOB_CONFIGURATION)?.form_options || null) as JobConfigurationFormOptions | null;
   const jobTypeOptionsPayload = (configurations.find(c => c.type === ConfigurationType.JOB_TYPE_OPTIONS)?.form_options || null) as JobTypeOptionsPayload | null;
+
+  const onCreateJob = async (payload: { data: CreateJobData; application_form?: ApplicationForm }) => {
+    "use server";
+    await createJobs(payload);
+    revalidatePath("/admin/job-list");
+    revalidatePath("/candidate/job-list");
+  };
 
   return (
     <div>
@@ -26,6 +36,7 @@ const JobListAdminPage = async ({ searchParams }: { searchParams?: { search?: st
         configuration={jobConfig}
         jobTypeOptions={jobTypeOptionsPayload}
         initialQuery={search}
+        onCreateJob={onCreateJob}
       />
     </div>
   );

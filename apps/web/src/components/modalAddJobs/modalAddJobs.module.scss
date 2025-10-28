@@ -1,14 +1,5 @@
 .salaryInputContainer {
-  @apply grid grid-cols-2 gap-12 relative;
-
-  [class*='input'] {
-
-    &::after {
-      content: "";
-      @apply absolute right-[-2rem] top-[20px] w-4 h-px bg-no-repeat bg-contain;
-      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="1" viewBox="0 0 16 1" fill="none"><line y1="0.5" x2="16" y2="0.5" stroke="%23E0E0E0"/></svg>');
-    }
-  }
+  @apply grid grid-cols-2 gap-6;
 }
 
 

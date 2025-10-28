@@ -1,50 +1,13 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-
-type ApplicationFormField = {
-  key: string;
-  validation: { required: boolean };
-};
-
-type ApplicationFormSection = {
-  title: string;
-  fields: ApplicationFormField[];
-};
-
-type ApplicationForm = {
-  sections: ApplicationFormSection[];
-};
-
-type JobRow = {
-  id: string;
-  slug: string;
-  title: string;
-  status: "active" | "inactive" | string;
-  salary_range: {
-    min: number;
-    max: number;
-    currency: string;
-    display_text: string;
-  };
-  list_card?: {
-    badge?: string;
-    started_on_text?: string;
-    cta?: string;
-  } | null;
-  application_form?: ApplicationForm | null;
-};
-
-
-type JobQueryOptions = {
-  page?: number;
-  per?: number;
-  offset?: number;
-  sort_by?: string;
-  sort_order?: "asc" | "desc";
-  search?: string;
-  filters?: Record<string, string | number | boolean | null | undefined>;
-};
+import { createAdminClient } from "@/lib/supabase/admin";
+import type {
+  ApplicationForm,
+  JobRow,
+  JobQueryOptions,
+  CreateJobData,
+} from "@/types/jobActionType";
 
 export const getJobs = async (options: JobQueryOptions = {}) => {
   const {
@@ -105,6 +68,8 @@ export const getJobs = async (options: JobQueryOptions = {}) => {
       `title.ilike.${like}`,
       `slug.ilike.${like}`,
       `status.ilike.${like}`,
+      `description.ilike.${like}`,
+      `type.ilike.${like}`,
     ].join(","));
   }
 
@@ -171,7 +136,7 @@ export const getJobBySlug = async (slug: string): Promise<JobRow | null> => {
 
   const { data, error } = await supabase
     .from("jobs")
-    .select("id, slug, title, status, salary_range, list_card")
+    .select("id, slug, title, description, type, status, salary_range, list_card")
     .eq("slug", slug)
     .limit(1)
     .maybeSingle();
@@ -194,21 +159,11 @@ export const getJobBySlug = async (slug: string): Promise<JobRow | null> => {
   };
 };
 
-// ---------- Create Jobs ----------
-type CreateJobData = {
-  title: string;
-  type?: string;
-  description?: string;
-  candidate_needed?: number;
-  salary_min?: number;
-  salary_max?: number;
-};
-
 export const createJobs = async (
   payload: { data: CreateJobData; application_form?: ApplicationForm }
 ) => {
-  const supabase = await createClient();
-  if (!supabase) return null;
+  // Use admin client to bypass RLS for controlled server-side insertion
+  const supabase = await createAdminClient();
 
   const { data } = payload;
 
@@ -245,6 +200,9 @@ export const createJobs = async (
       id,
       slug,
       title: data.title,
+      type: data.type ?? null,
+      description: data.description ?? null,
+      candidate_needed: data.candidate_needed ?? null,
       status: "active",
       salary_range,
       list_card,
@@ -257,7 +215,7 @@ export const createJobs = async (
 
   if (error) {
     console.error("Supabase createJobs error:", error.message);
-    return null;
+    throw new Error(error.message || "Failed to insert job");
   }
 
   const row = Array.isArray(inserted) ? (inserted[0] as JobRow) : (inserted as unknown as JobRow);

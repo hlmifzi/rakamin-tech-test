@@ -1,11 +1,12 @@
 "use client";
-import { useState } from "react";
+ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { TextInput, Button, Typography, EmptyState, Card, Badge, UilSearch, SkeletonTable, SkeletonInput } from "@rakamin/ui";
 import { ModalAddJobs } from "@/components/modalAddJobs/ModalAddJobs";
 import { formatRupiah } from "@/lib/format";
 import type { JobTypeOptionsPayload } from "@/types/type";
+import type { CreateJobData } from "@/types/jobActionType";
 import { useRouter } from "next/navigation";
 import { JobListSkeleton } from "@/app/admin/job-list/loading";
 
@@ -35,6 +36,7 @@ type Props = {
   configuration?: JobConfigurationFormOptions | null;
   jobTypeOptions?: JobTypeOptionsPayload | null;
   initialQuery?: string;
+  onCreateJob?: (payload: { data: CreateJobData; application_form?: ApplicationForm }) => Promise<void>;
 };
 
 type ApplicationFormField = { key: string; validation: { required: boolean } };
@@ -44,7 +46,7 @@ type JobConfigurationFormOptions = { application_form: ApplicationForm };
 
  type SearchForm = { search: string };
 
- export default function JobsPage({ jobs = [], configuration = null, jobTypeOptions = null, initialQuery = "" }: Props) {
+ export default function JobsPage({ jobs = [], configuration = null, jobTypeOptions = null, initialQuery = "", onCreateJob }: Props) {
    const { control, handleSubmit } = useForm<SearchForm>({
      defaultValues: { search: initialQuery || "" },
    });
@@ -60,12 +62,28 @@ type JobConfigurationFormOptions = { application_form: ApplicationForm };
   const handleSubmitSearch: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     handleSubmit(({ search }) => {
-      setIsSearching(true);
       const q = (search || "").trim();
+      const prev = (initialQuery || "").trim();
       const url = q ? `/admin/job-list?search=${encodeURIComponent(q)}` : `/admin/job-list`;
+
+      // Jika query sama dengan yang sudah aktif, jangan tahan skeleton
+      if (q === prev) {
+        router.replace(url);
+        setIsSearching(false);
+        return;
+      }
+
+      // Tampilkan skeleton saat navigasi ke query baru
+      setIsSearching(true);
       router.push(url);
     })();
   };
+
+  // Reset skeleton setelah server-side render selesai (ketika initialQuery berubah)
+  useEffect(() => {
+    setIsSearching(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialQuery]);
 
   return (
     <>
@@ -148,7 +166,7 @@ type JobConfigurationFormOptions = { application_form: ApplicationForm };
                   <Link href={`/admin/job-list/manage-candidate/${job.id}`}>
                     <Button variant="primary">
                       <Typography variant="TextSBold">
-                        Manage Job
+                        {job?.list_card?.cta || "Manage Job"}
                       </Typography> 
                     </Button>
                   </Link>
@@ -191,6 +209,7 @@ type JobConfigurationFormOptions = { application_form: ApplicationForm };
         onConfirm={() => setIsModalOpen(false)}
         configuration={configuration}
         jobTypeOptions={jobTypeOptions?.job_type_options ?? []}
+        onCreate={onCreateJob}
       />
     </>
   );

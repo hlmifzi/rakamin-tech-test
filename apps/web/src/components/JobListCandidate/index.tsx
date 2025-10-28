@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import styles from "./jobList.module.scss";
 import {
@@ -10,7 +11,7 @@ import {
 } from "@rakamin/ui";
 import Link from "next/link";
 import { useMemo } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type JobType = {
   id: number | string;
@@ -41,20 +42,30 @@ type JobListCandidateType = {
 
 const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail }: JobListCandidateType) => {
   const safeJobs = Array.isArray(jobs) ? jobs : [];
+  const params = useSearchParams();
+  const currentSlug = params.get("slug") || selectedSlug || "";
   const router = useRouter();
 
-  // Derive selected index from slug (fallback to first item)
   const selectedIndex = useMemo(() => {
     if (!safeJobs.length) return -1;
-    if (selectedSlug) {
+
+    if (selectedJobDetail) {
+      const byId = safeJobs.findIndex((j) => String(j.id) === String(selectedJobDetail.id));
+      if (byId >= 0) return byId;
+      const bySlug = safeJobs.findIndex((j) => (j?.slug ?? String(j.id)) === (selectedJobDetail?.slug ?? String(selectedJobDetail.id)));
+      if (bySlug >= 0) return bySlug;
+    }
+
+    if (currentSlug) {
       const idx = safeJobs.findIndex((j) => {
         const jobSlug = j?.slug ?? String(j.id);
-        return jobSlug === selectedSlug;
+        return jobSlug === currentSlug;
       });
       if (idx >= 0) return idx;
     }
+
     return 0;
-  }, [safeJobs, selectedSlug]);
+  }, [safeJobs, currentSlug, selectedJobDetail]);
 
   const selectedJob = useMemo(() => {
     if (selectedJobDetail) return selectedJobDetail;
@@ -62,15 +73,15 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail }: J
   }, [safeJobs, selectedIndex, selectedJobDetail]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.inner}>
+    <div className={styles.container} key={currentSlug || String(selectedJobDetail?.id || "")}>
+      <div className={styles.inner} key={currentSlug || String(selectedJobDetail?.id || "")}>
         {safeJobs.length > 0 ? (
           <>
             <div className={styles.listJobContainer}>
               {safeJobs.map((job, index) => (
                 <div
                   key={String(job.id) || index}
-                  className={`${styles.cardBorder} ${index === selectedIndex ? 'border border-primary bg-primary-surface' : ''}`}
+                  className={`${index === selectedIndex ? styles.cardBorderSelected : styles.cardBorder}`}
                   onClick={() => {
                     const slug = job.slug ? String(job.slug) : String(job.id);
                     // Push query param to trigger server fetch and show skeleton

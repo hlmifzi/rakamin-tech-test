@@ -5,7 +5,7 @@ export default function Loading() {
     <div className="p-6">
       {/* Header dengan skeleton input */}
       <div className="mb-6">
-        <SkeletonInput className="w-12" />
+        <SkeletonInput/>
       </div>
       
       {/* Skeleton table dengan many rows */}
