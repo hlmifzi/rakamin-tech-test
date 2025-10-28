@@ -13,7 +13,7 @@ const JobListAdminPage = async ({ searchParams }: { searchParams?: { search?: st
   const search = resolvedParams?.search ?? "";
 
   const [jobsResult, configurations] = await Promise.all([
-    getJobs({ page: 1, per: 100, sort_by: "created_at", sort_order: "desc", search }),
+    getJobs({ page: 1, per: 10, sort_by: "created_at", sort_order: "desc", search }),
     getConfigurations([ConfigurationType.JOB_CONFIGURATION, ConfigurationType.JOB_TYPE_OPTIONS]),
   ]);
   const jobs = jobsResult?.data ?? [];

@@ -140,7 +140,7 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail, use
                   {selectedJob && (
                     <>
                       <Typography className={styles.jobType} variant="TextSBold">
-                        {selectedJob?.type || "Full-time"}
+                        {selectedJob?.type?.replaceAll("_", " ") || "Full-time"}
                       </Typography>
                       <Typography variant="TextLBold">{selectedJob.title}</Typography>
                       <Typography variant="TextMRegular">Rakamin</Typography>

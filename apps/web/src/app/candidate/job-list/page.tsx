@@ -12,7 +12,7 @@ const JobListCandidatePage = async ({ searchParams }: { searchParams?: SearchPar
   const slug = searchParams?.slug || "";
 
   const [jobsResult, selectedJob] = await Promise.all([
-    getJobs({ page: 1, per: 100, sort_by: "created_at", sort_order: "desc" }),
+    getJobs({ page: 1, per: 10, sort_by: "created_at", sort_order: "desc" }),
     slug ? getJobBySlug(slug) : Promise.resolve(null),
   ]);
 
