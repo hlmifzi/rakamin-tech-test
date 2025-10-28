@@ -6,8 +6,8 @@ import styles from "./Modal.module.scss";
 export interface ModalProps {
   open: boolean;
   onClose: () => void;
-  title?: string;
-  subtitle?: string;
+  title?: string | React.ReactNode;
+  subtitle?: string | React.ReactNode;
   children?: React.ReactNode;
   footer?: React.ReactNode;
   closeOnOverlay?: boolean;

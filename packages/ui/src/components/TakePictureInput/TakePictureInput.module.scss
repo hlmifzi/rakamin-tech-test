@@ -2,6 +2,18 @@
   @apply mb-4;
 }
 
+.descriptionContainer {
+  @apply flex items-center justify-center gap-2;
+}
+
+.poseImage {
+  @apply rounded-lg border-2 border-transparent w-[58px] h-[58px];
+}
+
+.poseImage.completed {
+  @apply border-green-500;
+}
+
 .label {
   @apply text-sm font-medium text-neutral-90 mb-2;
 }
@@ -33,11 +45,15 @@
 }
 
 .modalContent {
-  @apply flex flex-col gap-4;
+  @apply flex flex-col py-2 gap-4 w-[589px] max-w-[calc(100vw-4rem)];
+}
+
+.countdownText {
+  @apply text-white;
 }
 
 .videoContainer {
-  @apply relative w-full h-[400px] bg-black rounded-lg overflow-hidden flex items-center justify-center;
+  @apply relative w-full h-[400px] bg-black overflow-hidden flex items-center justify-center;
 }
 
 .video {
@@ -82,5 +98,9 @@
 }
 
 .actions {
-  @apply flex justify-end gap-2;
+  @apply flex justify-center gap-2;
+
+  button {
+    @apply h-8 w-fit text-center;
+  }
 }

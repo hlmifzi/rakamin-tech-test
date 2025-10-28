@@ -1,10 +1,11 @@
 "use client";
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, Fragment } from "react";
 import { Button } from "../Button/Button";
 import { Modal } from "../Modal/Modal";
 import { Typography } from "../Typography/Typography";
-import { UilUpload } from "../../icons";
+import { UilUpload, UilAngleRight } from "../../icons";
 import { HandLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
+
 import styles from "./TakePictureInput.module.scss";
 
 export type PoseIndicatorStatus = "neutral" | "correct" | "wrong";
@@ -15,6 +16,62 @@ interface HandLandmark {
   z: number;
 }
 
+// Canvas helpers for styled detection box and label tag
+const drawRoundedRect = (
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  r: number
+) => {
+  const radius = Math.max(0, Math.min(r, Math.min(w, h) / 2));
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + w - radius, y);
+  ctx.arcTo(x + w, y, x + w, y + radius, radius);
+  ctx.lineTo(x + w, y + h - radius);
+  ctx.arcTo(x + w, y + h, x + w - radius, y + h, radius);
+  ctx.lineTo(x + radius, y + h);
+  ctx.arcTo(x, y + h, x, y + h - radius, radius);
+  ctx.lineTo(x, y + radius);
+  ctx.arcTo(x, y, x + radius, y, radius);
+  ctx.closePath();
+};
+
+const drawLabelTag = (
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  x: number,
+  y: number,
+  color: string
+) => {
+  ctx.save();
+  ctx.font = "bold 22px Nunito, sans-serif";
+  const metrics = ctx.measureText(text);
+  const paddingX = 12;
+  const paddingY = 8;
+  const labelW = metrics.width + paddingX * 2;
+  const labelH = 30; // approximate height for 22px font
+  const radius = 8;
+
+  // Ensure label stays in canvas bounds
+  const clampedX = Math.max(8, Math.min(x, ctx.canvas.width - labelW - 8));
+  const clampedY = Math.max(8, Math.min(y, ctx.canvas.height - labelH - 8));
+
+  // Draw label background
+  ctx.fillStyle = color;
+  drawRoundedRect(ctx, clampedX, clampedY, labelW, labelH, radius);
+  ctx.fill();
+
+  // Hapus tab aksen di sisi kiri agar label bersih
+
+  // Draw label text
+  ctx.fillStyle = "#ffffff";
+  ctx.textBaseline = "middle";
+  ctx.fillText(text, clampedX + paddingX, clampedY + labelH / 2);
+  ctx.restore();
+};
 // Tambahkan util untuk cek orientasi telapak tangan
 const isPalmFacingCamera = (lm: HandLandmark[]): boolean => {
   if (!lm || lm.length < 18) return false;
@@ -80,6 +137,12 @@ export const TakePictureInput = ({
   form,
   name = "photo",
   onCaptured,
+  descriptionImages = [
+    "/component/takePictureInput/Open-Camera-3.webp",
+    "/component/takePictureInput/Open-Camera-2.webp",
+    "/component/takePictureInput/Open-Camera-1.webp",
+  ],
+  arrowIcon,
 }: any) => {
   const [open, setOpen] = useState(false);
   const [captured, setCaptured] = useState<string | null>(null);
@@ -256,12 +319,17 @@ export const TakePictureInput = ({
           lastCorrectTsRef.current = performance.now();
         }
 
-        ctx.lineWidth = 5;
-        ctx.strokeStyle = isCorrect ? "#22c55e" : "#ef4444";
+        const borderColor = isCorrect ? "#22c55e" : "#ef4444";
+        ctx.lineWidth = 6;
+        ctx.strokeStyle = borderColor;
+        ctx.lineJoin = "miter"; // sudut tajam, tanpa radius
         ctx.strokeRect(rectX, rectY, rectW, rectH);
-        ctx.font = "bold 22px Nunito, sans-serif";
-        ctx.fillStyle = isCorrect ? "#22c55e" : "#ef4444";
-        ctx.fillText(isCorrect ? "Detected" : "Undetected", xMin, yMin - 10);
+
+        // Label kiri-atas dengan margin-bottom negatif ~1rem agar sedikit overlap
+        const labelText = isCorrect ? "Detected" : "Undetected";
+        const approxLabelH = 30;
+        const labelY = rectY - approxLabelH + 16; // -1rem overlap
+        drawLabelTag(ctx, labelText, rectX + 12, labelY, borderColor);
 
         const now = performance.now();
         if (!isCorrect && lastCorrectRectRef.current && now - lastCorrectTsRef.current < 160) {
@@ -271,9 +339,7 @@ export const TakePictureInput = ({
           ctx.strokeRect(r.x, r.y, r.width, r.height);
         }
 
-        ctx.font = "bold 26px Nunito, sans-serif";
-        ctx.fillStyle = "#22c55e";
-        ctx.fillText(`Pose ${currentPoseLocal}`, 10, 40);
+        // Hapus tulisan "Pose X" di kanvas; urutan pose sudah dijelaskan di bawah
 
         if (stageRef.current === "pose") {
           const nowTs = performance.now();
@@ -293,6 +359,12 @@ export const TakePictureInput = ({
                 });
                 setPoseStatus("neutral");
               } else {
+                // Final pose completed: mark all steps as completed for UI (green borders)
+                setProgressIdx(() => {
+                  const next = descriptionImages.length;
+                  progressIdxRef.current = next;
+                  return next;
+                });
                 setStage("countdown");
                 stageRef.current = "countdown";
                 let count = 3;
@@ -461,7 +533,11 @@ export const TakePictureInput = ({
         <Typography variant="TextMBold">Take a Picture</Typography>
       </Button>
 
-      <Modal open={open} onClose={handleClose} title="Raise Your Hand to Capture"
+      <Modal 
+        open={open} 
+        onClose={handleClose} 
+        className={styles.modal}
+        title="Raise Your Hand to Capture"
         subtitle="We'll take the photo once your hand pose is detected.">
         <div className={styles.modalContent}>
           {stage !== "preview" ? (
@@ -469,9 +545,14 @@ export const TakePictureInput = ({
               <video ref={videoRef} className={styles.video} autoPlay muted playsInline />
               <canvas ref={canvasRef} className={styles.canvas} />
               {stage === "countdown" && countdown !== null && (
-                <div className={styles.countdownOverlay}>
-                  {countdown > 0 ? countdown : "📸"}
-                </div>
+                <>
+                  <Typography variant="TextMBold" className={styles.countdownText}>
+                    Capturing photo in
+                  </Typography>
+                  <div className={styles.countdownOverlay}>
+                    {countdown > 0 ? countdown : "📸"}
+                  </div>
+                </>
               )}
             </div>
           ) : (
@@ -482,19 +563,36 @@ export const TakePictureInput = ({
           )}
 
           {stage !== "preview" ? (
-            <div className={styles.poseSequence}>
-              {POSE_ORDER.map((p, i) => (
-                <div key={p}
-                  className={`${styles.poseStep} ${i < progressIdx ? styles.completed :
-                    i === progressIdx ? styles.active : ""}`}>
-                  {POSE_DEFINITIONS[p].name}
-                </div>
-              ))}
-            </div>
+            <>
+              <Typography variant="TextSRegular">
+                Follow the hand poses in the order shown below. The system will automatically capture the image once the final pose is detected.
+              </Typography>
+
+              <div className={styles.descriptionContainer}>
+                {descriptionImages.map((src: string, idx: number) => (
+                  <Fragment key={`desc-${idx}`}>
+                    <img
+                      src={src}
+                      alt={`open camera ${idx + 1}`}
+                      width={58}
+                      height={58}
+                      className={`${styles.poseImage} ${idx < progressIdx ? styles.completed : ""}`}
+                    />
+                    {idx < descriptionImages.length - 1
+                      ? (arrowIcon ?? <UilAngleRight className={styles.arrowLeft} />)
+                      : null}
+                  </Fragment>
+                ))}
+              </div>
+            </>
           ) : (
             <div className={styles.actions}>
-              <Button variant="secondary" onClick={handleRetake}>Retake</Button>
-              <Button variant="primary" onClick={handleSubmit}>Submit</Button>
+              <Button variant="default" onClick={handleRetake}>
+                <Typography variant="TextMBold">Retake photo</Typography>
+              </Button>
+              <Button variant="primary" onClick={handleSubmit}>
+                <Typography variant="TextMBold">Submit</Typography>
+              </Button>
             </div>
           )}
         </div>
