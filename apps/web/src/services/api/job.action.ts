@@ -98,9 +98,11 @@ export const getJobs = async (options: JobQueryOptions = {}) => {
   const rows = Array.isArray(data) ? (data as JobRow[]) : [];
   const mapped = rows.map((row) => ({
     id: row.id,
-    slug: row.slug,
+    slug: row.slug, 
     title: row.title,
     status: row.status,
+    description: row.description,
+    type: row.type,
     salary_range: row.salary_range,
     list_card: row.list_card || null,
     application_form: row.application_form || null,
@@ -210,12 +212,20 @@ export const createJobs = async (
       created_at: now.toISOString(),
       updated_at: now.toISOString(),
     })
-    .select("id, slug, title, status,description, type, salary_range, list_card, application_form")
+    .select("id, slug, title, status, description, type, salary_range, list_card, application_form")
     .limit(1);
+   console.log(error, "<<<< error")
 
   if (error) {
     console.error("Supabase createJobs error:", error.message);
-    throw new Error(error.message || "Failed to insert job");
+    console.log(inserted, "<<<< inserted")
+    const msg = (error.message || "").toLowerCase();
+    const code = (error as unknown as { code?: string }).code;
+    // Normalize duplicate slug errors to a stable code for client handling
+    if (code === "23505" || msg.includes("duplicate key") || msg.includes("jobs_slug_key")) {
+      throw new Error("DUPLICATE_SLUG");
+    }
+    throw new Error("CREATE_JOB_FAILED");
   }
 
   const row = Array.isArray(inserted) ? (inserted[0] as JobRow) : (inserted as unknown as JobRow);

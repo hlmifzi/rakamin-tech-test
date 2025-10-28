@@ -9,7 +9,7 @@ import {
   NumberInput,
   Typography,
 } from "@rakamin/ui";
-import { useForm, Controller, useWatch } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useEffect, useMemo, useState, useCallback, useTransition } from "react";
 import { scrollToFirstError } from "@/lib/hook/scrollToFirstError";
 import {
@@ -29,7 +29,7 @@ export interface ModalAddJobsProps {
   onConfirm?: () => void;
   configuration?: JobConfigurationFormOptions | null;
   jobTypeOptions?: { value: string; label: string }[];
-  onCreate?: (payload: { data: CreateJobData; application_form?: ApplicationForm }) => Promise<void>;
+  onCreate: (payload: { data: CreateJobData; application_form?: ApplicationForm }) => Promise<void>;
 }
 
 export function ModalAddJobs({
@@ -41,8 +41,32 @@ export function ModalAddJobs({
   onCreate,
 }: ModalAddJobsProps) {
   const showToast = useToastStore((s) => s.showToast);
-  const dynamicKeys = (configuration?.application_form?.sections || [])
-    .flatMap((section) => section.fields.map((f) => f.key));
+  // Fallback default application form when configuration is not available
+  const defaultApplicationForm: ApplicationForm = {
+    sections: [
+      {
+        title: "Minimum Profile Information Required",
+        fields: [
+          { key: "full_name", validation: { required: true } },
+          { key: "photo_profile", validation: { required: true } },
+          { key: "gender", validation: { required: false } },
+          { key: "domicile", validation: { required: false } },
+          { key: "email", validation: { required: true } },
+          { key: "phone_number", validation: { required: false } },
+          { key: "linkedin_link", validation: { required: false } },
+          { key: "date_of_birth", validation: { required: false } },
+        ],
+      },
+    ],
+  };
+
+  const effectiveSections = (configuration?.application_form?.sections?.length
+    ? configuration.application_form.sections
+    : defaultApplicationForm.sections);
+
+  const dynamicKeys = effectiveSections.flatMap((section) =>
+    section.fields.map((f) => f.key)
+  );
 
   const defaultValues: FormValues = {
     title: "",
@@ -60,7 +84,6 @@ export function ModalAddJobs({
   });
 
   const { errors } = formState;
-  const watchedValues = useWatch<FormValues>({ control });
 
   const handleCloseModal = useCallback(() => {
     // Bersihkan semua error saat modal ditutup
@@ -68,19 +91,15 @@ export function ModalAddJobs({
     onClose();
   }, [clearErrors, onClose]);
 
-  const asFormPrimitive = (v: unknown): string | number | undefined => {
-    if (typeof v === "string" || typeof v === "number") return v;
-    return undefined;
-  };
   const initialModes = useMemo(() => {
     const modes: Record<string, FieldMode> = {};
-    (configuration?.application_form?.sections || []).forEach((section) => {
+    effectiveSections.forEach((section) => {
       section.fields.forEach((f) => {
         modes[f.key] = f.validation?.required ? "mandatory" : "optional";
       });
     });
     return modes;
-  }, [configuration]);
+  }, [effectiveSections]);
 
   const [fieldModes, setFieldModes] = useState<Record<string, FieldMode>>(initialModes);
   const [submitting, setSubmitting] = useState(false);
@@ -99,33 +118,18 @@ export function ModalAddJobs({
     }
   }, [setFieldModes, setValue, clearErrors, unregister]);
 
-  const applicationFormBuilt = useMemo(() => ({
-    sections: (configuration?.application_form?.sections || []).map((section) => ({
-      title: section.title,
-      fields: section.fields
-        .filter((f) => fieldModes[f.key] !== "off")
-        .map((f) => ({
-          key: f.key,
-          validation: { required: fieldModes[f.key] === "mandatory" },
-          value: asFormPrimitive(watchedValues?.[f.key as keyof FormValues]) ?? null,
-        })),
-    })),
-  }), [configuration, fieldModes, watchedValues]);
-
   const onValid = useCallback((data: FormValues) => {
-    // Map form values to CreateJobData (server action expects this shape)
     const createData: CreateJobData = {
       title: typeof data.title === "string" ? data.title : "",
       type: typeof data.type === "string" ? data.type : undefined,
       description: typeof data.description === "string" ? data.description : undefined,
       candidate_needed: typeof data.candidate_needed === "number" ? data.candidate_needed : undefined,
-      salary_min: typeof data.salary_min === "number" ? data.salary_min : undefined,
-      salary_max: typeof data.salary_max === "number" ? data.salary_max : undefined,
+      salary_min: typeof data.salary_min === "number" && Number.isFinite(data.salary_min) ? data.salary_min : undefined,
+      salary_max: typeof data.salary_max === "number" && Number.isFinite(data.salary_max) ? data.salary_max : undefined,
     };
 
-    // Strip runtime values from application form to match ApplicationForm type
     const applicationFormForAction: ApplicationForm = {
-      sections: (configuration?.application_form?.sections || [])
+      sections: effectiveSections
         .map((section) => ({
           title: section.title,
           fields: section.fields
@@ -141,41 +145,31 @@ export function ModalAddJobs({
       data: createData,
       application_form: applicationFormForAction,
     };
-    startTransition(() => {
+
+    // Jalankan seluruh submit flow di dalam startTransition (sesuai standar yang diminta)
+    startTransition(async () => {
       setSubmitting(true);
-    });
-    (async () => {
       try {
-        if (onCreate) {
           await onCreate(payload);
           showToast("Job vacancy successfully created");
           reset();
           onConfirm ? onConfirm() : onClose();
-        } else {
-          // Fallback if onCreate is not provided
-          const res = await fetch("/api/jobs/create", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          });
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          const json = await res.json();
-          if (json?.success) {
-            showToast("Job vacancy successfully created");
-            reset();
-            onConfirm ? onConfirm() : onClose();
-          } else {
-            showToast("Failed to create job", "danger");
+      } catch (e) {
+        let message = "Gagal membuat job. Coba lagi.";
+        if (e && typeof e === "object") {
+          const m = (e as Error).message || "";
+          if (m.includes("DUPLICATE_SLUG")) {
+            message = "Slug already exist. use uniq name";
+          } else if (m.includes("CREATE_JOB_FAILED")) {
+            message = "Failed to create job. Please try again.";
           }
         }
-      } catch (e) {
-        console.error("[AddJob Submit Error]", e);
-        showToast("Submission failed. Please try again.", "danger");
+        showToast(message, "danger");
       } finally {
         setSubmitting(false);
       }
-    })();
-  }, [configuration, fieldModes, onConfirm, onClose, showToast, reset, onCreate]);
+    });
+  }, [effectiveSections, fieldModes, onConfirm, onClose, showToast, reset, onCreate]);
 
   const onInvalid = useCallback(() => {
     scrollToFirstError(errors);
@@ -311,7 +305,7 @@ export function ModalAddJobs({
   </div>
 
       <div className={styles.borderForm}>
-        {configuration?.application_form?.sections?.map((section, idx) => (
+        {effectiveSections.map((section, idx) => (
           <div key={idx}>
             <Typography className="mb-4" variant="TextMBold">
               {section.title}

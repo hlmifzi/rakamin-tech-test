@@ -106,12 +106,12 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail, use
                       blurDataURL="/tiny-blur.jpg"
                     />
                     <Typography variant="TextLBold">{job.title}</Typography>
-                    <Typography variant="TextMRegular">{job?.list_card?.badge || job.status || "Active"}</Typography>
+                    <Typography variant="TextMRegular">Rakamin</Typography>
                   </div>
                   <div className={styles.jobDescContainer}>
                     <div className={styles.jobDescItem}>
                       <UilLocationPoint />
-                      <Typography variant="TextSRegular">{job.location || "—"}</Typography>
+                      <Typography variant="TextSRegular">Bogor</Typography>
                     </div>
                     <div className={styles.jobDescItem}>
                       <UilMoneyBill />
@@ -143,7 +143,7 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail, use
                         {selectedJob?.type || "Full-time"}
                       </Typography>
                       <Typography variant="TextLBold">{selectedJob.title}</Typography>
-                      <Typography variant="TextMRegular">{selectedJob?.list_card?.badge || ""}</Typography>
+                      <Typography variant="TextMRegular">Rakamin</Typography>
                     </>
                   )}
                   </div>
@@ -158,6 +158,7 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail, use
               </div>
 
               <div className={styles.contentJobDetail}>
+                
                 <ul>
                   {isPending ? (
                     <li>
@@ -165,7 +166,7 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail, use
                     </li>
                   ) : selectedJob ? (
                     <>
-                      <li>{selectedJob.description}</li>
+                      {selectedJob.description}
                     </>
                   ) : (
                     <li>Select a job from the list to see details.</li>

@@ -29,6 +29,8 @@ export type JobRow = {
   id: string;
   slug: string;
   title: string;
+  description: string;
+  type: string;
   status: "active" | "inactive" | string;
   salary_range: SalaryRange;
   list_card?: JobListCard;
