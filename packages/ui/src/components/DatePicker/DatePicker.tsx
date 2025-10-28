@@ -57,6 +57,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
           name={name}
           value={value}
           onChange={onChange}
+          popupClassName={styles.antdDatePickerPopup} // 👈 ini untuk dropdown
           placeholder={placeholder}
           format={format}
           disabled={disabled}

@@ -3,11 +3,15 @@
 }
 
 .header {
-    @apply px-4 pt-10 md:px-10 pb-6 flex flex-col-reverse md:flex-row justify-between;
+    @apply px-4 pt-4 md:pt-10 md:px-10 pb-6 flex flex-col md:flex-row justify-between;
+
+    div:last-child {
+        @apply ml-11 md:ml-0;
+    }
 }
 
 .content {
-    @apply px-4 md:px-16 overflow-auto max-h-[60vh] pb-8;
+    @apply px-4 md:px-16 overflow-auto max-h-[72vh] md:max-h-[60vh] pb-8;
 }
 
 .backBtn {
