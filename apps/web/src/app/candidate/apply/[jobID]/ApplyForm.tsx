@@ -170,6 +170,7 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
 
   return (
     <form onSubmit={form.handleSubmit(onValid, onInvalid)}>
+
       <div className={styles.cardContainer}>
         <div className={styles.header}>
           <div className={styles.headerTitleContainer}>

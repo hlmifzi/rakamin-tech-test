@@ -46,7 +46,7 @@ const ApplySuccessPage = () => {
           className={styles.image}
           priority
           placeholder="blur"
-          blurDataURL="/tiny-blur.jpg"
+          blurDataURL="/tiny-blur.png"
         />
       </motion.div>
 

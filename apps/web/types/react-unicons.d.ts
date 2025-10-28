@@ -7,4 +7,17 @@ declare module '@iconscout/react-unicons' {
   };
   // Commonly used icons — extend as needed
   export const UilSearch: React.FC<UniconProps>;
+  export const UilAngleRight: React.FC<UniconProps>;
+  export const UilAngleDown: React.FC<UniconProps>;
+  export const UilAngleUp: React.FC<UniconProps>;
+  export const UilLocationPoint: React.FC<UniconProps>;
+  export const UilMoneyBill: React.FC<UniconProps>;
+  export const UilArrowLeft: React.FC<UniconProps>;
+  export const UilUpload: React.FC<UniconProps>;
+  export const UilCalendar: React.FC<UniconProps>;
+  export const UilEye: React.FC<UniconProps>;
+  export const UilEyeSlash: React.FC<UniconProps>;
+  export const UilCheckCircle: React.FC<UniconProps>;
+  export const UilTimes: React.FC<UniconProps>;
+  export const UilExclamationTriangle: React.FC<UniconProps>;
 }

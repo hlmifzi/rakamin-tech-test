@@ -35,7 +35,7 @@ export function Navbar() {
                 height={28}
                 priority
                 placeholder="blur"
-                blurDataURL="/tiny-blur.jpg"
+                  blurDataURL="/tiny-blur.png"
               />
               {/* Hilangkan gap (mt-0) supaya hover tidak putus saat pindah ke menu */}
               <div className="absolute right-0 top-full mt-0 hidden group-hover:block bg-white border border-neutral-40 rounded-md shadow-modal p-2 z-50 min-w-[160px]">

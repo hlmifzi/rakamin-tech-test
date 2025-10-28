@@ -124,7 +124,7 @@ type JobConfigurationFormOptions = { application_form: ApplicationForm };
                   width={306}
                   height={300}
                   placeholder="blur"
-                  blurDataURL="/tiny-blur.jpg"
+                  blurDataURL="/tiny-blur.png"
                 />
               }
               title="No job openings available"
@@ -185,7 +185,7 @@ type JobConfigurationFormOptions = { application_form: ApplicationForm };
             sizes="300px"
             className="object-cover"
             placeholder="blur"
-            blurDataURL="/tiny-blur.jpg"
+                  blurDataURL="/tiny-blur.png"
           />
           <div className={styles.ctaOverlay} />
           <div className={styles.ctaInnerText}>
@@ -209,7 +209,7 @@ type JobConfigurationFormOptions = { application_form: ApplicationForm };
         onConfirm={() => setIsModalOpen(false)}
         configuration={configuration}
         jobTypeOptions={jobTypeOptions?.job_type_options ?? []}
-        onCreate={onCreateJob}
+        onCreate={onCreateJob || (async () => {})}
       />
     </>
   );

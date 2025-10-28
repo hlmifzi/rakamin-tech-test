@@ -103,7 +103,7 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail, use
                       width={100}
                       height={100}
                       placeholder="blur"
-                      blurDataURL="/tiny-blur.jpg"
+                  blurDataURL="/tiny-blur.png"
                     />
                     <Typography variant="TextLBold">{job.title}</Typography>
                     <Typography variant="TextMRegular">Rakamin</Typography>
@@ -135,7 +135,7 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail, use
                     width={100}
                     height={100}
                     placeholder="blur"
-                    blurDataURL="/tiny-blur.jpg"
+                  blurDataURL="/tiny-blur.png"
                   />
                   {selectedJob && (
                     <>
