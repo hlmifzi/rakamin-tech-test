@@ -5,7 +5,7 @@
 
 /* Kontainer utama modal */
 .container {
-  @apply bg-white rounded-xl shadow-xl min-w-fit w-[90vw] max-w-lg relative flex flex-col my-4;
+  @apply bg-white rounded-xl shadow-xl min-w-fit w-[90vw] max-w-lg relative flex flex-col my-8;
   /* Hapus max-height agar tidak ada scroll internal; biarkan overlay/page yang scroll */
   /* @apply max-h-[calc(100vh-7.5rem)]; */
   animation: fadeIn 0.25s ease-out;

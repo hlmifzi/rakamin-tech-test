@@ -81,7 +81,7 @@ export const getJobs = async (options: JobQueryOptions = {}) => {
 
   let query = supabase
     .from("jobs")
-    .select("id, slug, title, status, salary_range, list_card, application_form", { count: "exact" })
+    .select("id, slug, title, status, salary_range, description, type, list_card, application_form", { count: "exact" })
     .order(sort_by, { ascending: sort_order === "asc" });
 
   // Apply filters

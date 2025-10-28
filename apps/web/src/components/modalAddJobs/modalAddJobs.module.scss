@@ -13,7 +13,7 @@
 
 
 .modalContainer {
-    @apply bg-white rounded-xl shadow-xl relative flex flex-col;
+    @apply bg-white rounded-xl shadow-xl relative flex flex-col my-[3.75rem];
     @apply max-h-[calc(100vh-7.5rem)];
     
     /* Desktop: min-width 900px (56.25rem) */

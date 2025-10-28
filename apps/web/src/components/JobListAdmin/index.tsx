@@ -12,7 +12,7 @@ import { JobListSkeleton } from "@/app/admin/job-list/loading";
 import styles from "./jobs.module.scss";
 import { useForm, Controller } from "react-hook-form";
 
-type StrapiJob = {
+type JobType = {
   id: number | string;
   title: string;
   status?: "active" | "inactive" | string;
@@ -31,7 +31,7 @@ type StrapiJob = {
 };
 
 type Props = {
-  jobs?: StrapiJob[];
+  jobs?: JobType[];
   configuration?: JobConfigurationFormOptions | null;
   jobTypeOptions?: JobTypeOptionsPayload | null;
   initialQuery?: string;

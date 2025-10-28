@@ -1,0 +1,162 @@
+"use client";
+import Image from "next/image";
+import styles from "./jobList.module.scss";
+import {
+  Button,
+  EmptyState,
+  Typography,
+  UilLocationPoint,
+  UilMoneyBill,
+} from "@rakamin/ui";
+import Link from "next/link";
+import { useMemo } from "react";
+import { useRouter } from "next/navigation";
+
+type JobType = {
+  id: number | string;
+  slug?: string;
+  title: string;
+  status?: "active" | "inactive" | string;
+  description?: string;
+  type?: "full-time" | "part-time" | string;
+  location?: string; // optional field for filtering compatibility
+  salary_range?: {
+    min?: number;
+    max?: number;
+    display_text?: string;
+    currency?: string;
+  } | null;
+  list_card?: {
+    badge?: string;
+    started_on_text?: string;
+    cta?: string;
+  } | null;
+};
+
+type JobListCandidateType = {
+  jobs?: JobType[];
+  selectedSlug?: string;
+  selectedJobDetail?: JobType | undefined;
+};
+
+const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail }: JobListCandidateType) => {
+  const safeJobs = Array.isArray(jobs) ? jobs : [];
+  const router = useRouter();
+
+  // Derive selected index from slug (fallback to first item)
+  const selectedIndex = useMemo(() => {
+    if (!safeJobs.length) return -1;
+    if (selectedSlug) {
+      const idx = safeJobs.findIndex((j) => {
+        const jobSlug = j?.slug ?? String(j.id);
+        return jobSlug === selectedSlug;
+      });
+      if (idx >= 0) return idx;
+    }
+    return 0;
+  }, [safeJobs, selectedSlug]);
+
+  const selectedJob = useMemo(() => {
+    if (selectedJobDetail) return selectedJobDetail;
+    return selectedIndex >= 0 ? safeJobs[selectedIndex] || null : null;
+  }, [safeJobs, selectedIndex, selectedJobDetail]);
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.inner}>
+        {safeJobs.length > 0 ? (
+          <>
+            <div className={styles.listJobContainer}>
+              {safeJobs.map((job, index) => (
+                <div
+                  key={String(job.id) || index}
+                  className={`${styles.cardBorder} ${index === selectedIndex ? 'border border-primary bg-primary-surface' : ''}`}
+                  onClick={() => {
+                    const slug = job.slug ? String(job.slug) : String(job.id);
+                    // Push query param to trigger server fetch and show skeleton
+                    router.push(`/candidate/job-list?slug=${encodeURIComponent(slug)}`);
+                  }}
+                >
+                  <div className={styles.cardBorderHeader}>
+                    <Image
+                      src="/rakamin-logo.webp"
+                      alt="artwork"
+                      width={100}
+                      height={100}
+                      placeholder="blur"
+                      blurDataURL="/tiny-blur.jpg"
+                    />
+                    <Typography variant="TextLBold">{job.title}</Typography>
+                    <Typography variant="TextMRegular">{job?.list_card?.badge || job.status || "Active"}</Typography>
+                  </div>
+                  <div className={styles.jobDescContainer}>
+                    <div className={styles.jobDescItem}>
+                      <UilLocationPoint />
+                      <Typography variant="TextSRegular">{job.location || "—"}</Typography>
+                    </div>
+                    <div className={styles.jobDescItem}>
+                      <UilMoneyBill />
+                      <Typography variant="TextSRegular">
+                        {job?.salary_range?.display_text || "—"}
+                      </Typography>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className={styles.cardDetailJob}>
+              <div className="relative">
+                <div className={styles.cardBorderDetail}>
+                  <Image
+                    src="/rakamin-logo.webp"
+                    alt="artwork"
+                    width={100}
+                    height={100}
+                    placeholder="blur"
+                    blurDataURL="/tiny-blur.jpg"
+                  />
+                  {selectedJob && (
+                    <>
+                      <Typography className={styles.jobType} variant="TextSBold">
+                        {selectedJob?.type || "Full-time"}
+                      </Typography>
+                      <Typography variant="TextLBold">{selectedJob.title}</Typography>
+                      <Typography variant="TextMRegular">{selectedJob?.list_card?.badge || ""}</Typography>
+                    </>
+                  )}
+                </div>
+                <Link href={selectedJob ? `/candidate/apply/${selectedJob.id}` : "#"}>
+                  <Button className={styles.applyButton} variant="secondary">
+                    <Typography variant="TextMBold">Apply</Typography>
+                  </Button>
+                </Link>
+              </div>
+
+              <div className={styles.contentJobDetail}>
+                <ul>
+                  {selectedJob ? (
+                    <>
+                      <li>Status: {selectedJob.description || "Active"}</li>
+                      <li>Salary: {selectedJob?.salary_range?.display_text || "—"}</li>
+                    </>
+                  ) : (
+                    <li>Select a job from the list to see details.</li>
+                  )}
+                </ul>
+              </div>
+            </div>
+          </>
+        ) : (
+          <EmptyState
+            icon="/empty/artwork.svg"
+            title="No job openings available"
+            description="Please wait for the next batch of openings."
+          />
+        )}
+        
+      </div>
+    </div>
+  );
+};
+
+export default JobListCandidate;
