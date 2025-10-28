@@ -20,7 +20,7 @@ import { scrollToFirstError } from "@/lib/hook/scrollToFirstError";
 
 type Attribute = { key: string; label: string; value: string; order: number };
 
-export default function ApplyForm({ jobID, onApply }: { jobID: string; onApply: (payload: { attributes: Attribute[] }) => Promise<void> }) {
+export default function ApplyForm({ jobID, jobTitle, onApply }: { jobID: string; jobTitle?: string; onApply: (payload: { attributes: Attribute[] }) => Promise<void> }) {
   const { showToast } = useToastStore.getState();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -97,7 +97,7 @@ export default function ApplyForm({ jobID, onApply }: { jobID: string; onApply: 
                 <UilArrowLeft />
               </Button>
             </Link>
-            <Typography variant="TextXLBold">Apply Front End at Rakamin</Typography>
+            <Typography variant="TextXLBold">Apply {jobTitle || "Job"} at Rakamin</Typography>
           </div>
           <div>
             <Typography variant="TextMRegular">ℹ️ This field required to fill</Typography>
