@@ -57,12 +57,24 @@
       }
   }
 
-  li, [class*='iti__highlight'] {
-    @apply hover:bg-primary-surface hover:text-primary;
+  li,
+  [class*='iti__highlight'] {
+    @apply hover:bg-primary-surface hover:text-primary transition-all;
+
+    &[aria-selected='true'] {
+      @apply bg-primary-surface text-primary;
+    }
   }
+
 
   [class*='iti__country-name'] {
     @apply text-s-bold;
+  }
+  [class*='iti__search-clear'] {
+
+    svg {
+      @apply ml-[-32px]
+    }
   }
 }
 .label {
