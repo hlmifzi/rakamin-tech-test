@@ -1,5 +1,69 @@
 .wrapper {
   @apply flex flex-col mb-4;
+
+  [class*='iti__flag'] {
+    width: 1rem !important;
+    height: 1rem !important;
+    border-radius: 100% !important;
+    border: 1px solid #E0E0E0 !important; /* neutral-40 */
+  }
+  [class*='iti__selected-country-primary'] {
+    border-right: 1px solid #E0E0E0 !important;
+    height: full !important;
+    padding: 0 .5rem 0 1rem;
+
+    &::after {
+      content:"";
+      @apply w-2 h-1 ml-2;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 8 5' fill='none'><path d='M6.36035 0.5C6.3823 0.5 6.40391 0.504508 6.42383 0.512695L6.47852 0.548828C6.49412 0.564316 6.50619 0.583216 6.51465 0.603516C6.52301 0.62369 6.52732 0.645156 6.52734 0.666992C6.52734 0.688992 6.52311 0.711134 6.51465 0.731445L6.47852 0.785156L3.61914 3.61133L3.61523 3.61523C3.59985 3.63068 3.58163 3.64295 3.56152 3.65137C3.54121 3.65983 3.51907 3.66406 3.49707 3.66406C3.47511 3.66405 3.45289 3.65981 3.43262 3.65137C3.41254 3.64293 3.39426 3.63069 3.37891 3.61523L0.548828 0.785156C0.533428 0.769772 0.521079 0.751536 0.512695 0.731445C0.504234 0.711136 0.5 0.688995 0.5 0.666992C0.500027 0.645202 0.504369 0.623649 0.512695 0.603516C0.521117 0.583302 0.53331 0.564277 0.548828 0.548828H0.549805C0.580983 0.517835 0.623035 0.500054 0.666992 0.5C0.710296 0.5 0.752137 0.51679 0.783203 0.546875V0.547852L3.14355 2.90723L3.49512 3.25879L3.84863 2.91016L6.24121 0.549805L6.24316 0.548828C6.27435 0.517829 6.31638 0.500047 6.36035 0.5Z' fill='%231D1F20' stroke='%231D1F20'/></svg>") no-repeat center;
+      background-size: contain;
+    }
+  }
+  [class*='iti__arrow'] {
+    display: none;
+  }
+
+  [class='iti__dropdown-content'] {
+    @apply rounded-lg;
+    z-index: 30 !important;
+    width: 346px !important;
+    max-width: 346px !important;
+    border: 1px solid #E0E0E0;
+    overflow: hidden;
+    
+      [class*='iti__country'] {
+        @apply relative;
+        width: calc(345px ) !important;
+    
+        & > span:last-child {
+          @apply absolute right-4;
+        }
+      }
+
+      [class*='iti__search-input-wrapper'] {
+        @apply p-4 border-b border-neutral-40;
+
+        span {
+          margin-left: 1.2rem !important
+        }
+
+        input {
+          @apply border border-2 border-neutral-40 rounded-lg h-10;
+        }
+      }
+
+      [class*='iti__dial-code'] {
+        @apply text-s-regular text-neutral-100;
+      }
+  }
+
+  li, [class*='iti__highlight'] {
+    @apply hover:bg-primary-surface hover:text-primary;
+  }
+
+  [class*='iti__country-name'] {
+    @apply text-s-bold;
+  }
 }
 .label {
   @apply text-sm font-medium text-neutral-90 mb-2;
@@ -8,6 +72,8 @@
   @apply flex items-center rounded-lg border-2 border-neutral-40 bg-neutral-20 shadow-sm transition-colors duration-150;
   min-height: 44px;
   @apply relative; /* anchor dropdown positioning */
+
+ 
 }
 .container:hover,
 .container:focus-within {
@@ -59,6 +125,7 @@
 }
 .input {
   @apply w-full rounded-lg border-2 border-neutral-40 bg-white px-4 max-h-11 py-[.625rem] text-neutral-90 placeholder:text-neutral-60 shadow-sm outline-0 transition-colors duration-150 text-m-regular;
+  padding-left: 62px !important;
 }
 .input:hover,
 .input:focus {
@@ -89,10 +156,6 @@
   --iti-path-flags-2x: url('https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.2/build/img/flags@2x.webp');
   --iti-path-globe-1x: url('https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.2/build/img/globe.webp');
   --iti-path-globe-2x: url('https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.2/build/img/globe@2x.webp');
-}
-:global(.iti__flag) {
-  border-radius: 9999px;
-  border: 1px solid #E0E0E0; /* neutral-40 */
 }
 
 /* Dropdown list hover: use primary surface and text */

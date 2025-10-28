@@ -17,8 +17,10 @@ export type DatePickerProps = {
   helperText?: string;
   disabled?: boolean;
   className?: string;
-  /** kiri dalam input, default "/date.svg" dari app's public */
-  prefixIconSrc?: string;
+  /** Icon di sisi kiri dalam input (React node), override jika diset */
+  prefixIcon?: React.ReactNode;
+  /** Alternatif: path gambar icon, mis. "/date.svg" dari public app */
+  prefixIconSrc?: string | React.ReactNode;
 };
 
 export const DatePicker: React.FC<DatePickerProps> = ({
@@ -33,9 +35,28 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   helperText,
   disabled,
   className,
-  prefixIconSrc = "/date.svg",
+  prefixIcon,
+  prefixIconSrc,
 }) => {
   const [open, setOpen] = useState(false);
+  // Resolve prefix icon node: prefer explicit ReactNode, otherwise build from src string
+  let prefixIconNode: React.ReactNode | null =
+    prefixIcon ??
+    (typeof prefixIconSrc === "string"
+      ? <img src={prefixIconSrc} alt="date" />
+      : (prefixIconSrc ?? null));
+
+  // If user passes a React element (e.g., Next <Image />), ensure width/height are set
+  if (React.isValidElement(prefixIconNode)) {
+    const props: any = (prefixIconNode as any).props || {};
+    const width = props.width ?? 18;
+    const height = props.height ?? 18;
+    try {
+      prefixIconNode = React.cloneElement(prefixIconNode as any, { width, height });
+    } catch {
+      // ignore clone failures for elements that don't accept width/height
+    }
+  }
   return (
     <div className={styles.wrapper}>
       {label && (
@@ -49,15 +70,17 @@ export const DatePicker: React.FC<DatePickerProps> = ({
 
       <div className={[styles.picker, className || ""].filter(Boolean).join(" ")}>
         {/* Prefix icon inside input */}
-        <span className={styles.prefixIcon} aria-hidden="true">
-          <img src={prefixIconSrc} alt="" />
-        </span>
+        {prefixIconNode ? (
+          <span className={styles.prefixIcon} aria-hidden="true">
+            {prefixIconNode}
+          </span>
+        ) : null}
         <AntDatePicker
           id={id}
           name={name}
           value={value}
           onChange={onChange}
-          popupClassName={styles.antdDatePickerPopup} // 👈 ini untuk dropdown
+          classNames={{ popup: { root: styles.antdDatePickerPopup } as any }}
           placeholder={placeholder}
           format={format}
           disabled={disabled}

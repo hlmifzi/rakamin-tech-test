@@ -11,6 +11,7 @@ import {
 } from "@rakamin/ui";
 import { useForm, Controller } from "react-hook-form";
 import styles from "./apply.module.scss";
+import Image from "next/image";
 
 interface FormData {
   photo?: string;
@@ -108,13 +109,16 @@ const ApplyPage = () => {
                 isMandatory
                 format="DD MMMM YYYY"
                 value={undefined}
-                prefixIconSrc="/candidate/date.svg"
+                prefixIconSrc={
+                  <Image src={"/candidate/date.svg"} width={20} height={20} alt="icon date" />
+                }
                 onChange={(_, dateString) =>
                   field.onChange(Array.isArray(dateString) ? "" : dateString)
                 }
               />
             )}
           />
+          
 
           {/* Pronoun (gender) */}
           <div className="mb-4">

@@ -98,6 +98,20 @@ module.exports = {
           lineHeight: '24px',
           letterSpacing: '0px',
         },
+        '.text-s-bold': {
+          fontFamily: 'var(--font-nunito), "Nunito Sans", ui-sans-serif, system-ui, sans-serif',
+          fontWeight: '700',
+          fontSize: '12px',
+          lineHeight: '20px',
+          letterSpacing: '0px',
+        },
+        '.text-s-regular': {
+          fontFamily: 'var(--font-nunito), "Nunito Sans", ui-sans-serif, system-ui, sans-serif',
+          fontWeight: '400',
+          fontSize: '12px',
+          lineHeight: '20px',
+          letterSpacing: '0px',
+        },
         '.shadow-modal': {
             boxShadow: '0px 4px 8px 0px #0000001A',
         },
