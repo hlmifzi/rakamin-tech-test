@@ -11,7 +11,6 @@ export default async function ApplyPage({ params }: { params: { jobID: string } 
   async function onApply(payload: { attributes: Attribute[] }) {
     "use server";
     const payloads = { apply_jobs_id: jobID, attributes: payload.attributes }
-    console.log(payloads, "<<< payloads");
     await createCandidate(payloads);
     revalidatePath(`/admin/job-list/manage-candidate/${jobID}`);
   }

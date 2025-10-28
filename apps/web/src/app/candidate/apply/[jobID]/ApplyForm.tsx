@@ -157,16 +157,20 @@ export default function ApplyForm({ jobID, onApply }: { jobID: string; onApply: 
               render={({ field }) => (
                 <div className="flex items-center gap-4">
                   <label className="flex items-center gap-[10px] cursor-pointer">
-                    <input type="radio" value="female" name={field.name} checked={field.value === "female"} onChange={() => field.onChange("female")} className="peer sr-only" />
-                    <span className="w-5 h-5 rounded-full border-2 border-neutral-90 flex items-center justify-center">
-                      <span className="hidden peer-checked:block w-2.5 h-2.5 rounded-full bg-primary"></span>
+                    <input type="radio" value="female" name={field.name} checked={field.value === "female"} onChange={() => field.onChange("female")} className="sr-only" />
+                    <span className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${field.value === "female" ? "border-primary" : "border-neutral-90"}`}>
+                      {field.value === "female" && (
+                        <span className="w-2.5 h-2.5 rounded-full bg-primary"></span>
+                      )}
                     </span>
                     <Typography variant="TextMRegular" className="text-neutral-90">She/her (Female)</Typography>
                   </label>
                   <label className="flex items-center gap-[10px] cursor-pointer">
-                    <input type="radio" value="male" name={field.name} checked={field.value === "male"} onChange={() => field.onChange("male")} className="peer sr-only" />
-                    <span className="w-5 h-5 rounded-full border-2 border-neutral-90 flex items-center justify-center">
-                      <span className="hidden peer-checked:block w-2.5 h-2.5 rounded-full bg-primary"></span>
+                    <input type="radio" value="male" name={field.name} checked={field.value === "male"} onChange={() => field.onChange("male")} className="sr-only" />
+                    <span className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${field.value === "male" ? "border-primary" : "border-neutral-90"}`}>
+                      {field.value === "male" && (
+                        <span className="w-2.5 h-2.5 rounded-full bg-primary"></span>
+                      )}
                     </span>
                     <Typography variant="TextMRegular" className="text-neutral-90">He/him (Male)</Typography>
                   </label>
@@ -208,8 +212,8 @@ export default function ApplyForm({ jobID, onApply }: { jobID: string; onApply: 
               <PhoneNumberInput
                 label="Phone number"
                 isMandatory
-                value={field.value}
-                onChange={field.onChange}
+                value={field.value ?? ""}
+                onChange={(val) => form.setValue("phoneNumber", val ?? "", { shouldDirty: true })}
                 country={form.watch("phoneCountry")}
                 onCountryChange={(code) => form.setValue("phoneCountry", code)}
                 placeholder="Enter phone number"

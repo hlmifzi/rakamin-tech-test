@@ -80,6 +80,7 @@ const dummyData: RowData[] = [
 type ManageCandidatePageType = { 
   jobID: string;
   candidates: Candidate[];
+  jobTitle?: string;
 }
 
 // Transform candidate attributes to flat object for table
@@ -101,13 +102,13 @@ const transformCandidateToRowData = (candidate: Candidate): RowData => {
   };
 };
 
-export default function ManageCandidatePage({ jobID, candidates }: ManageCandidatePageType) {
+export default function ManageCandidatePage({ jobID, candidates, jobTitle }: ManageCandidatePageType) {
   // Transform candidates data for table
   const tableData = candidates.map(transformCandidateToRowData);
   return (
     <div>
       <Typography variant="TextXLBold" className="mb-6">
-        Front End Developer
+        {jobTitle || "Manage Candidates"}
       </Typography>
 
       {tableData?.length > 0 ? (

@@ -138,7 +138,7 @@ export const getJobBySlug = async (slug: string): Promise<JobRow | null> => {
 
   const { data, error } = await supabase
     .from("jobs")
-    .select("id, slug, title, description, type, status, salary_range, list_card")
+    .select("id, slug, title, description, type, status, salary_range, list_card, application_form")
     .eq("slug", slug)
     .limit(1)
     .maybeSingle();
@@ -154,6 +154,39 @@ export const getJobBySlug = async (slug: string): Promise<JobRow | null> => {
     id: row.id,
     slug: row.slug,
     title: row.title,
+    description: row.description,
+    type: row.type,
+    status: row.status,
+    salary_range: row.salary_range,
+    list_card: row.list_card || null,
+    application_form: row.application_form || null,
+  };
+};
+
+export const getJobById = async (id: string): Promise<JobRow | null> => {
+  const supabase = await createClient();
+  if (!supabase) return null;
+
+  const { data, error } = await supabase
+    .from("jobs")
+    .select("id, slug, title, description, type, status, salary_range, list_card, application_form")
+    .eq("id", id)
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Supabase getJobById error:", error.message);
+    return null;
+  }
+
+  if (!data) return null;
+  const row = data as JobRow;
+  return {
+    id: row.id,
+    slug: row.slug,
+    title: row.title,
+    description: row.description,
+    type: row.type,
     status: row.status,
     salary_range: row.salary_range,
     list_card: row.list_card || null,
@@ -233,6 +266,8 @@ export const createJobs = async (
     id: row.id,
     slug: row.slug,
     title: row.title,
+    description: row.description,
+    type: row.type,
     status: row.status,
     salary_range: row.salary_range,
     list_card: row.list_card || null,
