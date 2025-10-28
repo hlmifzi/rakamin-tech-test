@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "./DatePicker.module.scss";
 import { DatePicker as AntDatePicker } from "antd";
 import { Typography } from "../Typography/Typography";
-import { UilAngleDown, UilAngleUp } from "../../icons";
+import { UilAngleDown, UilAngleUp } from "@iconscout/react-unicons";
 
 export type DatePickerProps = {
   label?: string;
