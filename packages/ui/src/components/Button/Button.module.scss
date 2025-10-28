@@ -64,7 +64,7 @@
 .text:hover:not(:disabled),
 .text:focus:not(:disabled),
 .text:active:not(:disabled) {
-  @apply bg-primary-surface bg-transparent;
+  @apply bg-primary-surface;
 }
 /* Loading */
 .loading {

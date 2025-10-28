@@ -10,8 +10,9 @@ import {
   UilMoneyBill,
 } from "@rakamin/ui";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useMemo, useState, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { DetailJobListSkeleton } from "@/app/candidate/job-list/loading";
 
 type JobType = {
   id: number | string;
@@ -38,13 +39,16 @@ type JobListCandidateType = {
   jobs?: JobType[];
   selectedSlug?: string;
   selectedJobDetail?: JobType | undefined;
+  userRole?: string;
 };
 
-const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail }: JobListCandidateType) => {
+const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail, userRole = "" }: JobListCandidateType) => {
   const safeJobs = Array.isArray(jobs) ? jobs : [];
   const params = useSearchParams();
   const currentSlug = params.get("slug") || selectedSlug || "";
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  // userRole dikirim dari server, tidak membaca cookie di klien
 
   const selectedIndex = useMemo(() => {
     if (!safeJobs.length) return -1;
@@ -72,6 +76,8 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail }: J
     return selectedIndex >= 0 ? safeJobs[selectedIndex] || null : null;
   }, [safeJobs, selectedIndex, selectedJobDetail]);
 
+  // Read cookie once via lazy state initializer to avoid setState in effects
+
   return (
     <div className={styles.container} key={currentSlug || String(selectedJobDetail?.id || "")}>
       <div className={styles.inner} key={currentSlug || String(selectedJobDetail?.id || "")}>
@@ -84,8 +90,10 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail }: J
                   className={`${index === selectedIndex ? styles.cardBorderSelected : styles.cardBorder}`}
                   onClick={() => {
                     const slug = job.slug ? String(job.slug) : String(job.id);
-                    // Push query param to trigger server fetch and show skeleton
-                    router.push(`/candidate/job-list?slug=${encodeURIComponent(slug)}`);
+                    // Use transition untuk men-trigger skeleton detail sambil navigasi
+                    startTransition(() => {
+                      router.push(`/candidate/job-list?slug=${encodeURIComponent(slug)}`);
+                    });
                   }}
                 >
                   <div className={styles.cardBorderHeader}>
@@ -117,7 +125,10 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail }: J
             </div>
             <div className={styles.cardDetailJob}>
               <div className="relative">
-                <div className={styles.cardBorderDetail}>
+                {isPending ? (
+                  <DetailJobListSkeleton noBorder />
+                ) : (
+                  <div className={styles.cardBorderDetail}>
                   <Image
                     src="/rakamin-logo.webp"
                     alt="artwork"
@@ -135,20 +146,26 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail }: J
                       <Typography variant="TextMRegular">{selectedJob?.list_card?.badge || ""}</Typography>
                     </>
                   )}
-                </div>
-                <Link href={selectedJob ? `/candidate/apply/${selectedJob.id}` : "#"}>
-                  <Button className={styles.applyButton} variant="secondary">
-                    <Typography variant="TextMBold">Apply</Typography>
-                  </Button>
-                </Link>
+                  </div>
+                )}
+                {!isPending && (
+                  <Link href={selectedJob ? (userRole ? `/candidate/apply/${selectedJob.id}` : `/auth?jobID=${encodeURIComponent(String(selectedJob.id))}`) : "#"}>
+                    <Button className={styles.applyButton} variant="secondary">
+                      <Typography variant="TextMBold">Apply</Typography>
+                    </Button>
+                  </Link>
+                )}
               </div>
 
               <div className={styles.contentJobDetail}>
                 <ul>
-                  {selectedJob ? (
+                  {isPending ? (
+                    <li>
+                      {/* menjaga struktur agar tidak kosong saat skeleton */}
+                    </li>
+                  ) : selectedJob ? (
                     <>
-                      <li>Status: {selectedJob.description || "Active"}</li>
-                      <li>Salary: {selectedJob?.salary_range?.display_text || "—"}</li>
+                      <li>{selectedJob.description}</li>
                     </>
                   ) : (
                     <li>Select a job from the list to see details.</li>

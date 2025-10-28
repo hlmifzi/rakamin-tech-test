@@ -12,6 +12,7 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import styles from "./apply.module.scss";
 import Image from "next/image";
+import Link from "next/link";
 
 interface FormData {
   photo?: string;
@@ -60,9 +61,11 @@ const ApplyPage = () => {
       <div className={styles.cardContainer}>
         <div className={styles.header}>
           <div className={styles.headerTitleContainer}>
-            <Button variant="default" className={styles.backBtn}>
-              <UilArrowLeft />
-            </Button>
+            <Link href="/candidate/job-list">
+              <Button variant="default" className={styles.backBtn}>
+                <UilArrowLeft />
+              </Button>
+            </Link>
             <Typography variant="TextXLBold">
               Apply Front End at Rakamin
             </Typography>

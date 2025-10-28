@@ -3,11 +3,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { TextInput, PasswordInput, Button, Typography, IconEmail, IconSSOLogin } from "@rakamin/ui";
+import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
+import { useState, useTransition } from "react";
 
 import styles from "./auth.module.scss";
 
 const AuthPage = () => {
+  const params = useSearchParams();
+  const jobID = params.get("jobID") || "";
+  const [submitting, setSubmitting] = useState(false);
+  const [isPending, startTransition] = useTransition();
   return (
     <div className={styles.root}>
       <motion.div
@@ -41,7 +47,17 @@ const AuthPage = () => {
             </Typography>
           </div>
 
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form
+            action="/api/auth/login"
+            method="post"
+            onSubmit={() => {
+              // Tampilkan loading hingga browser melakukan redirect dari form action
+              startTransition(() => {
+                setSubmitting(true);
+              });
+            }}
+          >
+            <input type="hidden" name="jobID" value={jobID} />
             <div className={styles.formGroup}>
               <TextInput
                 label="Email"
@@ -65,7 +81,7 @@ const AuthPage = () => {
                 Forgot password?
               </Typography>
             </Link>
-            <Button type="submit" variant="secondary">
+            <Button type="submit" variant="secondary" loading={submitting || isPending}>
               Log in
             </Button>
           </form>

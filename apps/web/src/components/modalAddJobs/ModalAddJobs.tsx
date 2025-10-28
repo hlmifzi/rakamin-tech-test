@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@rakamin/ui";
 import { useForm, Controller, useWatch } from "react-hook-form";
-import { useEffect, useMemo, useState, useCallback } from "react";
+import { useEffect, useMemo, useState, useCallback, useTransition } from "react";
 import { scrollToFirstError } from "@/lib/hook/scrollToFirstError";
 import {
   JobConfigurationFormOptions,
@@ -83,6 +83,8 @@ export function ModalAddJobs({
   }, [configuration]);
 
   const [fieldModes, setFieldModes] = useState<Record<string, FieldMode>>(initialModes);
+  const [submitting, setSubmitting] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     setFieldModes(initialModes);
@@ -139,6 +141,9 @@ export function ModalAddJobs({
       data: createData,
       application_form: applicationFormForAction,
     };
+    startTransition(() => {
+      setSubmitting(true);
+    });
     (async () => {
       try {
         if (onCreate) {
@@ -166,6 +171,8 @@ export function ModalAddJobs({
       } catch (e) {
         console.error("[AddJob Submit Error]", e);
         showToast("Submission failed. Please try again.", "danger");
+      } finally {
+        setSubmitting(false);
       }
     })();
   }, [configuration, fieldModes, onConfirm, onClose, showToast, reset, onCreate]);
@@ -186,6 +193,7 @@ export function ModalAddJobs({
           <Button
             variant="primary"
             onClick={handleSubmit(onValid, onInvalid)}
+            loading={submitting || isPending}
           >
             <Typography variant="TextMBold">Publish Job</Typography>
           </Button>

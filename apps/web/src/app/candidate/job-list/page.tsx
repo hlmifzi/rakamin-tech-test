@@ -1,5 +1,7 @@
 import JobListCandidate from "@/components/JobListCandidate";
 import { getJobs, getJobBySlug } from "@/services/api/job.action";
+import { headers } from "next/headers";
+
 type SearchParams = { slug?: string };
 
 // Ensure fresh data per navigation based on slug param
@@ -15,10 +17,13 @@ const JobListCandidatePage = async ({ searchParams }: { searchParams?: SearchPar
   ]);
 
   const jobs = jobsResult?.data ?? [];
+  const hdrs = await headers();
+  const cookieHeader = hdrs.get("cookie") || "";
+  const userRole = (cookieHeader.split("; ").find((row: string) => row.startsWith("role=")) || "").split("=")[1] || "";
 
   return (
     <div>
-      <JobListCandidate jobs={jobs} selectedSlug={slug} selectedJobDetail={selectedJob || undefined} />
+      <JobListCandidate jobs={jobs} selectedSlug={slug} selectedJobDetail={selectedJob || undefined} userRole={userRole} />
     </div>
   );
 };

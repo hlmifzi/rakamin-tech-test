@@ -210,7 +210,7 @@ export const createJobs = async (
       created_at: now.toISOString(),
       updated_at: now.toISOString(),
     })
-    .select("id, slug, title, status, salary_range, list_card, application_form")
+    .select("id, slug, title, status,description, type, salary_range, list_card, application_form")
     .limit(1);
 
   if (error) {
