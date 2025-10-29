@@ -104,7 +104,9 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
   };
 
   const handlePhotoCapture = (dataUrl: string) => {
-    form.setValue("photo", dataUrl);
+    // Set nilai foto dan lakukan validasi agar error terhapus ketika foto tersedia
+    form.setValue("photo", dataUrl, { shouldValidate: true, shouldDirty: true });
+    form.clearErrors("photo");
   };
 
   const onValid = (data: FormData) => {
@@ -200,7 +202,8 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
                   key={key}
                   label={label}
                   isMandatory={required}
-                  isError={Boolean(errors.photo)}
+                  // Tampilkan error hanya setelah form di-submit
+                  isError={form.formState.isSubmitted && Boolean(errors.photo)}
                   defaultImageSrc="/candidate/default-picture.webp"
                   form={formAdapter}
                   name="photo"

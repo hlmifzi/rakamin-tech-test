@@ -101,7 +101,16 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
         className={inputClasses}
         placeholder={placeholder}
         value={value ?? ""}
-        onChange={(e) => onChange?.(e.target.value)}
+        onChange={(e) => {
+          // Prefer the plugin's parsed number when available
+          const parsed = itiRef.current?.getNumber?.();
+          onChange?.(typeof parsed === "string" && parsed.length ? parsed : e.target.value);
+        }}
+        onBlur={(e) => {
+          // On blur, normalize with plugin one more time
+          const parsed = itiRef.current?.getNumber?.();
+          onChange?.(typeof parsed === "string" && parsed.length ? parsed : e.target.value);
+        }}
         disabled={disabled}
         inputMode="tel"
         ref={inputRef}
