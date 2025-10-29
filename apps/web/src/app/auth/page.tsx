@@ -1,6 +1,7 @@
 import AuthForm from "@/components/AuthForm/AuthForm";
 
-export default function AuthPage({ searchParams }: { searchParams?: { jobID?: string } }) {
-  const jobID = searchParams?.jobID ?? "";
+export default async function AuthPage({ searchParams }: { searchParams?: { jobID?: string } }) {
+  const searchParamsResult = await searchParams ?? {};
+  const jobID = searchParamsResult?.jobID ?? "";
   return <AuthForm jobID={jobID} />;
 }
