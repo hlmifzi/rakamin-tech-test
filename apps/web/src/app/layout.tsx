@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Nunito_Sans } from "next/font/google";
 import "./globals.scss";
+import ToastRoot from "@/components/toast/ToastRoot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +31,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${nunito.variable}`}>{children}</body>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${nunito.variable}`}>
+        {children}
+        <ToastRoot />
+      </body>
     </html>
   );
 }

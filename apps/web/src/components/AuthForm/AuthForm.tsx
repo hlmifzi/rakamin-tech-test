@@ -4,12 +4,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { TextInput, PasswordInput, Button, Typography, IconEmail, IconSSOLogin } from "@rakamin/ui";
 import { motion } from "framer-motion";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
+import { useSearchParams } from "next/navigation";
+import { useToastStore } from "@/lib/store/toastStore";
 import styles from "@/app/auth/auth.module.scss";
 
 export default function AuthForm({ jobID = "" }: { jobID?: string }) {
   const [submitting, setSubmitting] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const searchParams = useSearchParams();
+  const showToast = useToastStore((s) => s.showToast);
+
+  useEffect(() => {
+    const error = searchParams.get("error");
+    if (error === "invalid") {
+      showToast("Invalid username/password", "danger");
+    }
+  }, [searchParams, showToast]);
 
   return (
     <div className={styles.root}>
