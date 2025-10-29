@@ -79,8 +79,8 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail, use
   // Read cookie once via lazy state initializer to avoid setState in effects
 
   return (
-    <div className={styles.container} key={currentSlug || String(selectedJobDetail?.id || "")}>
-      <div className={styles.inner} key={currentSlug || String(selectedJobDetail?.id || "")}>
+    <div className={styles.container}>
+      <div className={styles.inner}>
         {safeJobs.length > 0 ? (
           <>
             <div className={styles.listJobContainer}>
@@ -92,7 +92,7 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail, use
                     const slug = job.slug ? String(job.slug) : String(job.id);
                     // Use transition untuk men-trigger skeleton detail sambil navigasi
                     startTransition(() => {
-                      router.push(`/candidate/job-list?slug=${encodeURIComponent(slug)}`);
+                      router.push(`/candidate/job-list?slug=${encodeURIComponent(slug)}`, { scroll: false });
                     });
                   }}
                 >
