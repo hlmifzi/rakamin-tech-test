@@ -1,6 +1,14 @@
+/* Import mixins first to satisfy Sass @use ordering */
+@use "@rakamin/ui/styles/scrollbar.scss" as scrollbar;
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Import shared scrollbar styles from UI package */
-@import "@rakamin/ui/styles/scrollbar.scss";
+body {
+  @include scrollbar.rakScrollbarPrimary;
+}
+
+html {
+  @include scrollbar.rakScrollbarPrimary;
+}

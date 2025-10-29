@@ -88,7 +88,7 @@ type JobConfigurationFormOptions = { application_form: ApplicationForm };
   return (
     <>
       <div className={styles.container} key={initialQuery}>
-        <div>
+        <div className={styles.jobsList}>
           <div className={styles.searchBar}>
             <form onSubmit={handleSubmitSearch} key={initialQuery}>
               <Controller

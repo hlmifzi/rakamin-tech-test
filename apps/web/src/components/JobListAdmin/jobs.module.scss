@@ -1,3 +1,5 @@
+@use "@rakamin/ui/styles/scrollbar.scss" as scrollbar;
+
 .container {
   @apply grid grid-cols-1 md:grid-cols-[auto_18.75rem] gap-6 pt-3;
 }
@@ -7,8 +9,12 @@
   }
 }
 
+.jobsList {
+  @apply pr-4; /* Use body scroll instead of inner overflow */
+}
+
 .ctaContainer {
-  @apply relative col-start-1 md:col-start-2 overflow-hidden flex p-6 h-fit text-white rounded-2xl;
+  @apply relative md:sticky md:top-3 col-start-1 md:col-start-2 overflow-hidden flex p-6 h-fit text-white rounded-2xl;
 
   img {
     @apply object-cover;
