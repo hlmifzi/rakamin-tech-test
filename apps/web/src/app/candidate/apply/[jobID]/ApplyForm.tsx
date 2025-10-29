@@ -252,8 +252,8 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
                       ]}
                       value={field.value}
                       onChange={field.onChange}
-                      error={Boolean(errors.pronoun)}
-                      helperText={Boolean(errors.pronoun) ? "* field pronoun is required" : undefined}
+                      error={form.formState.isSubmitted && Boolean(errors.pronoun)}
+                      helperText={form.formState.isSubmitted && Boolean(errors.pronoun) ? "* field pronoun is required" : undefined}
                     />
                   )}
                 />
@@ -283,7 +283,7 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
                       isMandatory={required}
                       value={field.value}
                       onChange={field.onChange}
-                      isError={Boolean(errors.domicile)}
+                      isError={form.formState.isSubmitted && Boolean(errors.domicile)}
                     />
                   )}
                 />
@@ -317,7 +317,7 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
                       country={form.watch("phoneCountry")}
                       onCountryChange={(code) => form.setValue("phoneCountry", code)}
                       placeholder="Enter phone number"
-                      isError={Boolean(errors.phoneNumber)}
+                      isError={form.formState.isSubmitted && Boolean(errors.phoneNumber)}
                     />
                   )}
                 />
@@ -338,7 +338,7 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
                       isMandatory={required}
                       value={field.value}
                       onChange={field.onChange}
-                      isError={Boolean(errors.email)}
+                      isError={form.formState.isSubmitted && Boolean(errors.email)}
                     />
                   )}
                 />
@@ -359,7 +359,7 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
                       isMandatory={required}
                       value={field.value}
                       onChange={field.onChange}
-                      isError={Boolean(errors.linkedin)}
+                      isError={form.formState.isSubmitted && Boolean(errors.linkedin)}
                     />
                   )}
                 />
@@ -380,7 +380,7 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
                       isMandatory={required}
                       value={field.value}
                       onChange={field.onChange}
-                      isError={Boolean(errors.fullName)}
+                      isError={form.formState.isSubmitted && Boolean(errors.fullName)}
                     />
                   )}
                 />

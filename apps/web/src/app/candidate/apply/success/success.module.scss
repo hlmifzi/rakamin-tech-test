@@ -7,5 +7,5 @@
 }
 
 .description {
-  @apply mt-2 w-[606px] text-neutral-90;
+  @apply mt-2 w-[606px] max-w-[calc(100vw-2rem)] text-neutral-90;
 }
