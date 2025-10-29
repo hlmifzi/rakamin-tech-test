@@ -1,7 +1,7 @@
 # Hiring Platform
 
 Deployed URL: https://rekaman-tech-test-web.vercel.app/
-storybook URL: https://storybook-hiring-platform.vercel.app/
+storybook URL: https://rekaman-ui.vercel.app/
 
 Credentials for Login
 - Recruiter: `recruiter@gmail.com` / `123456`
