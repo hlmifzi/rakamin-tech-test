@@ -64,13 +64,28 @@ export const getJobs = async (options: JobQueryOptions = {}) => {
   if (search && typeof search === "string" && search.trim().length > 0) {
     const term = search.trim();
     const like = `%${term}%`;
-    query = query.or([
+    // Map common human inputs to enum values for type filter via equality
+    const normalizedType = (() => {
+      const t = term.toLowerCase();
+      if (["full_time", "full-time", "full time"].includes(t)) return "full_time";
+      if (["part_time", "part-time", "part time"].includes(t)) return "part_time";
+      if (["internship", "intern"].includes(t)) return "internship";
+      if (["contract"].includes(t)) return "contract";
+      if (["freelance"].includes(t)) return "freelance";
+      return null;
+    })();
+
+    const orClauses = [
       `title.ilike.${like}`,
       `slug.ilike.${like}`,
       `status.ilike.${like}`,
       `description.ilike.${like}`,
-      `type.ilike.${like}`,
-    ].join(","));
+    ];
+    // Avoid ILIKE on enum column; use equality when term maps to enum
+    if (normalizedType) {
+      orClauses.push(`type.eq.${normalizedType}`);
+    }
+    query = query.or(orClauses.join(","));
   }
 
   const { data, error, count } = await query.range(from, to);

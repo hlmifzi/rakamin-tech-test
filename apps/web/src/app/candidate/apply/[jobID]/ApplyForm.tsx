@@ -119,7 +119,7 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
           break;
         }
         case "phone_number": {
-          value = String(data.phoneNumber || "");
+          value = String(data.phoneNumber || "").trim();
           break;
         }
         case "full_name": {
@@ -295,9 +295,10 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
                   rules={{
                     required,
                     validate: (v) => {
-                      const val = v ?? "";
+                      const val = (v ?? "").trim();
                       if (!val) return !required;
-                      return /^\d+$/.test(val);
+                      // Allow typical phone characters: digits, spaces, plus, parentheses, hyphen
+                      return /^[\d\s()+-]+$/.test(val);
                     },
                   }}
                   control={form.control}
@@ -307,10 +308,8 @@ export default function ApplyForm({ jobID, jobTitle, applicationForm, onApply }:
                       isMandatory={required}
                       value={field.value ?? ""}
                       onChange={(val) => {
-                        if (typeof val === "string") {
-                          const sanitized = val.replace(/\D/g, "");
-                          field.onChange(sanitized);
-                        }
+                        // Store raw string to avoid over-sanitizing into empty values
+                        field.onChange(typeof val === "string" ? val : String(val ?? ""));
                       }}
                       country={form.watch("phoneCountry")}
                       onCountryChange={(code) => form.setValue("phoneCountry", code)}
