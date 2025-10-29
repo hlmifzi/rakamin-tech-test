@@ -18,7 +18,7 @@ export default function AuthForm({ jobID = "" }: { jobID?: string }) {
   useEffect(() => {
     const error = searchParams.get("error");
     if (error === "invalid") {
-      showToast("Invalid username/password", "danger");
+      showToast("Invalid username or password", "danger");
     }
   }, [searchParams, showToast]);
 

@@ -1,9 +1,11 @@
+@use "@rakamin/ui/styles/scrollbar.scss" as scrollbar;
+
 .inner {
     @apply grid grid-cols-1 md:grid-cols-[400px_auto] gap-6;
 }
 
 .cardBorder {
-    @apply border-neutral-40 cursor-pointer rounded-lg px-4 py-3 transition-all border-2 hover:border-primary hover:bg-primary-surface;
+    @apply border-neutral-40 min-w-[384px] cursor-pointer rounded-lg px-4 py-3 transition-all border-2 hover:border-primary hover:bg-primary-surface;
 }
 
 .cardBorderSelected {
@@ -12,7 +14,8 @@
 }
 
 .listJobContainer {
-    @apply flex flex-col gap-4 max-h-[80vh] overflow-y-auto pr-5;
+    @apply flex flex-row md:flex-col gap-4 max-h-[80vh] overflow-y-auto pr-5;
+    @include scrollbar.rakScrollbarPrimary;
 }
 
 .cardBorderHeader {
@@ -66,4 +69,5 @@
 
 .contentJobDetail {
     @apply overflow-y-auto text-m-regular pt-6;
+    @include scrollbar.rakScrollbarPrimary;
 }

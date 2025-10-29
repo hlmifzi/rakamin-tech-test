@@ -15,10 +15,11 @@ GitHub Repository: https://github.com/hlmifzi/rekaman-tech-test
 
 ## Tech Stack Used
 - storybook design system: https://rekaman-ui.vercel.app/
-- Next.js 16, React 19, TypeScript
+- Next.js 16, React 19, TypeScript, SSR App router and caching revalidate
 - Tailwind CSS, SCSS Modules
 - pnpm, Turborepo workspace
 - Framer Motion (animations), Zustand (state), React Hook Form
+- supabase
 
 ## How to Run Locally
 - Prerequisite: Node.js 18+, pnpm

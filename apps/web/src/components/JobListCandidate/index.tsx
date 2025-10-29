@@ -105,7 +105,7 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail, use
                       placeholder="blur"
                   blurDataURL="/tiny-blur.png"
                     />
-                    <Typography variant="TextLBold">{job.title}</Typography>
+                    <Typography variant="TextLBold" className="capitalize">{job.title}</Typography>
                     <Typography variant="TextMRegular">Rakamin</Typography>
                   </div>
                   <div className={styles.jobDescContainer}>
@@ -142,7 +142,7 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail, use
                       <Typography className={styles.jobType} variant="TextSBold">
                         {selectedJob?.type?.replaceAll("_", " ") || "Full-time"}
                       </Typography>
-                      <Typography variant="TextLBold">{selectedJob.title}</Typography>
+                      <Typography variant="TextLBold" className="capitalize">{selectedJob.title}</Typography>
                       <Typography variant="TextMRegular">Rakamin</Typography>
                     </>
                   )}
@@ -159,11 +159,9 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail, use
 
               <div className={styles.contentJobDetail}>
                 
-                <ul>
+                <div className="whitespace-pre-line">
                   {isPending ? (
-                    <li>
-                      {/* menjaga struktur agar tidak kosong saat skeleton */}
-                    </li>
+                    <></>
                   ) : selectedJob ? (
                     <>
                       {selectedJob.description}
@@ -171,7 +169,7 @@ const JobListCandidate = ({ jobs = [], selectedSlug = "", selectedJobDetail, use
                   ) : (
                     <li>Select a job from the list to see details.</li>
                   )}
-                </ul>
+                </div>
               </div>
             </div>
           </>

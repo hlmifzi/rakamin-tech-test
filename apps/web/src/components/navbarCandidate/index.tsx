@@ -21,7 +21,7 @@ export function NavbarCandidate({ userRole }: NavbarCandidateProps) {
               <div className="relative group">
                 <Image
                   className={styles.avatar}
-                  src="/admin/avatar.svg"
+                  src="/admin/avatar-admin.svg"
                   alt="Profile"
                   width={28}
                   height={28}

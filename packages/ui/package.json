@@ -10,7 +10,8 @@
       "import": "./src/index.ts",
       "require": "./src/index.ts"
     },
-    "./tailwind.preset.cjs": "./tailwind.preset.cjs"
+    "./tailwind.preset.cjs": "./tailwind.preset.cjs",
+    "./styles/scrollbar.scss": "./src/styles/scrollbar.scss"
   },
   "files": [
     "src",

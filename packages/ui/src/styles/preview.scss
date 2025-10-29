@@ -1,3 +1,6 @@
+/* Include shared scrollbar styles for Storybook preview */
+@use "./scrollbar.scss";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

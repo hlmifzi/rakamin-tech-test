@@ -1,0 +1,127 @@
+/* Shared scrollbar styles for Rakamin UI */
+
+/* Keep grey scheme for generic main scrollbars */
+.scrollbar_main {
+  overflow: auto;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #c1c1c1 #f1f1f1; /* thumb track */
+
+  &::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #E6E6E6;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+}
+
+/* Product carousel: replace non-grey colors with primary scheme */
+.scrollbar_product_carousel {
+  overflow: auto;
+  scrollbar-width: thin; /* Firefox */
+  /* thumb primary, track grey */
+  scrollbar-color: #01959F #E6E6E6;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #E6E6E6; /* grey track */
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #01959F; /* primary */
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #01777F !important; /* primary.hover */
+  }
+}
+
+/* Global application to Tailwind utility containers with overflow */
+.overflow-auto,
+.overflow-y-auto {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #01959F #E6E6E6; /* thumb track */
+}
+
+.overflow-auto::-webkit-scrollbar,
+.overflow-y-auto::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.overflow-auto::-webkit-scrollbar-track,
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #E6E6E6; /* grey track */
+  border-radius: 10px;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb,
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #01959F; /* primary */
+  border-radius: 10px;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb:hover,
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #01777F; /* primary.hover */
+}
+
+/* SCSS mixins for reuse in CSS Modules */
+@mixin rakScrollbarPrimary {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #01959F #E6E6E6; /* thumb track */
+
+  &::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #E6E6E6; /* grey track */
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #01959F; /* primary */
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #01777F; /* primary.hover */
+  }
+}
+
+@mixin rakScrollbarGrey {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #c1c1c1 #E6E6E6; /* thumb track */
+
+  &::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #E6E6E6;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+}

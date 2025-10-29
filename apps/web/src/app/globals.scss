@@ -1,3 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Import shared scrollbar styles from UI package */
+@import "@rakamin/ui/styles/scrollbar.scss";
