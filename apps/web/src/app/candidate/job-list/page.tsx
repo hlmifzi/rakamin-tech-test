@@ -4,11 +4,12 @@ import { headers } from "next/headers";
 
 type SearchParams = { slug?: string };
 
-// Ensure fresh data per navigation based on slug param
 export const dynamic = "force-dynamic";
 
 const JobListCandidatePage = async ({ searchParams }: { searchParams?: SearchParams }) => {
-  const slug = searchParams?.slug || "";
+  const searchParamsRes = await searchParams || {slug: ""};
+  const slug = searchParamsRes?.slug || "";
+
 
   const [jobsResult, selectedJob] = await Promise.all([
     getJobs({ page: 1, per: 10, sort_by: "created_at", sort_order: "desc" }),
