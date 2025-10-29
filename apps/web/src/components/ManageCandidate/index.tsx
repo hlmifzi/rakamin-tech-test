@@ -14,68 +14,6 @@ interface RowData {
   linkedin: string;
 }
 
-const dummyData: RowData[] = [
-  {
-    id: "1",
-    namaLengkap: "Andi Wijaya",
-    email: "andi@example.com",
-    phone: "+62 812 3456 7890",
-    dob: "1995-02-12",
-    domicile: "Jakarta",
-    gender: "Male",
-    linkedin: "https://linkedin.com/in/andi",
-  },
-  {
-    id: "2",
-    namaLengkap: "Siti Rahma",
-    email: "siti@example.com",
-    phone: "+62 813 2345 6789",
-    dob: "30 January 2001",
-    domicile: "Bandung",
-    gender: "Female",
-    linkedin: "https://linkedin.com/in/siti",
-  },
-  {
-    id: "3",
-    namaLengkap: "Siti Rahma",
-    email: "siti@example.com",
-    phone: "+62 813 2345 6789",
-    dob: "30 January 2001",
-    domicile: "Bandung",
-    gender: "Female",
-    linkedin: "https://linkedin.com/in/siti",
-  },
-  {
-    id: "4",
-    namaLengkap: "Siti Rahma",
-    email: "siti@example.com",
-    phone: "+62 813 2345 6789",
-    dob: "30 January 2001",
-    domicile: "Bandung",
-    gender: "Female",
-    linkedin: "https://linkedin.com/in/siti",
-  },
-  {
-    id: "5",
-    namaLengkap: "Siti Rahma",
-    email: "siti@example.com",
-    phone: "+62 813 2345 6789",
-    dob: "30 January 2001",
-    domicile: "Bandung",
-    gender: "Female",
-    linkedin: "https://linkedin.com/in/siti",
-  },
-  {
-    id: "6",
-    namaLengkap: "Budi Santoso",
-    email: "budi@example.com",
-    phone: "+62 811 9876 5432",
-    dob: "1994-05-30",
-    domicile: "Surabaya",
-    gender: "Male",
-    linkedin: "https://linkedin.com/in/budi/asdasdasdasd/asdasdasdasdsadasdasd/",
-  },
-];
 
 type ManageCandidatePageType = { 
   jobID: string;
@@ -94,8 +32,9 @@ const transformCandidateToRowData = (candidate: Candidate): RowData => {
     id: candidate.id,
     namaLengkap: attributesMap.full_name || '',
     email: attributesMap.email || '',
-    phone: attributesMap.phone || '',
-    dob: attributesMap.dob || '',
+    // Support both legacy and new keys
+    phone: attributesMap.phone_number || attributesMap.phone || '',
+    dob: attributesMap.date_of_birth || attributesMap.dob || '',
     domicile: attributesMap.domicile || '',
     gender: attributesMap.gender || '',
     linkedin: attributesMap.linkedin_link || '',
