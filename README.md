@@ -1,6 +1,6 @@
 # Hiring Platform
 
-Deployed URL: https://hiring-platform.vercel.app
+Deployed URL: https://rekaman-tech-test-web.vercel.app/
 storybook URL: https://storybook-hiring-platform.vercel.app/
 
 Credentials for Login
@@ -26,6 +26,7 @@ GitHub Repository: https://github.com/HLMIFZI/hiring-platform
 - Start web app:
   - Option A: `cd apps/web && pnpm dev`
   - Option B (workspace filter): `pnpm --filter web dev`
+  - Option C (monorepo): `pnpm dev` => WILL START ALL APPS IN THE WORKSPACE 
 - Open: `http://localhost:3000`
 
 ## Credential Details
