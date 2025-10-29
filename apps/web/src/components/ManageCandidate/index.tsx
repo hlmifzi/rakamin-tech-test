@@ -35,7 +35,7 @@ const transformCandidateToRowData = (candidate: Candidate): RowData => {
     // Support both legacy and new keys
     phone: attributesMap.phone_number || attributesMap.phone || '',
     dob: attributesMap.date_of_birth || attributesMap.dob || '',
-    domicile: attributesMap.domicile || '',
+    domicile: attributesMap.domicile.replaceAll('-', ' ') || '',
     gender: attributesMap.gender || '',
     linkedin: attributesMap.linkedin_link || '',
   };
