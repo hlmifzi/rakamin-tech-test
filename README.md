@@ -7,14 +7,14 @@ Credentials for Login
 - Recruiter: `recruiter@gmail.com` / `123456`
 - Candidate: `candidate@gmail.com` / `123456`
 
-GitHub Repository: https://github.com/HLMIFZI/hiring-platform
+GitHub Repository: https://github.com/hlmifzi/rekaman-tech-test
 
 ## Project Overview
 - A simple hiring platform with candidate job listing, application form, and admin job management.
 - Supports mock authentication and role-based navigation between candidate and admin experiences.
 
 ## Tech Stack Used
-- storybook design system: https://storybook-design-system.vercel.app/
+- storybook design system: https://rekaman-ui.vercel.app/
 - Next.js 16, React 19, TypeScript
 - Tailwind CSS, SCSS Modules
 - pnpm, Turborepo workspace
